@@ -1,4 +1,10 @@
-app/Main.class
+game/enemy/EnemyType.class
+game/tower/TowerType.class
+game/tower/TowerFactory.class
+game/enemy/EnemySpawner.class
 ui/HelloFX.class
+game/enemy/Enemy.class
+game/tower/Tower.class
+util/Vector2.class
 game/engine/GameEngine.class
 game/engine/GameLoop.class
