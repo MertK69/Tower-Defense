@@ -42,7 +42,7 @@ public enum Pathtype{
 				new Vector2(600, 20)
 			)),
 
-		Pathtype_Impossible(
+		Impossible(
 			List.of(
 				new Vector2(20, 20),
 				new Vector2(20, 550),

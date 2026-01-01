@@ -3,6 +3,8 @@ package game.engine;
 import game.enemy.*;
 import game.wave.*;
 import game.path.*;
+import game.render.RenderSystems;
+import game.render.*;
 import game.tower.Tower;
 import game.tower.TowerFactory;
 import game.tower.TowerType;
@@ -29,13 +31,17 @@ public class GameEngine {
 		private WaveFactory waveFactory = new WaveFactory();
 		private PathFabric pathFabric = new PathFabric();
 		private ActiveWave activeWave = null;
-		private int waveNumber = 1;
+		private int waveNumber = 25;
 		private Path path = null;
-	    private	Canvas canvas = new Canvas(900, 600);
+	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
 		private TargetingSystem targetingSystem = new TargetingSystem();
         private DamageSystem damageSystem = new DamageSystem();
         private CombatSystem combatSystem = new CombatSystem(targetingSystem, damageSystem);
+		private TowerRenderer towerRenderer = new TowerRenderer();
+		private EnemyRenderer enemyRenderer = new EnemyRenderer();
+		private PathRenderer pathRenderer = new PathRenderer();
+		private RenderSystems renderSystems = new RenderSystems(towerRenderer, enemyRenderer, pathRenderer);
 		public void update(double stepTime) 
 		{
 				if ( path == null ) 
@@ -47,8 +53,8 @@ public class GameEngine {
 						towers.add(tower1);	towers.add(tower2); towers.add(tower3); towers.add(tower4);
 				}
 
-				if ( path == null) path = pathFabric.createPath(Pathtype.EASY);
-				if ( activeWave == null ) activeWave = new ActiveWave(waveFactory.create_wave(waveNumber));
+				if ( path == null) path = pathFabric.createPath(Pathtype.Impossible);
+				if ( activeWave == null ) activeWave = new ActiveWave(createWave());
 		
 				EnemyType spawnType = activeWave.update(stepTime);
 				
@@ -87,58 +93,33 @@ public class GameEngine {
 
 		public void render()
 		{
-				gc.setFill(Color.BLACK);
-                gc.fillRect(0, 0, 900, 600);
-
-                // PATH
-                gc.setStroke(Color.DARKGRAY);
-                gc.setLineWidth(3);
-                gc.strokeLine(50, 300, 850, 300);
-
-                // TOWERS + RANGE
-                for (Tower tower : towers) {
-                    Vector2 tp = tower.getPosition();
-
-                    gc.setFill(Color.BLUE);
-                    gc.fillOval(
-                            tp.getX() - 12,
-                            tp.getY() - 12,
-                            24, 24
-                    );
-
-                    gc.setStroke(Color.color(0, 0, 1, 0.25));
-                    gc.strokeOval(
-                            tp.getX() - tower.getReichweite(),
-                            tp.getY() - tower.getReichweite(),
-                            tower.getReichweite() * 2,
-                            tower.getReichweite() * 2
-                    );
-                }
-
-                // ENEMIES
-                for (Enemy enemy : enemies) {
-                    if (!enemy.isAlive()) continue;
-
-                    Vector2 ep = enemy.getPosition();
-                    gc.setFill(Color.RED);
-                    gc.fillOval(
-                            ep.getX() - 8,
-                            ep.getY() - 8,
-                            16, 16
-                    );
+				gc.setFill(Color.GREEN);
+                gc.fillRect(0, 0, 1200, 800);
+				if ( path != null)
+				{
+						renderSystems.renderPath(gc, path);
 				}
+				renderSystems.renderTower(gc, towers);	
+
+				renderSystems.renderEnemies(gc, enemies);
 
 		}
 
-		public void buyTower(TowerType type, Vector2 position){
+		public void buyTower(TowerType type, Vector2 position)
+		{
 				towers.add(towerfactory.create_tower(type, position));	
 		}
 
-		public void createEnemy(EnemyType type, Path path){
+		public void createEnemy(EnemyType type, Path path)
+		{
 				enemies.add(enemyspawner.create_enemy(type, path));
 		}
+		public Wave createWave()
+		{
+				return waveFactory.create_wave(waveNumber);		}
 
-		public Canvas getCanvas() {
+		public Canvas getCanvas()
+		{
 				return canvas;
 		}
 
