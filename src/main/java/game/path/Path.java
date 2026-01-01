@@ -11,7 +11,7 @@ public class Path {
 		private final List<Vector2> Waypoints;
 
 
-		public Path (ArrayList<Vector2> Waypoints){
+		public Path (List<Vector2> Waypoints){
 				if (Waypoints.size() < 1) {
 						throw new IllegalArgumentException();
 				}

@@ -24,6 +24,13 @@ public class Tower {
 		public void fire() {
 				cooldown = type.firerate();
 		}
+		public double getDamage(){
+				return this.type.damage();
+		}
+
+		public double getReichweite() {
+				return this.type.reichweite();
+		}
 
 		public TowerType getType() {
 				return type;
@@ -31,6 +38,10 @@ public class Tower {
 
 		public Vector2 getPosition() {
 				return position;
+		}
+
+		public void reset_cooldown() {
+				this.cooldown = type.firerate();
 		}
 
 		

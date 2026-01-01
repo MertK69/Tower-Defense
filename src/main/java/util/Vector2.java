@@ -41,5 +41,17 @@ public class Vector2 {
 		public Vector2 Addition( Vector2 other){
 				return new Vector2 (this.Ko_X + other.Ko_X, this.Ko_Y + other.Ko_Y);
 		}
+
+		public Vector2 subtraction( Vector2 other){
+				return new Vector2 (this.Ko_X - other.Ko_X, this.Ko_Y - other.Ko_Y);
+		}
+
+		public double getX(){
+				return this.Ko_X;
+		}
+
+		public double getY(){
+				return this.Ko_Y;
+		}
 		
 }

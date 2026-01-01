@@ -49,6 +49,26 @@ public class Enemy {
 		public double getCurrent_hp() {
 				return this.current_hp;
 		}
+
+		public boolean isFinished() {
+				if (this.curr_waypoint == path.get_waypoint_amount()){
+						return true;
+						} else {
+								return false;
+				}
+		}
+
+		public boolean isAlive() {
+				if (this.current_hp > 0) return true; else return false;
+		}
+
+		public void get_damage(double damage) {
+				if (this.current_hp - damage <= 0d) {
+						this.current_hp = 0d;
+						return;
+				}
+				this.current_hp = this.current_hp - damage;
+		}
 		
 
 
