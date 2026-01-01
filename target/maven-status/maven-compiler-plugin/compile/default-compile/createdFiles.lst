@@ -3,7 +3,6 @@ game/combat/CombatSystem.class
 game/wave/WaveSpawner.class
 game/path/Path.class
 game/combat/TargetingSystem.class
-app/Main$1.class
 util/Vector2.class
 game/path/Pathtype.class
 game/engine/GameLoop.class

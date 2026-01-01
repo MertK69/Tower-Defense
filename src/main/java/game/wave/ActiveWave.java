@@ -2,25 +2,26 @@ package game.wave;
 
 import java.util.Map;
 import java.util.List;
+import java.util.HashMap;
 import game.enemy.*;
 
 
 public class ActiveWave {
 		private final Wave wave;
 		private final Map<EnemyType, Integer> remainingEnemies;
-		private double Timer;
+		private double Timer = 0;
 
 		public ActiveWave (Wave wave)
 		{
 				this.wave = wave;
-				this.remainingEnemies = wave.getEnemyTypes();
+				this.remainingEnemies = new HashMap<>(wave.getEnemyTypes());
 		}
 
 		public EnemyType update(double dt)
 		{
 				Timer += dt;
 		
-				if (remainingEnemies.size() >= 0)
+				if (remainingEnemies.isEmpty())
 				{
 						return null;
 				}
@@ -37,7 +38,7 @@ public class ActiveWave {
 
 		private EnemyType getNextEnemyType()
 		{
-				return this.remainingEnemies.keySet().iterator().next();
+				return remainingEnemies.keySet().iterator().next();
 		}
 		
 		private void decrement(EnemyType type)

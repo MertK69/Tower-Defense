@@ -8,22 +8,19 @@ import java.util.List;
 
 
 public class Path {
-		private final List<Vector2> Waypoints;
+		private final List<Vector2> waypoints;
 
 
-		public Path (List<Vector2> Waypoints){
-				if (Waypoints.size() < 1) {
-						throw new IllegalArgumentException();
-				}
-				this.Waypoints = List.copyOf(Waypoints);
+		public Path (Pathtype pathtype){
+				this.waypoints = List.copyOf(pathtype.getWaypoints());
 		}
 
 		public Vector2 get_waypoint(int i){
-				return this.Waypoints.get(i);
+				return this.waypoints.get(i);
 		}
 	
 		public int get_waypoint_amount(){
-				return this.Waypoints.size();
+				return this.waypoints.size();
 		}
 
 		

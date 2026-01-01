@@ -1,6 +1,7 @@
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/combat/TargetingSystem.java
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/app/Main.java
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/enemy/EnemySpawner.java
+/home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/path/PathFabric.java
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/wave/WaveFactory.java
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/path/Path.java
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/engine/GameEngine.java
@@ -17,3 +18,4 @@
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/enemy/Enemy.java
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/tower/TowerFactory.java
 /home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/wave/Wave.java
+/home/mert/Documents/VSCode/Tower-Defense/src/main/java/game/wave/ActiveWave.java
