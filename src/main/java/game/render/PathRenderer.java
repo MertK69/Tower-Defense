@@ -10,7 +10,7 @@ public class PathRenderer {
 
 		public void renderPath(GraphicsContext gc, Path path)
 		{
-				gc.setStroke(Color.GRAY);
+				gc.setStroke(Color.TRANSPARENT);
                 gc.setLineWidth(6);
 				for (int i=0;i<path.get_waypoint_amount() - 1;i++)
 				{

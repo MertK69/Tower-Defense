@@ -32,6 +32,12 @@ public class Tower {
 				return this.type.reichweite();
 		}
 
+		public int getPrice()
+		{
+				return this.type.price();
+		}
+
+
 		public TowerType getType() {
 				return type;
 		}

@@ -9,11 +9,13 @@ import game.tower.Tower;
 import game.tower.TowerFactory;
 import game.tower.TowerType;
 import game.combat.*;
-import game.wave.*;
+import game.economy.EarningsSystems;
+import game.economy.Economy;
+import game.economy.EconomySystems;
+import game.economy.SpendingsSystems;
 import util.Vector2;
 import java.util.ArrayList;
 import java.util.List;
-import game.path.*;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -31,7 +33,7 @@ public class GameEngine {
 		private WaveFactory waveFactory = new WaveFactory();
 		private PathFabric pathFabric = new PathFabric();
 		private ActiveWave activeWave = null;
-		private int waveNumber = 25;
+		private int waveNumber = 1;
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -41,7 +43,13 @@ public class GameEngine {
 		private TowerRenderer towerRenderer = new TowerRenderer();
 		private EnemyRenderer enemyRenderer = new EnemyRenderer();
 		private PathRenderer pathRenderer = new PathRenderer();
-		private RenderSystems renderSystems = new RenderSystems(towerRenderer, enemyRenderer, pathRenderer);
+		private BackgroundRenderer backgroundRenderer = new BackgroundRenderer();
+		private UIRenderer uiRenderer = new UIRenderer();
+		private RenderSystems renderSystems = new RenderSystems(towerRenderer, enemyRenderer, pathRenderer, backgroundRenderer, uiRenderer);
+		private EarningsSystems earningsSystems = new EarningsSystems();
+		private SpendingsSystems spendingsSystems = new SpendingsSystems();
+		private EconomySystems economySystems = new EconomySystems(earningsSystems, spendingsSystems);
+		private Economy economy = new Economy(economySystems, Pathtype.EASY);
 		public void update(double stepTime) 
 		{
 				if ( path == null ) 
@@ -53,7 +61,7 @@ public class GameEngine {
 						towers.add(tower1);	towers.add(tower2); towers.add(tower3); towers.add(tower4);
 				}
 
-				if ( path == null) path = pathFabric.createPath(Pathtype.Impossible);
+				if ( path == null) path = pathFabric.createPath(Pathtype.EASY);
 				if ( activeWave == null ) activeWave = new ActiveWave(createWave());
 		
 				EnemyType spawnType = activeWave.update(stepTime);
@@ -69,32 +77,35 @@ public class GameEngine {
 						activeWave = null;
 						waveNumber++;
 				}
-				List<Enemy>ToRemove = new ArrayList<>();
+				List<Enemy>EnemiesToRemove = new ArrayList<>();
 				for (Enemy enemy : enemies)
 				{
 						
 						enemy.update(stepTime);
 						if (!enemy.isAlive() || enemy.isFinished())
 						{
-								ToRemove.add(enemy);
+								EnemiesToRemove.add(enemy);
 								continue;
 						}
 
 				}
-				enemies.removeAll(ToRemove);
+				enemies.removeAll(EnemiesToRemove);
 
+				List<Tower>TowersToRemove = new ArrayList<>();
 				for (Tower tower : towers)
 				{
 						tower.update(stepTime);
 				}
 				combatSystem.update(stepTime, towers, enemies);
-
+				economy.update(EnemiesToRemove, TowersToRemove);				
 		}
 
 		public void render()
 		{
-				gc.setFill(Color.GREEN);
-                gc.fillRect(0, 0, 1200, 800);
+				renderSystems.renderBackground(gc, canvas);
+
+				renderSystems.uiRenderer(gc, economy);
+
 				if ( path != null)
 				{
 						renderSystems.renderPath(gc, path);
@@ -116,7 +127,8 @@ public class GameEngine {
 		}
 		public Wave createWave()
 		{
-				return waveFactory.create_wave(waveNumber);		}
+				return waveFactory.create_wave(waveNumber);		
+		}
 
 		public Canvas getCanvas()
 		{
