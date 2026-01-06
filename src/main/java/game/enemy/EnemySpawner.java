@@ -1,6 +1,5 @@
 package game.enemy;
 
-import util.Vector2;
 import game.path.Path;
 
 public class EnemySpawner {

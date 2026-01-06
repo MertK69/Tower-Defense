@@ -31,7 +31,7 @@ public final class GameLoop extends AnimationTimer {
             accumulator -= STEP;
         }
 
-        GE.render();
+        GE.render(STEP);
     }
 }
 

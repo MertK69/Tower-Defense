@@ -2,6 +2,7 @@ package game.enemy;
 
 import util.Vector2;
 import game.path.Path;
+import javafx.scene.image.Image;
 
 public class Enemy {
 		private Vector2 position;
@@ -9,7 +10,9 @@ public class Enemy {
 		private double current_hp;
 		private int curr_waypoint;
 		private Path path;
-
+		private int curr_Movement = 0;
+		private double movementInterval;
+		private double timer = 0;
 
 		public Enemy(EnemyType type, Path path ) {
 				this.type = type;
@@ -17,6 +20,7 @@ public class Enemy {
 				this.current_hp = type.hp();
 				this.curr_waypoint = 0;
 				this.path = path;
+				this.movementInterval = type.movementInterval();
 		}
 
 		public void update(double dt) {
@@ -68,6 +72,33 @@ public class Enemy {
 						return;
 				}
 				this.current_hp = this.current_hp - damage;
+		}
+
+		private void nextMovement() 
+		{
+				if (curr_Movement == type.movementLeft().size() - 1)
+				{
+						curr_Movement = 0;
+				} else {
+						curr_Movement++;
+				}
+				timer = 0;
+		}
+		public Image getCurrMovement(double dt, int direction) // directions 1 == Right, 2 == left, 3 == Up, 4 == Down
+		{
+				Image image = null;
+				if (direction == 1) image = type.movementLeft().get(curr_Movement);
+				if (direction == 2) image = type.movementRight().get(curr_Movement);
+				if (direction == 3) image = type.movementUpwards().get(curr_Movement);
+				if (direction == 4) image = type.movementDownwards().get(curr_Movement);
+				timer += dt;
+				if (timer >= movementInterval) nextMovement();
+				return image;
+		}
+
+		public int getCurrWaypoint()
+		{
+				return curr_waypoint;
 		}
 		
 

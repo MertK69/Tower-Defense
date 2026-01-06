@@ -8,6 +8,7 @@ import game.render.*;
 import game.tower.Tower;
 import game.tower.TowerFactory;
 import game.tower.TowerType;
+import game.animation.towerAnimationen.Fire;
 import game.combat.*;
 import game.economy.EarningsSystems;
 import game.economy.Economy;
@@ -28,6 +29,8 @@ import javafx.stage.Stage;
 public class GameEngine {
 		private final List<Enemy>enemies = new ArrayList<>();
 		private final List<Tower>towers = new ArrayList<>();
+		private final List<Enemy>EnemiesToRemove = new ArrayList<>();
+		private final List<Fire>Bullets = new ArrayList<>();
 		private TowerFactory towerfactory = new TowerFactory();
 		private EnemySpawner enemyspawner = new EnemySpawner();
 		private WaveFactory waveFactory = new WaveFactory();
@@ -45,7 +48,8 @@ public class GameEngine {
 		private PathRenderer pathRenderer = new PathRenderer();
 		private BackgroundRenderer backgroundRenderer = new BackgroundRenderer();
 		private UIRenderer uiRenderer = new UIRenderer();
-		private RenderSystems renderSystems = new RenderSystems(towerRenderer, enemyRenderer, pathRenderer, backgroundRenderer, uiRenderer);
+		private BulletRenderer bulletRenderer = new BulletRenderer();
+		private RenderSystems renderSystems = new RenderSystems(towerRenderer, enemyRenderer, pathRenderer, backgroundRenderer, uiRenderer, bulletRenderer);
 		private EarningsSystems earningsSystems = new EarningsSystems();
 		private SpendingsSystems spendingsSystems = new SpendingsSystems();
 		private EconomySystems economySystems = new EconomySystems(earningsSystems, spendingsSystems);
@@ -55,9 +59,9 @@ public class GameEngine {
 				if ( path == null ) 
 				{
 						Tower tower1 = new Tower(TowerType.BASIC,    new Vector2(500, 270));
-						Tower tower2 = new Tower(TowerType.ADVANCED, new Vector2(450, 270));
-						Tower tower3 = new Tower(TowerType.BASIC,    new Vector2(400, 270));
-						Tower tower4 = new Tower(TowerType.ADVANCED, new Vector2(350, 270));
+						Tower tower2 = new Tower(TowerType.EXPERT, new Vector2(350, 270));
+						Tower tower3 = new Tower(TowerType.BASIC,    new Vector2(100, 270));
+						Tower tower4 = new Tower(TowerType.ADVANCED, new Vector2(170, 270));
 						towers.add(tower1);	towers.add(tower2); towers.add(tower3); towers.add(tower4);
 				}
 
@@ -77,7 +81,7 @@ public class GameEngine {
 						activeWave = null;
 						waveNumber++;
 				}
-				List<Enemy>EnemiesToRemove = new ArrayList<>();
+				EnemiesToRemove.clear();
 				for (Enemy enemy : enemies)
 				{
 						
@@ -96,23 +100,39 @@ public class GameEngine {
 				{
 						tower.update(stepTime);
 				}
-				combatSystem.update(stepTime, towers, enemies);
+				List<Fire>bulletsToRemove = new ArrayList<>();
+				for (Fire bullet : Bullets)
+				{
+						bullet.updatePosition(stepTime);
+						if (bullet.reachedTarget())
+						{
+								bulletsToRemove.add(bullet);
+						}
+				}
+				Bullets.removeAll(bulletsToRemove);
+
+
+				combatSystem.update(stepTime, towers, enemies, Bullets);
 				economy.update(EnemiesToRemove, TowersToRemove);				
 		}
 
-		public void render()
+		public void render(double STEP)
 		{
 				renderSystems.renderBackground(gc, canvas);
 
-				renderSystems.uiRenderer(gc, economy);
+				renderSystems.renderUI(gc, economy);
 
 				if ( path != null)
 				{
 						renderSystems.renderPath(gc, path);
 				}
-				renderSystems.renderTower(gc, towers);	
+				renderSystems.renderTower(gc, towers, STEP);	
 
-				renderSystems.renderEnemies(gc, enemies);
+				renderSystems.renderEnemies(gc, enemies, STEP, path);
+
+				renderSystems.renderRemovedEnemies(gc, EnemiesToRemove);
+
+				renderSystems.renderBullets(gc, Bullets);
 
 		}
 

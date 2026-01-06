@@ -12,7 +12,7 @@ public class UIRenderer {
 				String Wealth = String.valueOf(economy.getCurr_Money()); 
 				gc.setFont(Font.font("Arial", 40));
 				gc.setFill(Color.DARKRED);
-				gc.fillText(Wealth, 110, 585);
+				gc.fillText(Wealth, 85, 585);
 		}
 
 
