@@ -11,7 +11,7 @@ public class Tower {
 		private int currShootAnimation = 0;
 		private double shootAnimationInterval = 5d;
 		private double Timer = 0d;
-				
+	    private double currentAngle = -90d;			
 		public Tower(TowerType type, Vector2 position) {
 				this.type = type;
 				this.position = position;
@@ -98,4 +98,20 @@ public class Tower {
 						return false;
 						}
 		}
+
+		public void calculateAngle(Vector2 enemy)
+		{
+				Vector2 Direction = position.direction_to(enemy);
+
+				this.currentAngle = Math.toDegrees(Math.atan2(Direction.getY(), Direction.getX()));
+		}
+
+		public double getAngle()
+		{
+				return this.currentAngle + 90d;
+		}
+
+
+
+
 }

@@ -15,7 +15,7 @@ public enum TowerType {
 						SLVL1.loadImage("/images/static-images/lvl2-turret"),
 						SLVL1.loadWalking("/images/lvl2-turret-fight/lvl2-turret-fight", 8)
 						),
-		EXPERT(40.0d, 30, 75, 650,
+		EXPERT(40.0d, 80, 75, 650,
 						SLVL1.loadImage("/images/static-images/lvl3-turret"),
 						SLVL1.loadWalking("/images/lvl3-turret-fight/lvl3-turret-fight", 8)	
 						);

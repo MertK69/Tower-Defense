@@ -19,9 +19,9 @@ public class BulletRenderer{
                     gc.setFill(Color.RED);
                     gc.drawImage(
 						    currBullet,
-                            ep.getX() - 12,
-                            ep.getY() - 12,
-                            24, 24
+                            ep.getX() - 9,
+                            ep.getY() - 9,
+                            18, 18
                     );
 				}
 		}

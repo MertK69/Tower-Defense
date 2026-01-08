@@ -36,7 +36,7 @@ public class GameEngine {
 		private WaveFactory waveFactory = new WaveFactory();
 		private PathFabric pathFabric = new PathFabric();
 		private ActiveWave activeWave = null;
-		private int waveNumber = 1;
+		private int waveNumber = 5;
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -59,7 +59,7 @@ public class GameEngine {
 				if ( path == null ) 
 				{
 						Tower tower1 = new Tower(TowerType.BASIC,    new Vector2(500, 270));
-						Tower tower2 = new Tower(TowerType.EXPERT, new Vector2(350, 270));
+						Tower tower2 = new Tower(TowerType.EXPERT, new Vector2(185, 470));
 						Tower tower3 = new Tower(TowerType.BASIC,    new Vector2(100, 270));
 						Tower tower4 = new Tower(TowerType.ADVANCED, new Vector2(170, 270));
 						towers.add(tower1);	towers.add(tower2); towers.add(tower3); towers.add(tower4);

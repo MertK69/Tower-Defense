@@ -17,6 +17,7 @@ public class Hilfsfunktionen {
 				throw new IllegalStateException("Asset nicht gefunden: " + path);
 			}
 			return new Image(url.toExternalForm());
+
 		}
 
 

@@ -13,13 +13,16 @@ public class TowerRenderer {
 				{
 					Vector2 tp = tower.getPosition();
 				    Image towerPic = image(tower, dt);
+					gc.save();
+					gc.translate(tp.getX(), tp.getY());
+					gc.rotate(tower.getAngle());
 					gc.drawImage(
 						    towerPic,
-							tp.getX() - 12,
-							tp.getY() - 12,
-							24, 24
+							- 18,
+							- 18,
+							36, 36
 					);
-
+					gc.restore();
 					gc.setStroke(Color.color(0, 0, 1, 0.25));
 					gc.strokeOval(
 							tp.getX() - tower.getReichweite(),

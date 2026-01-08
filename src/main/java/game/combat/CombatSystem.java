@@ -26,6 +26,7 @@ public class CombatSystem {
 								Bullets.add(new Fire(tower.getPosition(), enemyToShoot.getPosition()));
 								tower.reset_cooldown();
 								tower.lockAnimationLock();
+								tower.calculateAngle(enemyToShoot.getPosition());
 								}
 						}		
 				}

@@ -10,14 +10,10 @@ public class Fire{
 		private Vector2 position;
 		private double speed = 400d;
 		private boolean reachedTarget = false;
+
 		public Fire(Vector2 position, Vector2 endpoint) 
 		{
 				this.position = position; this.endpoint = endpoint;
-		}
-
-		public Image getFirePic()
-		{
-				return this.firePic;
 		}
 
 		public void updatePosition(double dt)
@@ -45,5 +41,9 @@ public class Fire{
 				return position;
 		}
 
+		public Image getFirePic()
+		{
+				return this.firePic;
+		}
 
 }
