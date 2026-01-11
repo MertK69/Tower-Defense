@@ -7,7 +7,7 @@ import game.enemy.*;
 import game.tower.*;
 
 public class Economy {
-		private EconomySystems economySystems;
+		public EconomySystems economySystems;
 		private int curr_money;
 		
 
@@ -31,4 +31,8 @@ public class Economy {
 				return curr_money;
 		}
 
+		public void towersBought(TowerType type)
+		{
+				curr_money -= economySystems.withdrawMoneyFromBoughtTowers(type);
+		}
 }

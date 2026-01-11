@@ -9,20 +9,14 @@ import game.path.*;
 import java.util.List;
 
 public class RenderSystems {
-		private TowerRenderer towerRenderer;
-		private EnemyRenderer enemyRenderer;
-		private PathRenderer pathRenderer;
-		private BackgroundRenderer backgroundRenderer;
-		private UIRenderer uiRenderer;
-		private BulletRenderer bulletRenderer;
-		public RenderSystems (TowerRenderer towerRenderer, EnemyRenderer enemyRenderer, PathRenderer pathRenderer, BackgroundRenderer backgroundRenderer, UIRenderer uiRenderer, BulletRenderer bulletRenderer)
+		private TowerRenderer towerRenderer = new TowerRenderer();
+		private EnemyRenderer enemyRenderer = new EnemyRenderer();
+		private PathRenderer pathRenderer = new PathRenderer();
+		private BackgroundRenderer backgroundRenderer = new BackgroundRenderer();
+		private UIRenderer uiRenderer = new UIRenderer();
+		private BulletRenderer bulletRenderer = new BulletRenderer();
+		public RenderSystems ()
 		{
-				this.towerRenderer = towerRenderer;
-				this.enemyRenderer = enemyRenderer;
-				this.pathRenderer = pathRenderer;
-				this.backgroundRenderer = backgroundRenderer;
-				this.uiRenderer = uiRenderer;
-				this.bulletRenderer = bulletRenderer;
 		}
 
 		public void renderTower(GraphicsContext gc, List<Tower>towers, double dt)

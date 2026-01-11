@@ -6,13 +6,12 @@ import game.enemy.*;
 import java.util.List;
 
 public class CombatSystem {
-		TargetingSystem targetingsystem;
-		DamageSystem damagesystem;
+		TargetingSystem targetingsystem = new TargetingSystem();
+		DamageSystem damagesystem = new DamageSystem();
 
 
-		public CombatSystem(TargetingSystem targetingsystem, DamageSystem damagesystem){
-				this.targetingsystem = targetingsystem;
-				this.damagesystem = damagesystem;
+		public CombatSystem()
+		{
 		}
 
 		public void update(double dt,List<Tower> towerList, List<Enemy>targetList, List<Fire>Bullets) {

@@ -3,7 +3,7 @@ package game.wave;
 import game.enemy.Enemy;
 import game.enemy.EnemySpawner;
 
-
+/*
 public class WaveSpawner {
 		private final Wave wave;
 		private int spawned;
@@ -32,3 +32,4 @@ public class WaveSpawner {
 		}
 		
 }
+*/

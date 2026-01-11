@@ -22,37 +22,37 @@ public enum EnemyType {
 						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-oben", 6), 0.2d),	
+						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),	
 
 		Kapitan(120.0d, 30.0d, true, false, 
 						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-oben", 6), 0.2d),
+						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
 
 		Kommodore(220.0d, 35.0d, true, false, 
 						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-oben", 6), 0.2d),
+						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
 
 		Vizeadmiral(300.0d, 30.0d, false, true, 
 						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-oben", 6), 0.2d),
+						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
 
 		Admiral(450.0d, 50.0d, false, true, 
 						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-oben", 6), 0.2d),
+						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
 
 		Großadmiral(1000.0d, 60.0d, false, true,
 						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
 						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-oben", 6), 0.2d);	
+						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d);	
 
 		private double hp;
 		private double speed;

@@ -4,27 +4,14 @@ import game.enemy.*;
 import game.wave.*;
 import game.path.*;
 import game.render.RenderSystems;
-import game.render.*;
-import game.tower.Tower;
-import game.tower.TowerFactory;
-import game.tower.TowerType;
+import game.tower.*;
 import game.animation.towerAnimationen.Fire;
 import game.combat.*;
-import game.economy.EarningsSystems;
-import game.economy.Economy;
-import game.economy.EconomySystems;
-import game.economy.SpendingsSystems;
+import game.economy.*;
 import util.Vector2;
-import java.util.ArrayList;
-import java.util.List;
-import javafx.scene.Scene;
+import java.util.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
-
-
 
 public class GameEngine {
 		private final List<Enemy>enemies = new ArrayList<>();
@@ -40,25 +27,16 @@ public class GameEngine {
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
-		private TargetingSystem targetingSystem = new TargetingSystem();
-        private DamageSystem damageSystem = new DamageSystem();
-        private CombatSystem combatSystem = new CombatSystem(targetingSystem, damageSystem);
-		private TowerRenderer towerRenderer = new TowerRenderer();
-		private EnemyRenderer enemyRenderer = new EnemyRenderer();
-		private PathRenderer pathRenderer = new PathRenderer();
-		private BackgroundRenderer backgroundRenderer = new BackgroundRenderer();
-		private UIRenderer uiRenderer = new UIRenderer();
-		private BulletRenderer bulletRenderer = new BulletRenderer();
-		private RenderSystems renderSystems = new RenderSystems(towerRenderer, enemyRenderer, pathRenderer, backgroundRenderer, uiRenderer, bulletRenderer);
-		private EarningsSystems earningsSystems = new EarningsSystems();
-		private SpendingsSystems spendingsSystems = new SpendingsSystems();
-		private EconomySystems economySystems = new EconomySystems(earningsSystems, spendingsSystems);
+		private TowerSystems towerSystems = new TowerSystems();
+        private CombatSystem combatSystem = new CombatSystem();
+		private RenderSystems renderSystems = new RenderSystems();
+		private EconomySystems economySystems = new EconomySystems();
 		private Economy economy = new Economy(economySystems, Pathtype.EASY);
 		public void update(double stepTime) 
 		{
 				if ( path == null ) 
 				{
-						Tower tower1 = new Tower(TowerType.BASIC,    new Vector2(500, 270));
+						Tower tower1 = new Tower(TowerType.BASIC,    new Vector2(165, 395));
 						Tower tower2 = new Tower(TowerType.EXPERT, new Vector2(185, 470));
 						Tower tower3 = new Tower(TowerType.BASIC,    new Vector2(100, 270));
 						Tower tower4 = new Tower(TowerType.ADVANCED, new Vector2(170, 270));
@@ -69,7 +47,8 @@ public class GameEngine {
 				if ( activeWave == null ) activeWave = new ActiveWave(createWave());
 		
 				EnemyType spawnType = activeWave.update(stepTime);
-				
+			
+
 				if (spawnType != null)
 				{
 						createEnemy(spawnType, path);
@@ -113,7 +92,7 @@ public class GameEngine {
 
 
 				combatSystem.update(stepTime, towers, enemies, Bullets);
-				economy.update(EnemiesToRemove, TowersToRemove);				
+				economy.update(EnemiesToRemove, TowersToRemove);
 		}
 
 		public void render(double STEP)
@@ -153,6 +132,11 @@ public class GameEngine {
 		public Canvas getCanvas()
 		{
 				return canvas;
+		}
+
+		public void handleBuyRequest(TowerType type)
+		{
+				towerSystems.handleBuyRequest(economy, towers, type);	
 		}
 
 }

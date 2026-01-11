@@ -4,13 +4,11 @@ import java.util.List;
 import game.enemy.*;
 import game.tower.*;
 public class EconomySystems {
-		private EarningsSystems earningsSystems;
-		private SpendingsSystems spendingsSystems;
+		private EarningsSystems earningsSystems = new EarningsSystems();
+		private SpendingsSystems spendingsSystems = new SpendingsSystems();
 
-		public EconomySystems(EarningsSystems earningsSystems, SpendingsSystems spendingsSystems)
+		public EconomySystems()
 		{
-				this.earningsSystems = earningsSystems;
-				this.spendingsSystems = spendingsSystems;
 		}
 
 		public int addMoneyFromDefeatedEnemy(List<Enemy>removedEnemies)
@@ -23,6 +21,8 @@ public class EconomySystems {
 				return earningsSystems.addMoneyFromSoldTowers(soldTowers);
 		}
 
-
-
+		public int withdrawMoneyFromBoughtTowers(TowerType type)
+		{
+				return spendingsSystems.buyTower(type);
+		}
 }
