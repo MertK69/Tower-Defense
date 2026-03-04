@@ -50,6 +50,11 @@ public class Enemy {
 				return this.position;
 		}
 
+        public void __set_Position__(double X, double Y)
+        {
+                this.position.set_Position(X, Y);
+        }
+
 		public double getCurrent_hp() {
 				return this.current_hp;
 		}

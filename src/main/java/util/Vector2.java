@@ -53,5 +53,20 @@ public class Vector2 {
 		public double getY(){
 				return this.Ko_Y;
 		}
+
+        public void set_X(double X)
+        {
+            this.Ko_X = X;
+        }
+
+        public void set_Y(double Y)
+        {
+            this.Ko_Y = Y;
+        }
+
+        public void set_Position(double X, double Y)
+        {
+            this.Ko_X = X; this.Ko_Y = Y;
+        }
 		
 }
