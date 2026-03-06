@@ -5,7 +5,8 @@ import util.Vector2;
 import game.animation.enemyAnimationen.SLVL1;
 
 public class Fire{
-		private Image firePic = SLVL1.loadImage("/images/static-images/bullet");
+		private String firePic = "/images/static-images/bullet";
+        private Image loadedFirePic = null;
 		private Vector2 endpoint;
 		private Vector2 position;
 		private double speed = 400d;
@@ -43,7 +44,11 @@ public class Fire{
 
 		public Image getFirePic()
 		{
-				return this.firePic;
+            if (this.loadedFirePic == null)
+            {
+                this.loadedFirePic = SLVL1.loadImage(this.firePic);
+            }
+			return this.loadedFirePic;
 		}
 
 }

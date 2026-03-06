@@ -8,31 +8,33 @@ import javafx.scene.image.Image;
 public enum TowerType {
 
 		BASIC(80.0d, 40, 40, 150, 
-						SLVL1.loadImage("/images/static-images/lvl1-turret"),
-						SLVL1.loadWalking("/images/lvl1-turret-fight/lvl1-turret-fight", 8)
+						"/images/static-images/lvl1-turret",
+						"/images/lvl1-turret-fight/lvl1-turret-fight", 8
 						),
 		ADVANCED(60.0d, 50, 60, 300,
-						SLVL1.loadImage("/images/static-images/lvl2-turret"),
-						SLVL1.loadWalking("/images/lvl2-turret-fight/lvl2-turret-fight", 8)
+						"/images/static-images/lvl2-turret",
+						"/images/lvl2-turret-fight/lvl2-turret-fight", 8
 						),
 		EXPERT(40.0d, 80, 75, 650,
-						SLVL1.loadImage("/images/static-images/lvl3-turret"),
-						SLVL1.loadWalking("/images/lvl3-turret-fight/lvl3-turret-fight", 8)	
+						"/images/static-images/lvl3-turret",
+						"/images/lvl3-turret-fight/lvl3-turret-fight", 8	
 						);
 		private final double firerate;
 		private final int reichweite;
 		private final int damage;
 		private final int price;
-		private final Image image;
-		private final List<Image>shootingAnimation;
+		private final String imagePath;
+        private final String framePath;
+        private final int frameCount;
 
-		TowerType(double firerate, int reichweite, int damage, int price,Image image, List<Image>shootingAnimation) {
+		TowerType(double firerate, int reichweite, int damage, int price,String imagePath, String framePath, int frameCount) {
 				this.firerate = firerate;
 				this.reichweite = reichweite;
 				this.damage = damage;
 				this.price = price;
-				this.image = image;
-				this.shootingAnimation = shootingAnimation;
+				this.imagePath = imagePath;
+                this.framePath = framePath;
+                this.frameCount = frameCount;
 		}
 
 		public double firerate() {
@@ -54,12 +56,12 @@ public enum TowerType {
 
 		public Image image()
 		{
-				return this.image;
+				return SLVL1.loadImage(imagePath);
 		}
 
 		public List<Image>shootingAnimation()
 		{
-				return this.shootingAnimation;
+				return SLVL1.loadWalking(this.framePath, this.frameCount);
 		}
 
 

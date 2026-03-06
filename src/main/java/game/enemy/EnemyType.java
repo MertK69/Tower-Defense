@@ -7,70 +7,73 @@ public enum EnemyType {
 		// Enum Const
 		
 		Matrose(10.0d, 20.0d, false, false, 
-						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
+						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
+						"/images/s-lvl1-walk-left/s-lvl1-walk-left", 
+						"/images/s-lvl1-walk-down/s-lvl1-walk-down",
+						"/images/s-lvl1-walk-up/s-lvl1-walk-up", 6, 0.2d),
 
 		Gefreiter(70.0d, 20.0d, false, false, 
-						SLVL1.loadWalking("/images/s-lvl2-walk-right/s-lvl2-walk-right", 6),
-						SLVL1.loadWalking("/images/s-lvl2-walk-left/s-lvl2-walk-left", 6),
-						SLVL1.loadWalking("/images/s-lvl2-walk-down/s-lvl2-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl2-walk-up/s-lvl2-walk-up", 6), 0.2d),
+						"/images/s-lvl2-walk-right/s-lvl2-walk-right",
+						"/images/s-lvl2-walk-left/s-lvl2-walk-left",
+						"/images/s-lvl2-walk-down/s-lvl2-walk-down",
+						"/images/s-lvl2-walk-up/s-lvl2-walk-up", 6, 0.2d),
 
 		Leutnant(105.0d, 25.0d, false, false,
-						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),	
+						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
+						"/images/s-lvl1-walk-left/s-lvl1-walk-left",
+						"/images/s-lvl1-walk-down/s-lvl1-walk-down",
+						"/images/s-lvl1-walk-up/s-lvl1-walk-up", 6, 0.2d),	
 
 		Kapitan(120.0d, 30.0d, true, false, 
-						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
+						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
+						"/images/s-lvl1-walk-left/s-lvl1-walk-left",
+						"/images/s-lvl1-walk-down/s-lvl1-walk-down",
+						"/images/s-lvl1-walk-up/s-lvl1-walk-up", 6, 0.2d),
 
 		Kommodore(220.0d, 35.0d, true, false, 
-						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
+						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
+						"/images/s-lvl1-walk-left/s-lvl1-walk-left",
+						"/images/s-lvl1-walk-down/s-lvl1-walk-down",
+						"/images/s-lvl1-walk-up/s-lvl1-walk-up", 6, 0.2d),
 
 		Vizeadmiral(300.0d, 30.0d, false, true, 
-						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
+						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
+						"/images/s-lvl1-walk-left/s-lvl1-walk-left",
+						"/images/s-lvl1-walk-down/s-lvl1-walk-down",
+						"/images/s-lvl1-walk-up/s-lvl1-walk-up", 6, 0.2d),
 
 		Admiral(450.0d, 50.0d, false, true, 
-						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d),
+						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
+						"/images/s-lvl1-walk-left/s-lvl1-walk-left",
+						"/images/s-lvl1-walk-down/s-lvl1-walk-down",
+						"/images/s-lvl1-walk-up/s-lvl1-walk-up", 6, 0.2d),
 
 		Großadmiral(1000.0d, 60.0d, false, true,
-						SLVL1.loadWalking("/images/s-lvl1-walk-right/s-lvl1-walk-right", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-left/s-lvl1-walk-left", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-down/s-lvl1-walk-down", 6),
-						SLVL1.loadWalking("/images/s-lvl1-walk-up/s-lvl1-walk-up", 6), 0.2d);	
+						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
+						"/images/s-lvl1-walk-left/s-lvl1-walk-left",
+						"/images/s-lvl1-walk-down/s-lvl1-walk-down",
+						"/images/s-lvl1-walk-up/s-lvl1-walk-up", 6, 0.2d);	
 
 		private double hp;
 		private double speed;
 		private boolean can_explode;
 		private boolean can_summon;
-		private List<Image>movementRight;
-		private List<Image>movementLeft;
-		private List<Image>movementUpwards;
-		private List<Image>movementDownwards;
-		private double movementInterval;EnemyType(double hp, double speed, boolean can_explode, boolean can_summon, List<Image>movementRight,List<Image>movementLeft, 								  List<Image>movementUpwards, List<Image>movementDownwards, double movementInterval) {
+        private final String movementRightPath;
+		private final String movementLeftPath;
+        private final String movementUpwardsPath;
+        private final String movementDownwardsPath;
+        private final int movementFrameCount;
+		private double movementInterval;
+        EnemyType(double hp, double speed, boolean can_explode, boolean can_summon, String movementRightPath, String movementLeftPath, String movementUpwardsPath, String movementDownwardsPath, int movementFrameCount, double movementInterval) {
 				this.hp = hp; 
 				this.speed = speed; 
 				this.can_explode = can_explode; 
 				this.can_summon = can_summon;
-				this.movementRight = movementRight;
-				this.movementLeft = movementLeft;
-				this.movementUpwards = movementUpwards;
-				this.movementDownwards = movementDownwards;
+				this.movementRightPath = movementRightPath;
+				this.movementLeftPath = movementLeftPath;
+				this.movementUpwardsPath = movementUpwardsPath;
+				this.movementDownwardsPath = movementDownwardsPath;
+                this.movementFrameCount = movementFrameCount;
 				this.movementInterval = movementInterval;
 
 		}
@@ -93,22 +96,22 @@ public enum EnemyType {
 
 		public List<Image>movementRight() 
 		{
-				return this.movementRight;
+				return SLVL1.loadWalking(movementRightPath, movementFrameCount);
 		}
 
 		public List<Image>movementLeft() 
 		{
-				return this.movementLeft;
+				return SLVL1.loadWalking(movementLeftPath, movementFrameCount);
 		}
 
 		public List<Image>movementUpwards() 
 		{
-				return this.movementUpwards;
+				return SLVL1.loadWalking(movementUpwardsPath, movementFrameCount);
 		}
 
 		public List<Image>movementDownwards() 
 		{
-				return this.movementDownwards;
+				return SLVL1.loadWalking(movementDownwardsPath, movementFrameCount);
 		}
 
 		public double movementInterval()
