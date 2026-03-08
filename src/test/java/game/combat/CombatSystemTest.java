@@ -23,7 +23,7 @@ class CombatSystemTest {
     public void update_CombatSystem_Test()
     {
         // arrange
-        PathFabric pathFabric = new PathFabric();
+        PathFactory pathFabric = new PathFactory();
         CombatSystem combatSystem = new CombatSystem();
         Tower tower = new Tower(TowerType.BASIC, new Vector2(165,395));
         List<Tower>towerlist = new ArrayList<>(List.of(tower));

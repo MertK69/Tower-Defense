@@ -1,25 +1,40 @@
 package app;
 
+
 import game.engine.GameEngine;
 import game.engine.GameLoop;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ui.*;
 public class Main extends Application {
     private GameLoop GL;
+    private UIBuilder uiB;
 
     @Override
-    public void start(Stage stage) {
+    public void init() // init, start, stop, werden in dieser Reihenfolge durch launch() aufgerufen!
+    {
 
+    }
+
+    @Override
+    public void start(Stage stage) 
+    {
         GameEngine engine = new GameEngine();
         this.GL = new GameLoop(engine);
         GL.start();
-		StackPane root = new StackPane();
-			
-		root.getChildren().add(engine.getCanvas());
-		root.getChildren().add(UIFXSettings.createBuyMenu(engine));			
+		StackPane root = new StackPane(); // root = Grundgerüst, immer nur 1 root
+        BorderPane Layout = new BorderPane();
+        this.uiB = new UIBuilder(Layout);
+        this.uiB.initializeMainPane(engine);
+        root.getChildren().add(Layout);
 
 		Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/css/UI.css").toExternalForm());
@@ -27,7 +42,14 @@ public class Main extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+    @Override
+    public void stop()
+    {
+
+    }
+
+    public static void main(String[] args) 
+    {
         launch();
     }
     

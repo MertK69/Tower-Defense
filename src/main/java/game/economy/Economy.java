@@ -9,7 +9,6 @@ import game.tower.*;
 public class Economy {
 		public EconomySystems economySystems;
 		private int curr_money;
-		
 
 		public Economy(EconomySystems economySystems, Pathtype difficulty)
 		{

@@ -70,9 +70,8 @@ public class Tower {
 				shootAnimationLock = false;
 		}
 
-		public Image currShootAnimation(double dt)
+		public int currShootAnimation(double dt)
 		{
-				Image image = this.type.shootingAnimation().get(currShootAnimation);
 				if (nextFrame(dt) == true){
 						if (currShootAnimation ==6)
 						{
@@ -81,9 +80,9 @@ public class Tower {
 						} else{
 						currShootAnimation++;
 						}
-						return image;
+						return currShootAnimation;
 				} else {
-						return image;
+						return currShootAnimation;
 				}
 		}
 

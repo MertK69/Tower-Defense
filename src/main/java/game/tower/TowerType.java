@@ -2,7 +2,7 @@ package game.tower;
 
 import java.util.List;
 
-import game.animation.enemyAnimationen.SLVL1;
+import game.animation.enemyAnimationen.LoadSystems;
 import javafx.scene.image.Image;
 
 public enum TowerType {
@@ -54,15 +54,20 @@ public enum TowerType {
 				return this.price;
 		}
 
-		public Image image()
+		public String get_imagePath()
 		{
-				return SLVL1.loadImage(imagePath);
+				return this.imagePath; 
 		}
 
-		public List<Image>shootingAnimation()
+		public String get_shootingAnimationPath()
 		{
-				return SLVL1.loadWalking(this.framePath, this.frameCount);
+				return this.framePath; 
 		}
+
+        public int get_frameCount()
+        {
+                return this.frameCount;
+        }
 
 
 }

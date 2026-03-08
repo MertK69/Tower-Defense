@@ -18,12 +18,12 @@ public class GameEngine {
 		private final List<Tower>towers = new ArrayList<>();
 		private final List<Enemy>EnemiesToRemove = new ArrayList<>();
 		private final List<Fire>Bullets = new ArrayList<>();
-		private TowerFactory towerfactory = new TowerFactory();
-		private EnemySpawner enemyspawner = new EnemySpawner();
+		private TowerFactory towerFactory = new TowerFactory();
+		private EnemyFactory enemyFactory = new EnemyFactory();
 		private WaveFactory waveFactory = new WaveFactory();
-		private PathFabric pathFabric = new PathFabric();
+		private PathFactory pathFactory = new PathFactory();
 		private ActiveWave activeWave = null;
-		private int waveNumber = 5;
+		private int waveNumber = 1;
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -34,20 +34,11 @@ public class GameEngine {
 		private Economy economy = new Economy(economySystems, Pathtype.EASY);
 		public void update(double stepTime) 
 		{
-				if ( path == null ) 
-				{
-						Tower tower1 = new Tower(TowerType.BASIC,    new Vector2(165, 395));
-						Tower tower2 = new Tower(TowerType.EXPERT, new Vector2(185, 470));
-						Tower tower3 = new Tower(TowerType.BASIC,    new Vector2(100, 270));
-						Tower tower4 = new Tower(TowerType.ADVANCED, new Vector2(170, 270));
-						towers.add(tower1);	towers.add(tower2); towers.add(tower3); towers.add(tower4);
-				}
 
-				if ( path == null) path = pathFabric.createPath(Pathtype.EASY);
+				if ( path == null) path = pathFactory.createPath(Pathtype.EASY);
 				if ( activeWave == null ) activeWave = new ActiveWave(createWave());
 		
 				EnemyType spawnType = activeWave.update(stepTime);
-			
 
 				if (spawnType != null)
 				{
@@ -63,14 +54,12 @@ public class GameEngine {
 				EnemiesToRemove.clear();
 				for (Enemy enemy : enemies)
 				{
-						
 						enemy.update(stepTime);
 						if (!enemy.isAlive() || enemy.isFinished())
 						{
 								EnemiesToRemove.add(enemy);
 								continue;
 						}
-
 				}
 				enemies.removeAll(EnemiesToRemove);
 
@@ -89,7 +78,6 @@ public class GameEngine {
 						}
 				}
 				Bullets.removeAll(bulletsToRemove);
-
 
 				combatSystem.update(stepTime, towers, enemies, Bullets);
 				economy.update(EnemiesToRemove, TowersToRemove);
@@ -117,12 +105,12 @@ public class GameEngine {
 
 		public void buyTower(TowerType type, Vector2 position)
 		{
-				towers.add(towerfactory.create_tower(type, position));	
+				towers.add(towerFactory.create_tower(type, position));	
 		}
 
 		public void createEnemy(EnemyType type, Path path)
 		{
-				enemies.add(enemyspawner.create_enemy(type, path));
+				enemies.add(enemyFactory.create_enemy(type, path));
 		}
 		public Wave createWave()
 		{
@@ -134,9 +122,8 @@ public class GameEngine {
 				return canvas;
 		}
 
-		public void handleBuyRequest(TowerType type)
+		public void handleBuyRequest(TowerType type, Vector2 position)
 		{
-				towerSystems.handleBuyRequest(economy, towers, type);	
+				towerSystems.handleBuyRequest(economy, towers, type, position);	
 		}
-
 }

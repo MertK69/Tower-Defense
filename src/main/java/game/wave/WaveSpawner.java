@@ -1,7 +1,7 @@
 package game.wave;
 
 import game.enemy.Enemy;
-import game.enemy.EnemySpawner;
+import game.enemy.EnemyFactory;
 
 /*
 public class WaveSpawner {

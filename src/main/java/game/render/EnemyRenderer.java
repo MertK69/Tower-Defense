@@ -2,22 +2,39 @@ package game.render;
 import game.enemy.*;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritableImage;
 import java.util.*;
 import util.Vector2;
 import javafx.scene.paint.Color;
 import game.path.*;
-
-
+import game.animation.enemyAnimationen.*;
+import game.render.animationStorage.*;
 public class EnemyRenderer {
+    public EnemyAnimation Matrose;
+    public EnemyAnimation Gefreiter;
+    public EnemyAnimation Leutnant;
+    public EnemyAnimation Kapitan;
+    public EnemyAnimation Kommodore;
+    public EnemyAnimation Vizeadmiral;
+    public EnemyAnimation Admiral;
+    public EnemyAnimation Großadmiral;
+
+    public EnemyRenderer()
+    {
+        this.Matrose = new EnemyAnimation(EnemyType.Matrose);
+        this.Gefreiter = new EnemyAnimation(EnemyType.Gefreiter);
+        this.Leutnant = new EnemyAnimation(EnemyType.Leutnant);
+        this.Kapitan = new EnemyAnimation(EnemyType.Kapitan);
+        this.Kommodore = new EnemyAnimation(EnemyType.Kommodore);
+        this.Vizeadmiral = new EnemyAnimation(EnemyType.Vizeadmiral);
+        this.Admiral = new EnemyAnimation(EnemyType.Admiral);
+        this.Großadmiral = new EnemyAnimation(EnemyType.Großadmiral);
+    }
 
 		public void renderEnemies(GraphicsContext gc, List<Enemy>enemies, double dt, Path path)
 		{
 				for (Enemy enemy : enemies) {
                     if (!enemy.isAlive()) continue;
-				    Image currEnemyMovement = enemy.getCurrMovement(dt, getDirection(enemy, path));
+				    Image currEnemyMovement = getNextImage(enemy, getDirection(enemy, path),enemy.getCurrMovement(dt));
                     Vector2 ep = enemy.getPosition();
                     gc.setFill(Color.RED);
                     gc.drawImage(
@@ -57,5 +74,42 @@ public class EnemyRenderer {
 						}
 				}
 		}
+
+        public Image getNextImage(Enemy enemy, int direction, int currMovement)
+        {
+            if (enemy.getType() == EnemyType.Matrose)
+            {
+                    return Matrose.getNextMovement(direction, currMovement);
+            }
+            if (enemy.getType() == EnemyType.Gefreiter)
+            {
+                    return Gefreiter.getNextMovement(direction, currMovement);
+            }
+            if (enemy.getType() == EnemyType.Leutnant)
+            {
+                    return Leutnant.getNextMovement(direction, currMovement);
+            }
+            if (enemy.getType() == EnemyType.Kapitan)
+            {
+                    return Kapitan.getNextMovement(direction, currMovement);
+            }
+            if (enemy.getType() == EnemyType.Kommodore)
+            {
+                    return Kommodore.getNextMovement(direction, currMovement);
+            }
+            if (enemy.getType() == EnemyType.Vizeadmiral)
+            {
+                    return Vizeadmiral.getNextMovement(direction, currMovement);
+            }
+            if (enemy.getType() == EnemyType.Admiral)
+            {
+                    return Admiral.getNextMovement(direction, currMovement);
+            }
+            if (enemy.getType() == EnemyType.Großadmiral)
+            {
+                    return Großadmiral.getNextMovement(direction, currMovement);
+            }
+            return null;
+        }
 
 }

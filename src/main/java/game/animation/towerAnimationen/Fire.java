@@ -2,7 +2,7 @@ package game.animation.towerAnimationen;
 
 import javafx.scene.image.Image;
 import util.Vector2;
-import game.animation.enemyAnimationen.SLVL1;
+import game.animation.enemyAnimationen.LoadSystems;
 
 public class Fire{
 		private String firePic = "/images/static-images/bullet";
@@ -46,7 +46,7 @@ public class Fire{
 		{
             if (this.loadedFirePic == null)
             {
-                this.loadedFirePic = SLVL1.loadImage(this.firePic);
+                this.loadedFirePic = LoadSystems.loadImage(this.firePic);
             }
 			return this.loadedFirePic;
 		}

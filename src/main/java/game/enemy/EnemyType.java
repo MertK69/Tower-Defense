@@ -1,10 +1,6 @@
 package game.enemy;
 
-import java.util.*;
-import javafx.scene.image.Image;
-import game.animation.enemyAnimationen.*;
 public enum EnemyType {
-		// Enum Const
 		
 		Matrose(10.0d, 20.0d, false, false, 
 						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
@@ -75,7 +71,6 @@ public enum EnemyType {
 				this.movementDownwardsPath = movementDownwardsPath;
                 this.movementFrameCount = movementFrameCount;
 				this.movementInterval = movementInterval;
-
 		}
 
 		public double hp(){
@@ -94,30 +89,33 @@ public enum EnemyType {
 				return this.can_explode;
 		}
 
-		public List<Image>movementRight() 
-		{
-				return SLVL1.loadWalking(movementRightPath, movementFrameCount);
-		}
-
-		public List<Image>movementLeft() 
-		{
-				return SLVL1.loadWalking(movementLeftPath, movementFrameCount);
-		}
-
-		public List<Image>movementUpwards() 
-		{
-				return SLVL1.loadWalking(movementUpwardsPath, movementFrameCount);
-		}
-
-		public List<Image>movementDownwards() 
-		{
-				return SLVL1.loadWalking(movementDownwardsPath, movementFrameCount);
-		}
-
 		public double movementInterval()
 		{
 				return this.movementInterval;
 		}
 
+        public String get_leftPath()
+        {
+                return this.movementLeftPath;
+        }
 
+        public String get_rightPath()
+        {
+                return this.movementRightPath;
+        }
+
+        public String get_upwardsPath()
+        {
+                return this.movementUpwardsPath;
+        }
+
+        public String get_downwardsPath()
+        {
+                return this.movementDownwardsPath;
+        }
+
+        public int get_frameCount()
+        {
+                return this.movementFrameCount;
+        }
 }

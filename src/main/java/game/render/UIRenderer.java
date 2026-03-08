@@ -25,12 +25,13 @@ public class UIRenderer {
 		}
 
 		private void initializeTowerUI(GraphicsContext gc)
-		{		
+		{		/*
 				Images.put(new Image("/images/static-images/lvl1-turret.png"), new Vector2(120, 710));
 				Images.put(new Image("/images/static-images/lvl2-turret.png"), new Vector2(310, 715));
 				Images.put(new Image("/images/static-images/lvl3-turret.png"), new Vector2(500, 710));
 				Images.put(new Image("/images/static-images/lvl1-turret.png"), new Vector2(700, 710));
-		}
+		        */
+        }
 
 		private void drawTowerUI(GraphicsContext gc)
 		{
