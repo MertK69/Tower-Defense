@@ -12,24 +12,24 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import ui.towerExchange.TowerUIChanger;
+import ui.towerExchange.TowerStrategies.FirstStrategy;
+import ui.towerExchange.TowerStrategies.SecondStrategy;
 import util.Vector2;
 
 public class UIBuilder {
     private BorderPane MainPane;
+    private TowerUIChanger TowerChanger = new TowerUIChanger();
 
         public UIBuilder(BorderPane pane)
         {
             this.MainPane = pane;
+            this.TowerChanger.setStrategy(new FirstStrategy());
         }
 
 		public void initializeMainPane(GameEngine engine)
@@ -46,42 +46,55 @@ public class UIBuilder {
             canvas.widthProperty().bind(pane.widthProperty());
             canvas.heightProperty().bind(pane.heightProperty());
             pane.setPadding(new Insets(10));
-            pane.setStyle("-fx-background-color: Transparent; -fx-border-color: green; -fx-border-width: 3;");
             return pane;
         }
 
         public HBox TopLayer()
         {
             HBox TopLayer = new HBox();
-            TopLayer.setPadding(new Insets(1));
             TopLayer.setAlignment(Pos.CENTER_LEFT);
-            TopLayer.setStyle("-fx-background-color: grey; -fx-border-color: red; -fx-border-width: 1;");
-            Button GameButton = new Button();
-            GameButton.setPrefSize(120,0.5);
-            Button OptionsButton = new Button();
-            GameButton.setPrefSize(120,0.5);
-            Button ExitButton = new Button();
-            GameButton.setPrefSize(120,0.5);
+            TopLayer.setPadding(new Insets(1));
+            TopLayer.getStyleClass().add("top-bottom-border");
+            Button GameButton = new Button("GameSettings");
+            GameButton.setPrefSize(120,0.6);
+            Button OptionsButton = new Button("Options");
+            OptionsButton.setPrefSize(120,0.6);
+            Button ExitButton = new Button("Exit Game");
+            ExitButton.setPrefSize(120,0.6);
 
+            GameButton.setFocusTraversable(false);
+            OptionsButton.setFocusTraversable(false);
+            ExitButton.setFocusTraversable(false);
+        
             TopLayer.getChildren().addAll(GameButton, OptionsButton, ExitButton);
             return TopLayer;
         }
 
         public VBox DualBottomLayer(GameEngine engine)
         {
-            VBox DualBottomLayer = new VBox(TopDualLayer(engine), LowerDualLayer());
+            VBox DualBottomLayer = new VBox(TopDualLayer(engine), LowerDualLayer(engine));
             return DualBottomLayer;
         }
 
-        public HBox LowerDualLayer()
+        public HBox LowerDualLayer(GameEngine engine)
         {
-            HBox towerMenu = new HBox(1000);
+            HBox towerMenu = new HBox(10);
             towerMenu.setPadding(new Insets(10));
             towerMenu.setAlignment(Pos.CENTER_LEFT);
-            towerMenu.setStyle("-fx-background-color: #6B4E31; -fx-border-color: blue; -fx-border-width: 1;");
+            towerMenu.setStyle("-fx-background-color: #6B4E31;");
             Button button = new Button();
-            button.setPrefSize(120,80);
-            towerMenu.getChildren().add(button);
+            button.setPrefSize(120,65);
+            button.setOnAction(e -> {
+            TowerChanger.setStrategy(new FirstStrategy());
+            updateBottomUI(engine);
+            });
+            Button button2 = new Button();
+            button2.setPrefSize(120,65);
+            button2.setOnAction(e -> {
+            TowerChanger.setStrategy(new SecondStrategy());
+            updateBottomUI(engine);
+            });
+            towerMenu.getChildren().addAll(button, button2);
             return towerMenu;
         }
 
@@ -90,33 +103,17 @@ public class UIBuilder {
             HBox bottomMenu = new HBox(); 
             bottomMenu.setPadding(new Insets(10, 20, 10, 20)); // Abstand nach oben, rechts, unten, links
             bottomMenu.setAlignment(Pos.CENTER_LEFT);
-            bottomMenu.setStyle("-fx-background-color: #6B4E31;"); // Brauner Hintergrund
-
+            bottomMenu.getStyleClass().add("bottom-top-border");
+            HBox towerMenu = TowerChanger.createTowerUI(engine, MainPane);
+                
             Label coinText = new Label("500");
             coinText.setStyle("-fx-font-size: 36px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 30 10 30; -fx-background-radius: 5;");
             
-            // 3. Ein Container für die Turm-Buttons (rechts daneben)
-            HBox towerMenu = new HBox(15); // 15 Pixel Abstand zwischen den Buttons
-            towerMenu.setAlignment(Pos.CENTER_LEFT);
-            towerMenu.setPadding(new Insets(0, 0, 0, 50)); // Etwas Abstand nach links zu den Münzen
-            
-            Button turm1 = new Button("Turm 1");
-            turm1.setOnAction(e -> buyTower(e, TowerType.BASIC, engine));
-            turm1.setPrefSize(80, 50);
-            Button turm2 = new Button("Turm 2");
-            turm2.setOnAction(e -> buyTower(e, TowerType.ADVANCED, engine));
-            turm2.setPrefSize(80, 50);
-            Button turm3 = new Button("Turm 3");
-            turm3.setOnAction(e -> buyTower(e, TowerType.EXPERT, engine));
-            turm3.setPrefSize(80, 50);
-
-            towerMenu.getChildren().addAll(turm1, turm2, turm3);
-
-            // 4. Alles der Haupt-Leiste hinzufügen
             bottomMenu.getChildren().addAll(coinText, towerMenu);
 
             return bottomMenu;
         }
+
 
         public void buyTower(ActionEvent e, TowerType type, GameEngine engine ) {
             Button sourceButton = (Button) e.getSource();
@@ -138,6 +135,9 @@ public class UIBuilder {
                     }
                 });
             });
+        }
+        public void updateBottomUI(GameEngine engine) {
+            this.MainPane.setBottom(DualBottomLayer(engine));
         }
 
 }

@@ -1,3 +1,15 @@
 .tower-buy-button {
 		-fx-background-color: Transparent;
 }
+
+.tower-border {
+    -fx-background-color: Transparent; -fx-border-color: grey; -fx-border-radius: 8;
+}
+
+.bottom-top-border {
+    -fx-background-color: #6B4E31; -fx-border-color: black transparent transparent transparent; -fx-border-width: 2; 
+}
+
+.top-bottom-border {
+    -fx-background-color: grey; -fx-border-color:  transparent transparent black transparent; -fx-border-width: 2; 
+}

@@ -1,21 +1,16 @@
 package game.tower;
 
-import java.util.List;
-
-import game.animation.enemyAnimationen.LoadSystems;
-import javafx.scene.image.Image;
-
 public enum TowerType {
 
-		BASIC(80.0d, 40, 40, 150, 
+		BASIC(80.0d, 60, 40, 150, 
 						"/images/static-images/lvl1-turret",
 						"/images/lvl1-turret-fight/lvl1-turret-fight", 8
 						),
-		ADVANCED(60.0d, 50, 60, 300,
+		ADVANCED(60.0d, 70, 60, 300,
 						"/images/static-images/lvl2-turret",
 						"/images/lvl2-turret-fight/lvl2-turret-fight", 8
 						),
-		EXPERT(40.0d, 80, 75, 650,
+		EXPERT(40.0d, 90, 75, 650,
 						"/images/static-images/lvl3-turret",
 						"/images/lvl3-turret-fight/lvl3-turret-fight", 8	
 						);

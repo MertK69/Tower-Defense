@@ -8,7 +8,7 @@ import game.animation.hilfsfunktionen.*;
 
 
 public final class LoadSystems {
-		
+    private String css = this.getClass().getResource("/css/UI.css").toExternalForm();		
 		public LoadSystems() 
 		{
 		}
@@ -27,5 +27,10 @@ public final class LoadSystems {
 		{
 					return Loader.loadImage(pathToStaticAnimation + ".png");
 		}
+
+        public String get_css()
+        {
+            return this.css;
+        }
 
 }
