@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import ui.towerExchange.TowerStrategy;
 import util.Vector2;
 
@@ -26,13 +27,20 @@ public class FirstStrategy implements TowerStrategy{
         public HBox changeTower(GameEngine engine, BorderPane MainPane) {
                 HBox towerMenu = new HBox(15); // 15 Pixel Abstand zwischen den Buttons
                 towerMenu.setAlignment(Pos.CENTER_LEFT);
-                towerMenu.setPadding(new Insets(0, 0, 0, 50)); // Etwas Abstand nach links zu den Münzen
+                towerMenu.setPadding(new Insets(0, 0, 0, 25)); 
                 Image image = Loader.loadImage("/images/static-images/lvl1-turret");
                 ImageView iV = new ImageView(image);
                 Image image2 = Loader.loadImage("/images/static-images/lvl2-turret");
                 ImageView iV2 = new ImageView(image2);
                 Image image3 = Loader.loadImage("/images/static-images/lvl3-turret");
                 ImageView iV3 = new ImageView(image3);
+                Image image4 = Loader.loadImage("/images/static-images/lvl4-turret");
+                ImageView iV4 = new ImageView(image4);
+                Image image5 = Loader.loadImage("/images/static-images/lvl5-turret");
+                ImageView iV5 = new ImageView(image5);
+                Image image6 = Loader.loadImage("/images/static-images/lvl6-turret");
+                ImageView iV6 = new ImageView(image6);
+
                 Button tower1 = new Button("", iV);
                 tower1.setOnAction(e -> buyTower(e, TowerType.BASIC, engine, MainPane));
                 tower1.getStyleClass().add("tower-border");
@@ -45,8 +53,20 @@ public class FirstStrategy implements TowerStrategy{
                 tower3.setOnAction(e -> buyTower(e, TowerType.EXPERT, engine, MainPane));
                 tower3.getStyleClass().add("tower-border");
                 tower3.setPrefSize(80, 50);
+                Button tower4 = new Button("", iV4);
+                tower4.setOnAction(e -> buyTower(e, TowerType.EXPERT, engine, MainPane));
+                tower4.getStyleClass().add("tower-border");
+                tower4.setPrefSize(80, 50);
+                Button tower5 = new Button("", iV5);
+                tower5.setOnAction(e -> buyTower(e, TowerType.EXPERT, engine, MainPane));
+                tower5.getStyleClass().add("tower-border");
+                tower5.setPrefSize(80, 50);
+                Button tower6 = new Button("", iV6);
+                tower6.setOnAction(e -> buyTower(e, TowerType.EXPERT, engine, MainPane));
+                tower6.getStyleClass().add("tower-border");
+                tower6.setPrefSize(80, 50);
 
-                towerMenu.getChildren().addAll(tower1, tower2, tower3);
+                towerMenu.getChildren().addAll(tower1, tower2, tower3, tower4, tower5, tower6);
             
                 return towerMenu;
         }
@@ -56,15 +76,18 @@ public class FirstStrategy implements TowerStrategy{
             Scene scene = sourceButton.getScene();
 
             scene.setCursor(Cursor.CROSSHAIR);
-
+            
             javafx.application.Platform.runLater(() -> {
                 scene.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent mouseEvent) {
+                        Pane place = (Pane) MainPane.getCenter();
                         Point2D localPoint = MainPane.getCenter().sceneToLocal(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                        if ( place.getBoundsInLocal().contains(localPoint))
+                        {
                         Vector2 position = new Vector2(localPoint.getX(), localPoint.getY());
                         engine.handleBuyRequest(type, position);
-
+                        }
                         scene.setCursor(Cursor.DEFAULT);
                         scene.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
                         mouseEvent.consume();

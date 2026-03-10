@@ -25,19 +25,21 @@ public class LowerLayerCreator{
             towerMenu.setPadding(new Insets(10));
             towerMenu.setAlignment(Pos.CENTER_LEFT);
             towerMenu.setStyle("-fx-background-color: #6B4E31;");
-            Button button = new Button();
-            button.setPrefSize(120,65);
-            button.setOnAction(e -> {
+            Button DefaultTowerMenu= new Button("Default \n Tower Menu");
+            DefaultTowerMenu.getStyleClass().add("bottom-menu-buttons");
+            DefaultTowerMenu.setPrefSize(120,65);
+            DefaultTowerMenu.setOnAction(e -> {
             TowerChanger.setStrategy(new FirstStrategy());
             MenuChange.set(!MenuChange.get());
             });
-            Button button2 = new Button();
-            button2.setPrefSize(120,65);
-            button2.setOnAction(e -> {
+            Button AdvancedTowerMenu = new Button("Advanced \n Tower Menu");
+            AdvancedTowerMenu.getStyleClass().add("bottom-menu-buttons");
+            AdvancedTowerMenu.setPrefSize(120,65);
+            AdvancedTowerMenu.setOnAction(e -> {
             TowerChanger.setStrategy(new SecondStrategy());
             MenuChange.set(!MenuChange.get());
             });
-            towerMenu.getChildren().addAll(button, button2);
+            towerMenu.getChildren().addAll(DefaultTowerMenu, AdvancedTowerMenu);
             return towerMenu;
     }
 }

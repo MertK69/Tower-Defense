@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import ui.towerExchange.TowerStrategy;
 import util.Vector2;
 
@@ -61,9 +62,12 @@ public class SecondStrategy implements TowerStrategy{
                     @Override
                     public void handle(MouseEvent mouseEvent) {
                         Point2D localPoint = MainPane.getCenter().sceneToLocal(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+                        Pane place = (Pane) MainPane.getCenter();
+                        if (place.getBoundsInLocal().contains(localPoint))
+                        {
                         Vector2 position = new Vector2(localPoint.getX(), localPoint.getY());
                         engine.handleBuyRequest(type, position);
-
+                        }
                         scene.setCursor(Cursor.DEFAULT);
                         scene.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
                         mouseEvent.consume();

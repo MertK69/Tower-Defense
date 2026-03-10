@@ -15,9 +15,13 @@
 }
 
 .coin-field{
-  -fx-font-size: 40px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 30 10 30; -fx-background-radius: 5;
+  -fx-font-size: 40px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 30 10 30; -fx-background-radius: 5;-fx-pref-width: 200px; -fx-pref-height: 80px; 
 }
 
 .half-sized{
-  -fx-font-size: 12px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 40 10 40; -fx-background-radius: 5; -fx-alignment: center-left;
+  -fx-font-size: 12px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 6 30 6 30; -fx-background-radius: 5; -fx-alignment: center-left; -fx-pref-width: 120px; -fx-pref-height: 35px;
+}
+
+.bottom-menu-buttons{
+    -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: darkred; -fx-align: center; -fx-text-alignment: center; 
 }

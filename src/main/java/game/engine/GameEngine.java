@@ -26,7 +26,7 @@ public class GameEngine {
 		private WaveFactory waveFactory = new WaveFactory();
 		private PathFactory pathFactory = new PathFactory();
 		private ActiveWave activeWave = null;
-        private IntegerProperty waveProperty = new SimpleIntegerProperty();
+        private IntegerProperty waveProperty = new SimpleIntegerProperty(1);
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
 		private int waveNumber = 1;
 		private Path path = null;

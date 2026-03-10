@@ -11,6 +11,7 @@ import ui.*;
 public class Main extends Application {
     private GameLoop GL;
     private UIBuilder uiB;
+
     @Override
     public void init() // init, start, stop, werden in dieser Reihenfolge durch launch() aufgerufen!
     {
