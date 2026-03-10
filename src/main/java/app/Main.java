@@ -1,6 +1,5 @@
 package app;
 
-
 import game.engine.GameEngine;
 import game.engine.GameLoop;
 import javafx.application.Application;
@@ -26,7 +25,7 @@ public class Main extends Application {
         GL.start();
 		StackPane root = new StackPane(); // root = Grundgerüst, immer nur 1 root
         BorderPane Layout = new BorderPane();
-        this.uiB = new UIBuilder(Layout);
+        this.uiB = new UIBuilder(Layout, engine);
         this.uiB.initializeMainPane(engine);
         root.getChildren().add(Layout);
 
