@@ -10,6 +10,9 @@ import game.combat.*;
 import game.economy.*;
 import util.Vector2;
 import java.util.*;
+
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -23,6 +26,8 @@ public class GameEngine {
 		private WaveFactory waveFactory = new WaveFactory();
 		private PathFactory pathFactory = new PathFactory();
 		private ActiveWave activeWave = null;
+        private IntegerProperty waveProperty = new SimpleIntegerProperty();
+        private IntegerProperty enemyProperty = new SimpleIntegerProperty();
 		private int waveNumber = 1;
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
@@ -44,12 +49,13 @@ public class GameEngine {
 				{
 						createEnemy(spawnType, path);
 				}
-
+                this.enemyProperty.set(enemies.size());
 
 				if (activeWave.isFinished() && enemies.isEmpty())
 				{
 						activeWave = null;
 						waveNumber++;
+                        this.waveProperty.set(this.waveNumber);
 				}
 				EnemiesToRemove.clear();
 				for (Enemy enemy : enemies)
@@ -86,8 +92,6 @@ public class GameEngine {
 		public void render(double STEP)
 		{
 				renderSystems.renderBackground(gc, canvas);
-
-				renderSystems.renderUI(gc, economy);
 
 				if ( path != null)
 				{
@@ -126,4 +130,19 @@ public class GameEngine {
 		{
 				towerSystems.handleBuyRequest(economy, towers, type, position);	
 		}
+
+        public IntegerProperty get_MoneyProperty()
+        {
+            return this.economy.Money_Property();
+        }
+
+        public IntegerProperty get_waveProperty()
+        {
+            return this.waveProperty;
+        }
+
+        public IntegerProperty get_enemyProperty()
+        {
+            return this.enemyProperty;
+        }
 }

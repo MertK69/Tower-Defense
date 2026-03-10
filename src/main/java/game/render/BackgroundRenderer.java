@@ -10,7 +10,7 @@ public class BackgroundRenderer {
 		{
 				if ( Background == null )
 				{
-					this.Background = new Image (getClass().getResource("/images/Background_new.png").toExternalForm());
+					this.Background = new Image (getClass().getResource("/images/clean_background.png").toExternalForm());
 				}
 				gc.drawImage(Background, 0, 0, canvas.getWidth(), canvas.getHeight());
 		}

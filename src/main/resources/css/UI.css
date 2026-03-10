@@ -13,3 +13,11 @@
 .top-bottom-border {
     -fx-background-color: grey; -fx-border-color:  transparent transparent black transparent; -fx-border-width: 2; 
 }
+
+.coin-field{
+  -fx-font-size: 36px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 30 10 30; -fx-background-radius: 5;
+}
+
+.half-sized{
+  -fx-font-size: 12px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 40 10 40; -fx-background-radius: 5; -fx-alignment: center-left;
+}

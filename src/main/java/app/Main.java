@@ -4,20 +4,14 @@ package app;
 import game.engine.GameEngine;
 import game.engine.GameLoop;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ui.*;
 public class Main extends Application {
     private GameLoop GL;
     private UIBuilder uiB;
-
     @Override
     public void init() // init, start, stop, werden in dieser Reihenfolge durch launch() aufgerufen!
     {
@@ -52,6 +46,4 @@ public class Main extends Application {
     {
         launch();
     }
-    
 }
-

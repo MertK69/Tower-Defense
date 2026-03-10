@@ -13,7 +13,6 @@ public class RenderSystems {
 		private EnemyRenderer enemyRenderer = new EnemyRenderer();
 		private PathRenderer pathRenderer = new PathRenderer();
 		private BackgroundRenderer backgroundRenderer = new BackgroundRenderer();
-		private UIRenderer uiRenderer = new UIRenderer();
 		private BulletRenderer bulletRenderer = new BulletRenderer();
 		public RenderSystems ()
 		{
@@ -42,11 +41,6 @@ public class RenderSystems {
 		public void renderBackground(GraphicsContext gc, Canvas canvas)
 		{
 				backgroundRenderer.renderBackground(gc, canvas);
-		}
-
-		public void renderUI(GraphicsContext gc, Economy economy)
-		{
-				uiRenderer.renderUI(gc, economy);
 		}
 
 		public void renderBullets(GraphicsContext gc, List<Fire>Bullets)

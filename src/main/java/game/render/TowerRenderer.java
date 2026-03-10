@@ -13,6 +13,7 @@ public class TowerRenderer {
 
 		public void renderTower(List<Tower>towers, GraphicsContext gc, double dt)
 		{
+            gc.save();
 				for (Tower tower : towers) 
 				{
 					Vector2 tp = tower.getPosition();
@@ -27,7 +28,7 @@ public class TowerRenderer {
 							36, 36
 					);
 					gc.restore();
-					gc.setStroke(Color.color(0, 0, 1, 0.25));
+					gc.setStroke(Color.BLACK);
 					gc.strokeOval(
 							tp.getX() - tower.getReichweite(),
 							tp.getY() - tower.getReichweite(),
@@ -35,6 +36,7 @@ public class TowerRenderer {
 							tower.getReichweite() * 2
 					);
 				 }
+            gc.restore();
 		}
 
 		public Image image(Tower tower, double dt)

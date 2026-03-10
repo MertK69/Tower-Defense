@@ -11,7 +11,7 @@ public class TowerSystems {
 
 		public void handleBuyRequest(Economy economy,List<Tower>towers, TowerType type, Vector2 position)
 		{
-			if (economy.getCurr_Money() >= type.price())
+			if (economy.getMoney() >= type.price())
 		    {
 				placementSystems.placeTower(towers, type, position);	
 				economy.towersBought(type);

@@ -1,18 +1,12 @@
 package ui;
-import app.Main;
 import game.engine.GameEngine;
-import game.tower.TowerType;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -20,12 +14,14 @@ import javafx.scene.layout.VBox;
 import ui.towerExchange.TowerUIChanger;
 import ui.towerExchange.TowerStrategies.FirstStrategy;
 import ui.towerExchange.TowerStrategies.SecondStrategy;
-import util.Vector2;
 
 public class UIBuilder {
     private BorderPane MainPane;
     private TowerUIChanger TowerChanger = new TowerUIChanger();
-
+    private IntegerProperty Money = new SimpleIntegerProperty(0);
+    private IntegerProperty Enemies = new SimpleIntegerProperty();
+    private IntegerProperty LifesLeft = new SimpleIntegerProperty();
+    private IntegerProperty WaveNumber = new SimpleIntegerProperty(1);
         public UIBuilder(BorderPane pane)
         {
             this.MainPane = pane;
@@ -105,39 +101,25 @@ public class UIBuilder {
             bottomMenu.setAlignment(Pos.CENTER_LEFT);
             bottomMenu.getStyleClass().add("bottom-top-border");
             HBox towerMenu = TowerChanger.createTowerUI(engine, MainPane);
-                
-            Label coinText = new Label("500");
-            coinText.setStyle("-fx-font-size: 36px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 30 10 30; -fx-background-radius: 5;");
-            
-            bottomMenu.getChildren().addAll(coinText, towerMenu);
-
+            VBox Test = new VBox(10);
+            Label life = new Label("Lifes left: ");
+            life.textProperty().bind(engine.get_waveProperty().asString());
+            Label EnemiesLeft = new Label("Enemies left: ");
+            life.getStyleClass().add("half-sized"); 
+            EnemiesLeft.getStyleClass().add("half-sized");
+            EnemiesLeft.textProperty().bind(engine.get_enemyProperty().asString());
+            Test.setPadding(new Insets(10,10,10,10));
+            Test.setAlignment(Pos.CENTER_LEFT);
+            Test.getChildren().addAll(life, EnemiesLeft);
+            Label coinText = new Label();
+            coinText.getStyleClass().add("coin-field");
+            coinText.textProperty().bind(engine.get_MoneyProperty().asString());
+            bottomMenu.getChildren().addAll(coinText, Test,  towerMenu);
             return bottomMenu;
         }
 
-
-        public void buyTower(ActionEvent e, TowerType type, GameEngine engine ) {
-            Button sourceButton = (Button) e.getSource();
-            Scene scene = sourceButton.getScene();
-
-            scene.setCursor(Cursor.CROSSHAIR);
-
-            javafx.application.Platform.runLater(() -> {
-                scene.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        Point2D localPoint = MainPane.getCenter().sceneToLocal(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-                        Vector2 position = new Vector2(localPoint.getX(), localPoint.getY());
-                        engine.handleBuyRequest(type, position);
-
-                        scene.setCursor(Cursor.DEFAULT);
-                        scene.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
-                        mouseEvent.consume();
-                    }
-                });
-            });
-        }
-        public void updateBottomUI(GameEngine engine) {
+        public void updateBottomUI(GameEngine engine) 
+        {
             this.MainPane.setBottom(DualBottomLayer(engine));
         }
-
 }
