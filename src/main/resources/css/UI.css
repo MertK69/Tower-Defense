@@ -15,7 +15,7 @@
 }
 
 .coin-field{
-  -fx-font-size: 36px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 30 10 30; -fx-background-radius: 5;
+  -fx-font-size: 40px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 30 10 30; -fx-background-radius: 5;
 }
 
 .half-sized{

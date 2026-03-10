@@ -18,10 +18,6 @@ import ui.towerExchange.TowerStrategies.SecondStrategy;
 public class UIBuilder {
     private BorderPane MainPane;
     private TowerUIChanger TowerChanger = new TowerUIChanger();
-    private IntegerProperty Money = new SimpleIntegerProperty(0);
-    private IntegerProperty Enemies = new SimpleIntegerProperty();
-    private IntegerProperty LifesLeft = new SimpleIntegerProperty();
-    private IntegerProperty WaveNumber = new SimpleIntegerProperty(1);
         public UIBuilder(BorderPane pane)
         {
             this.MainPane = pane;
