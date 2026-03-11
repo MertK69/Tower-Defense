@@ -25,9 +25,9 @@ public class UIFactory {
         return this.topLayerCreator.create_top_layer(); 
     }
 
-   public VBox create_BottomLayer(BorderPane MainPane)
+   public VBox create_BottomLayer()
     {
-        return this.bottomLayerCreator.create_bottom_layer(this.engine, MainPane);
+        return this.bottomLayerCreator.create_bottom_layer(this.engine);
     }
 
    public Pane create_GameArea()

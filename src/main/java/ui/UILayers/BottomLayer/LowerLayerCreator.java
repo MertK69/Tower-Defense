@@ -39,7 +39,15 @@ public class LowerLayerCreator{
             TowerChanger.setStrategy(new SecondStrategy());
             MenuChange.set(!MenuChange.get());
             });
-            towerMenu.getChildren().addAll(DefaultTowerMenu, AdvancedTowerMenu);
+            Button EffectsMenu = new Button("Special Attacks");
+            EffectsMenu.getStyleClass().add("bottom-menu-buttons");
+            EffectsMenu.setPrefSize(120,65);
+            EffectsMenu.setOnAction(e -> {
+            TowerChanger.setStrategy(new ThirdStrategy());
+            MenuChange.set(!MenuChange.get());
+            });
+
+            towerMenu.getChildren().addAll(DefaultTowerMenu, AdvancedTowerMenu, EffectsMenu);
             return towerMenu;
     }
 }

@@ -13,24 +13,26 @@ public class BottomLayerCreator{
     private TowerUIChanger TowerChanger = new TowerUIChanger();
     private LowerLayerCreator lowerLayerCreator = new LowerLayerCreator(TowerChanger);
     private UpperLayerCreator upperLayerCreator = new UpperLayerCreator(TowerChanger);
+    private BorderPane MainPane;
 
     public BottomLayerCreator(GameEngine engine, BorderPane MainPane)
     {
-        lowerLayerCreator.MenuChange.addListener(obs -> refreshUI(engine, MainPane));
+        this.MainPane = MainPane;
+        lowerLayerCreator.MenuChange.addListener(obs -> refreshUI(engine));
         this.TowerChanger.setStrategy(new FirstStrategy());
-        refreshUI(engine, MainPane);
+        refreshUI(engine);
     }
 
-    public VBox create_bottom_layer(GameEngine engine, BorderPane MainPane)
+    public VBox create_bottom_layer(GameEngine engine)
     {
-        refreshUI( engine, MainPane);
+        refreshUI( engine);
         return DualBottomLayer;
     }
 
-    public void refreshUI(GameEngine engine,BorderPane MainPane)
+    public void refreshUI(GameEngine engine)
     {
         DualBottomLayer.getChildren().clear();
-        DualBottomLayer.getChildren().add(upperLayerCreator.create_upper_layer(engine, MainPane)); 
+        DualBottomLayer.getChildren().add(upperLayerCreator.create_upper_layer(engine, this.MainPane)); 
         DualBottomLayer.getChildren().add(lowerLayerCreator.create_lower_layer(engine));
     }
 }

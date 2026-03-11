@@ -4,6 +4,8 @@ package game.combat;
 import util.Vector2;
 import game.enemy.*;
 import game.tower.*;
+
+import java.util.ArrayList;
 import java.util.List;
 public class TargetingSystem {
 
@@ -22,5 +24,21 @@ public class TargetingSystem {
 				}
 				return closest;
 		}
+
+        public List<Enemy>getEnemiesInRange(List<Enemy>pos_Enemys, Vector2 Position, double Reichweite)
+        {
+            List<Enemy>Enemies = new ArrayList<>();
+
+            for(Enemy enemy : pos_Enemys)
+            {
+                Vector2 Distance = enemy.getPosition().subtraction(Position);
+                double Distance_length = Distance.Vector_length();
+                if ( Distance_length <= Reichweite)
+                {
+                    Enemies.add(enemy);
+                }
+            }
+            return Enemies;
+        }
 
 }

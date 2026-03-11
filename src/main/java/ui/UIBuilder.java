@@ -5,8 +5,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import ui.UILayers.UIFactory;
-import ui.towerExchange.TowerUIChanger;
-import ui.towerExchange.TowerStrategies.FirstStrategy;
 
 public class UIBuilder {
     private BorderPane MainPane;
@@ -36,7 +34,7 @@ public class UIBuilder {
 
         public VBox DualBottomLayer()
         {
-            return this.uiFactory.create_BottomLayer(this.MainPane);
+            return this.uiFactory.create_BottomLayer();
         }
 
 }

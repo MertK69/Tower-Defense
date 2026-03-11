@@ -4,6 +4,7 @@ import game.enemy.*;
 import game.wave.*;
 import game.path.*;
 import game.render.RenderSystems;
+import game.sattack.SpecialAttackTypes;
 import game.tower.*;
 import game.animation.towerAnimationen.Fire;
 import game.combat.*;
@@ -130,6 +131,11 @@ public class GameEngine {
 		{
 				towerSystems.handleBuyRequest(economy, towers, type, position);	
 		}
+
+        public void handleSpecialAttack(Vector2 Position ,SpecialAttackTypes attackType)
+        {
+               combatSystem.handleSpecialAttack(this.enemies, Position, attackType); 
+        }
 
         public IntegerProperty get_MoneyProperty()
         {
