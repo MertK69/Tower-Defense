@@ -20,7 +20,7 @@ import javafx.scene.layout.Pane;
 import ui.towerExchange.TowerStrategy;
 import util.Vector2;
 import game.sattack.SpecialAttack;
-import game.sattack.SpecialAttackTypes;
+import game.sattack.SpecialAttackType;
 
 public class ThirdStrategy implements TowerStrategy {
     LoadSystems Loader = new LoadSystems();
@@ -39,22 +39,22 @@ public class ThirdStrategy implements TowerStrategy {
         ImageView iV3 = new ImageView(image3);
         Button tower1 = new Button("", iV);
         tower1.getStyleClass().add("tower-border");
-        tower1.setOnAction(e -> useSpecialAttack(e, SpecialAttackTypes.FireAttack, engine, MainPane));
+        tower1.setOnAction(e -> useSpecialAttack(e, SpecialAttackType.FireAttack, engine, MainPane));
         tower1.setPrefSize(80, 50);
         Button tower2 = new Button("", iV2);
         tower2.getStyleClass().add("tower-border");
-        tower2.setOnAction(e -> useSpecialAttack(e, SpecialAttackTypes.BombAttack, engine, MainPane));
+        tower2.setOnAction(e -> useSpecialAttack(e, SpecialAttackType.BombAttack, engine, MainPane));
         tower2.setPrefSize(80, 50);
         Button tower3 = new Button("", iV3);
         tower3.getStyleClass().add("tower-border");
-        tower3.setOnAction(e -> useSpecialAttack(e, SpecialAttackTypes.EarthQuake, engine, MainPane));
+        tower3.setOnAction(e -> useSpecialAttack(e, SpecialAttackType.EarthQuake, engine, MainPane));
         tower3.setPrefSize(80, 50);
         towerMenu.getChildren().addAll(tower1, tower2, tower3);
             
         return towerMenu;
 	}
 
-    public void useSpecialAttack(ActionEvent e, SpecialAttackTypes attackType, GameEngine engine, BorderPane MainPane)
+    public void useSpecialAttack(ActionEvent e, SpecialAttackType attackType, GameEngine engine, BorderPane MainPane)
     {
        Button sourceButton = (Button) e.getSource();
        Scene scene = sourceButton.getScene(); 

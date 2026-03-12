@@ -4,7 +4,9 @@ import game.enemy.*;
 import game.wave.*;
 import game.path.*;
 import game.render.RenderSystems;
-import game.sattack.SpecialAttackTypes;
+import game.sattack.SpecialAttack;
+import game.sattack.SpecialAttackFactory;
+import game.sattack.SpecialAttackType;
 import game.tower.*;
 import game.animation.towerAnimationen.Fire;
 import game.combat.*;
@@ -22,8 +24,10 @@ public class GameEngine {
 		private final List<Tower>towers = new ArrayList<>();
 		private final List<Enemy>EnemiesToRemove = new ArrayList<>();
 		private final List<Fire>Bullets = new ArrayList<>();
+        private final List<SpecialAttack> sattackList = new ArrayList<>();
 		private TowerFactory towerFactory = new TowerFactory();
 		private EnemyFactory enemyFactory = new EnemyFactory();
+        private SpecialAttackFactory sattackFactory = new SpecialAttackFactory();
 		private WaveFactory waveFactory = new WaveFactory();
 		private PathFactory pathFactory = new PathFactory();
 		private ActiveWave activeWave = null;
@@ -85,6 +89,15 @@ public class GameEngine {
 						}
 				}
 				Bullets.removeAll(bulletsToRemove);
+                List<SpecialAttack>SAttacksToRemove = new ArrayList<>();
+                for(SpecialAttack specialAttack : sattackList)
+                {   
+                    if(specialAttack.reachedLastFrame())
+                    {
+                        SAttacksToRemove.add(specialAttack);
+                    }
+                }
+                sattackList.removeAll(SAttacksToRemove);
 
 				combatSystem.update(stepTime, towers, enemies, Bullets);
 				economy.update(EnemiesToRemove, TowersToRemove);
@@ -106,6 +119,7 @@ public class GameEngine {
 
 				renderSystems.renderBullets(gc, Bullets);
 
+                renderSystems.renderSpecialAttacks(gc, sattackList, STEP);
 		}
 
 		public void buyTower(TowerType type, Vector2 position)
@@ -113,10 +127,16 @@ public class GameEngine {
 				towers.add(towerFactory.create_tower(type, position));	
 		}
 
+        public void createSAttack(SpecialAttackType type, Vector2 position)
+        {
+                sattackList.add(sattackFactory.create_sattack(type, position));
+        }
+
 		public void createEnemy(EnemyType type, Path path)
 		{
 				enemies.add(enemyFactory.create_enemy(type, path));
 		}
+
 		public Wave createWave()
 		{
 				return waveFactory.create_wave(waveNumber);		
@@ -132,9 +152,10 @@ public class GameEngine {
 				towerSystems.handleBuyRequest(economy, towers, type, position);	
 		}
 
-        public void handleSpecialAttack(Vector2 Position ,SpecialAttackTypes attackType)
+        public void handleSpecialAttack(Vector2 Position ,SpecialAttackType attackType)
         {
-               combatSystem.handleSpecialAttack(this.enemies, Position, attackType); 
+            createSAttack(attackType, Position);
+            combatSystem.handleSpecialAttack(this.enemies, Position, attackType); 
         }
 
         public IntegerProperty get_MoneyProperty()

@@ -6,6 +6,8 @@ import game.animation.towerAnimationen.Fire;
 import game.economy.Economy;
 import game.enemy.*;
 import game.path.*;
+import game.sattack.SpecialAttack;
+
 import java.util.List;
 
 public class RenderSystems {
@@ -14,9 +16,15 @@ public class RenderSystems {
 		private PathRenderer pathRenderer = new PathRenderer();
 		private BackgroundRenderer backgroundRenderer = new BackgroundRenderer();
 		private BulletRenderer bulletRenderer = new BulletRenderer();
+        private SAttackRenderer sattackRenderer = new SAttackRenderer();
 		public RenderSystems ()
 		{
 		}
+
+        public void renderSpecialAttacks(GraphicsContext gc, List<SpecialAttack>SAttackList, double dt)
+        {
+                sattackRenderer.renderSAttack(gc, SAttackList, dt);
+        }
 
 		public void renderTower(GraphicsContext gc, List<Tower>towers, double dt)
 		{

@@ -4,7 +4,7 @@ import game.tower.*;
 import util.Vector2;
 import game.animation.towerAnimationen.Fire;
 import game.enemy.*;
-import game.sattack.SpecialAttackTypes;
+import game.sattack.SpecialAttackType;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class CombatSystem {
 				}
 		 }
 
-        public void handleSpecialAttack(List<Enemy>Enemies, Vector2 Position, SpecialAttackTypes attackType)
+        public void handleSpecialAttack(List<Enemy>Enemies, Vector2 Position, SpecialAttackType attackType)
         {
             List<Enemy> EnemiesInRange = targetingsystem.getEnemiesInRange(Enemies, Position, attackType.get_Reichweite()); 
             for(Enemy enemy : EnemiesInRange)
