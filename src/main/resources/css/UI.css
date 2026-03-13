@@ -25,3 +25,7 @@
 .bottom-menu-buttons{
     -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: darkred; -fx-align: center; -fx-text-alignment: center; 
 }
+
+.start-game-button{
+    -fx-background-color: #800080; -fx-border-radius: 6; -fx-text-fill: white; -fx-font-size: 24px; -fx-text-alignment: center; -fx-background-radius: 5; -fx-text-alignment: center;
+}

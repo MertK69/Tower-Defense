@@ -33,7 +33,7 @@ public class GameEngine {
 		private ActiveWave activeWave = null;
         private IntegerProperty waveProperty = new SimpleIntegerProperty(1);
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
-		private int waveNumber = 1;
+		private int waveNumber = 50;
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
