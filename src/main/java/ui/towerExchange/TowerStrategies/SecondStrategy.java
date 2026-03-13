@@ -27,7 +27,7 @@ public class SecondStrategy implements TowerStrategy{
         public HBox changeTower(GameEngine engine, BorderPane MainPane) {
                 HBox towerMenu = new HBox(15); // 15 Pixel Abstand zwischen den Buttons
                 towerMenu.setAlignment(Pos.CENTER_LEFT);
-                towerMenu.setPadding(new Insets(0, 0, 0, 50)); // Etwas Abstand nach links zu den Münzen
+                towerMenu.setPadding(new Insets(0, 0, 0, 25)); // Etwas Abstand nach links zu den Münzen
                 Image image = Loader.loadImage("/images/static-images/bullet");
                 ImageView iV = new ImageView(image);
                 Image image2 = Loader.loadImage("/images/static-images/lvl2-turret");

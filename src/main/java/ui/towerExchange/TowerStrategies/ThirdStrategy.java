@@ -30,12 +30,12 @@ public class ThirdStrategy implements TowerStrategy {
     
         HBox towerMenu = new HBox(15); // 15 Pixel Abstand zwischen den Buttons
         towerMenu.setAlignment(Pos.CENTER_LEFT);
-        towerMenu.setPadding(new Insets(0, 0, 0, 50)); // Etwas Abstand nach links zu den Münzen
-        Image image = Loader.loadImage("/images/static-images/bullet");
+        towerMenu.setPadding(new Insets(0, 0, 0, 25)); // Etwas Abstand nach links zu den Münzen
+        Image image = Loader.loadImage("/images/static-images/Fireattack");
         ImageView iV = new ImageView(image);
-        Image image2 = Loader.loadImage("/images/static-images/lvl2-turret");
+        Image image2 = Loader.loadImage("/images/static-images/Missle");
         ImageView iV2 = new ImageView(image2);
-        Image image3 = Loader.loadImage("/images/static-images/lvl3-turret");
+        Image image3 = Loader.loadImage("/images/static-images/EarthQuake");
         ImageView iV3 = new ImageView(image3);
         Button tower1 = new Button("", iV);
         tower1.getStyleClass().add("tower-border");

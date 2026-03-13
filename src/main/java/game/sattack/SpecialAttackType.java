@@ -3,9 +3,9 @@ package game.sattack;
 public enum SpecialAttackType {
 
     // const
-    FireAttack(15, 200, "/images/Explosion/Explosion", 4, 0.2d),
-    BombAttack(30, 150, "/images/Explosion/Explosion", 9, 0.2d),
-    EarthQuake(10000, 1000, "/images/Explosion/Explosion", 5, 0.2d);
+    FireAttack(15, 200, "/images/Fire/Fire", 6, 0.15d, 18),
+    BombAttack(30, 150, "/images/Explosion/Explosion", 9, 0.15d, 36),
+    EarthQuake(10000, 1000, "/images/Explosion/Explosion", 5, 0.15d, 600);
 
 
     // constructor
@@ -15,15 +15,22 @@ public enum SpecialAttackType {
     private String AttackAnimation;
     private int FrameCount;
     private double SAttackInterval;
+    private double renderDistance;
 
 
-    SpecialAttackType(int Reichweite, int Damage, String AttackAnimation, int FrameCount, double SAttackInterval)
+    SpecialAttackType(int Reichweite, int Damage, String AttackAnimation, int FrameCount, double SAttackInterval, double renderDistance)
     {
         this.Reichweite = Reichweite; 
         this.Damage = Damage;
         this.AttackAnimation = AttackAnimation;
         this.FrameCount = FrameCount;
         this.SAttackInterval = SAttackInterval;
+        this.renderDistance = renderDistance;
+    }
+    
+    public double get_renderDistance()
+    {
+        return this.renderDistance;
     }
 
     public double get_Reichweite()

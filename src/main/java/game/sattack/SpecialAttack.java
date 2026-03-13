@@ -73,7 +73,7 @@ public class SpecialAttack {
             Timer += dt;
             if (Timer >= AnimationLockTimer)
             {
-                    Timer -= dt;
+                    Timer = 0;
                     return true;
             } else {
                     return false;

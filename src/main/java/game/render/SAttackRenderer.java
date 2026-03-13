@@ -25,9 +25,9 @@ public class SAttackRenderer{
             gc.translate(position.getX(), position.getY());
             gc.drawImage(
                     curr_Pic,
-                    - 18,
-                    - 18,
-                    36, 36
+                    - SAttack.get_type().get_renderDistance(),
+                    - SAttack.get_type().get_renderDistance(),
+                    SAttack.get_type().get_renderDistance() * 2, SAttack.get_type().get_renderDistance() * 2
             );
         }
         gc.restore();

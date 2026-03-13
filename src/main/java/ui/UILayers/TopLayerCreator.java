@@ -1,15 +1,18 @@
 package ui.UILayers;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 
 public class TopLayerCreator{
+    private BooleanProperty property;
 
-    public TopLayerCreator()
+    public TopLayerCreator(BooleanProperty property)
     {
-
+        this.property = property;
     }
 
     public HBox create_top_layer()
@@ -23,6 +26,7 @@ public class TopLayerCreator{
             Button OptionsButton = new Button("Options");
             OptionsButton.setPrefSize(120,0.6);
             Button ExitButton = new Button("Exit Game");
+            ExitButton.setOnAction(e -> jumpToMenu());
             ExitButton.setPrefSize(120,0.6);
 
             GameButton.setFocusTraversable(false);
@@ -31,5 +35,10 @@ public class TopLayerCreator{
         
             TopLayer.getChildren().addAll(GameButton, OptionsButton, ExitButton);
             return TopLayer;
+    }
+
+    public void jumpToMenu()
+    {
+        this.property.setValue(false);
     }
 }

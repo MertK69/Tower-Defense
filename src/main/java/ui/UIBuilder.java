@@ -1,5 +1,7 @@
 package ui;
 import game.engine.GameEngine;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -9,10 +11,10 @@ import ui.UILayers.UIFactory;
 public class UIBuilder {
     private BorderPane MainPane;
     private UIFactory uiFactory;
-        public UIBuilder(BorderPane pane, GameEngine engine)
+        public UIBuilder(BorderPane pane, GameEngine engine, BooleanProperty changeScene)
         {
             this.MainPane = pane;
-            this.uiFactory = new UIFactory(engine.getCanvas(), engine, pane);
+            this.uiFactory = new UIFactory(engine.getCanvas(), engine, pane, changeScene);
         }
 
 		public void initializeMainPane(GameEngine engine)
