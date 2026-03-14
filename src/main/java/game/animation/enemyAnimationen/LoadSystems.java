@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import game.animation.hilfsfunktionen.*;
 
 
-public final class LoadSystems {
+public class LoadSystems {
     private String css = this.getClass().getResource("/css/UI.css").toExternalForm();		
 		public LoadSystems() 
 		{
@@ -27,6 +27,11 @@ public final class LoadSystems {
 		{
 					return Loader.loadImage(pathToStaticAnimation + ".png");
 		}
+
+        public static Image loadGif(String pathToGif)
+        {
+                return Loader.loadGif(pathToGif + ".gif");
+        }
 
         public String get_css()
         {

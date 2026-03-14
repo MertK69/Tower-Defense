@@ -2,7 +2,10 @@ package ui;
 
 import app.Main;
 import game.engine.GameLoop;
+import game.path.Pathtype;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.layout.BorderPane;
 import ui.Menu.BottomLayerCreator;
@@ -15,9 +18,9 @@ public class MenuBuilder {
     private TopLayerCreator topLayerCreator = new TopLayerCreator();
     private MainLayerCreator mainLayerCreator;
 
-    public MenuBuilder(BooleanProperty changeScene)
+    public MenuBuilder(BooleanProperty changeScene, ObjectProperty<Pathtype> type, IntegerProperty waveNumber)
     {
-        this.mainLayerCreator = new MainLayerCreator(changeScene);
+        this.mainLayerCreator = new MainLayerCreator(changeScene, type, waveNumber);
     }
 
     public void set_MainPane(BorderPane pane)
@@ -25,7 +28,7 @@ public class MenuBuilder {
         this.MainPane = pane;
     }
 
-    public void create_Menu()
+    public void create_Menu(Pathtype type, int waveNumber)
     {
         this.MainPane.setBottom(bottomLayerCreator.create_bottomLayer());
         this.MainPane.setCenter(mainLayerCreator.create_MainLayer());

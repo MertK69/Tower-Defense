@@ -27,5 +27,37 @@
 }
 
 .start-game-button{
-    -fx-background-color: #800080; -fx-border-radius: 6; -fx-text-fill: white; -fx-font-size: 24px; -fx-text-alignment: center; -fx-background-radius: 5; -fx-text-alignment: center;
+    -fx-background-color: #800080; -fx-border-radius: 8px; -fx-text-fill: white; -fx-font-size: 18px; -fx-text-alignment: center; -fx-background-radius: 8px; -fx-text-alignment: center; -fx-font-weight: bold; -fx-border-color: black; 
+}
+
+.slider-setting{
+    -fx-background-color: #800080; -fx-border-radius: 8; -fx-text-fill: white; -fx-font-size: 18px; -fx-text-alignment: center; -fx-background-radius: 8; -fx-text-alignment: center; -fx-font-weight: bold; -fx-border-color: black; 
+}
+
+.curr-wave-label{
+    -fx-background-color: lightblue; -fx-border-radius: 8px; -fx-text-fill: black; -fx-font-size: 18px; -fx-text-alignment: center; -fx-background-radius: 8px; -fx-font-weight: bold; -fx-border-color: black; -fx-alignment: center;
+}   
+
+.top-menu-bar{
+    -fx-background-color: lightblue; -fx-alignment: center;
+}
+
+.top-menu-game-name{
+    -fx-font-weight: bold; -fx-font-size: 28px; -fx-text-fill: black;
+}
+
+.main-layer-big-buttons{
+    -fx-alignment: center; 
+}
+
+.highlighted-button{
+    -fx-background-color: #ffcc00; -fx-border-color: #ff6600; -fx-border-width: 2px; -fx-font-weight: bold;
+}
+
+.about-us{
+    -fx-background-color: white; -fx-border-color: black; -fx-text-fill: black; -fx-font-size: 16px; -fx-text-alignment: center; -fx-background-radius: 8px; -fx-alignment: top-center; -fx-font-weight: bold; -fx-padding: 20,20,20,20; -fx-border-radius: 8px;
+}
+
+.return-button{
+    -fx-background-color: #800080; -fx-border-radius: 8px; -fx-text-alignment: center; -fx-alignment: center; -fx-border-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px;  
 }

@@ -11,11 +11,10 @@ public class TopLayerCreator {
     public VBox create_TopLayer()
     {
         VBox TopBox = new VBox();
-        TopBox.setPadding(new Insets(40, 50, 40, 50));
-        TopBox.setAlignment(Pos.CENTER);
-        TopBox.setStyle("-fx-background-color: lightblue");
+        TopBox.setPadding(new Insets(30, 30, 30, 30));
+        TopBox.getStyleClass().add("top-menu-bar");
         Label GameLabel = new Label("Tower-Defense by MertK69");
-        GameLabel.getStyleClass().add("GameLabel");
+        GameLabel.getStyleClass().add("top-menu-game-name");
 
         TopBox.getChildren().add(GameLabel);
 

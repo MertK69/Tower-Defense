@@ -2,27 +2,28 @@ package app;
 
 import game.engine.GameEngine;
 import game.engine.GameLoop;
+import game.path.Pathtype;
 import javafx.application.Application;
-import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import ui.*;
 public class Main extends Application {
-    private GameEngine engine = new GameEngine();
-    private GameLoop GL = new GameLoop(this.engine);
+    private GameEngine engine;
+    private GameLoop GL;
     private UIBuilder uiB;
     private Stage mainStage;
     public BooleanProperty changeScene = new SimpleBooleanProperty();
-    private MenuBuilder menuBuilder = new MenuBuilder(changeScene);
-
+    private ObjectProperty<Pathtype> pathtype = new SimpleObjectProperty<>(Pathtype.EASY);
+    private IntegerProperty waveNumber = new SimpleIntegerProperty(0);
+    private MenuBuilder menuBuilder = new MenuBuilder(changeScene, pathtype, waveNumber);
     @Override
     public void init() // init, start, stop, werden in dieser Reihenfolge durch launch() aufgerufen!
     {
@@ -49,7 +50,6 @@ public class Main extends Application {
                     if (this.changeScene.getValue() == true)
                     {
                     this.mainStage.setScene(gameScene);
-                    // Optional: Fokus auf die neue Szene setzen
                     gameScene.getRoot().requestFocus();
                     } else {
                         this.mainStage.setScene(setMenuScene());
@@ -64,16 +64,17 @@ public class Main extends Application {
         StackPane root = new StackPane();
         BorderPane MainPane = new BorderPane();
         this.menuBuilder.set_MainPane(MainPane);
-        this.menuBuilder.create_Menu();
+        this.menuBuilder.create_Menu(this.pathtype.getValue(), waveNumber.getValue());
         root.getChildren().add(MainPane);
         Scene menuScene = new Scene(root);
-        
+        menuScene.getStylesheets().add(getClass().getResource("/css/UI.css").toExternalForm());
+       
         return menuScene;
     }
 
     public Scene setGameScene()
     {
-        GameEngine engine = new GameEngine();
+        this.engine = new GameEngine(this.pathtype.getValue(), this.waveNumber.getValue());
         this.GL = new GameLoop(engine);
         this.GL.start();
         StackPane root = new StackPane(); // root = Grundgerüst, immer nur 1 root

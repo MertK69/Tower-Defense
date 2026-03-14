@@ -1,42 +1,65 @@
 package ui.Menu;
 
-import app.Main;
-import game.engine.GameLoop;
+import game.animation.enemyAnimationen.LoadSystems;
+import game.path.Pathtype;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.MapProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.Parent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import ui.Menu.MainLayerInsets.MainLayerStrategy;
+import ui.Menu.MainLayerInsets.MainLayerStrategyChanger;
+import ui.Menu.MainLayerInsets.MainLayerStrategies.FirstStrategy;
 
 public class MainLayerCreator {
     public BooleanProperty gameStarter;
+    private LoadSystems Loader = new LoadSystems();
+    private BooleanProperty changedStrategy = new SimpleBooleanProperty(false);
+    private MainLayerStrategyChanger strategyChanger;
+    private BorderPane MainBox = new BorderPane();
+    private IntegerProperty waveNumber;
+    private ObjectProperty<Pathtype> type;
 
-    public MainLayerCreator(BooleanProperty changeScene)
+    public MainLayerCreator(BooleanProperty changeScene, ObjectProperty<Pathtype> type, IntegerProperty waveNumber)
     {
-        this.gameStarter = changeScene; 
+        this.strategyChanger = new MainLayerStrategyChanger(changeScene, changedStrategy);
+        this.type = type; this.waveNumber = waveNumber;
+        this.strategyChanger.changeStrategy(new FirstStrategy());
+        this.changedStrategy.addListener(e -> refreshUI());
     }
 
-    public BorderPane create_MainLayer()
+    public Parent create_MainLayer()
     {
-        BorderPane MainBox = new BorderPane();
-        MainBox.setStyle("-fx-background-color: white;");
+        Image gifImage = Loader.loadGif("/images/background-video/background_gif");
+    
+        ImageView backgroundView = new ImageView(gifImage);
+        VBox Buttons = this.strategyChanger.setNewMainLayer(this.type, this.waveNumber);
+        MainBox.setCenter(Buttons);
 
-        Button button = new Button("START GAME");
+        StackPane root = new StackPane();
 
-        button.setOnAction(e -> start_game());
-        button.getStyleClass().add("start-game-button");
-        button.setPrefSize(120,65);
+        backgroundView.fitWidthProperty().bind(root.widthProperty());
+        backgroundView.fitHeightProperty().bind(root.heightProperty());
+        backgroundView.setPreserveRatio(false);
 
-        MainBox.setCenter(button);
+        root.getChildren().add(backgroundView);
 
-        return MainBox;
+        root.getChildren().add(MainBox);
+
+        return root;
     }
 
-    public void start_game()
+    public void refreshUI()
     {
-       gameStarter.setValue(true); 
+        this.MainBox.setCenter(this.strategyChanger.setNewMainLayer(this.type, this.waveNumber));
     }
+
 
 
 }

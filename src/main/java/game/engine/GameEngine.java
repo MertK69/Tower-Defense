@@ -33,7 +33,7 @@ public class GameEngine {
 		private ActiveWave activeWave = null;
         private IntegerProperty waveProperty = new SimpleIntegerProperty(1);
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
-		private int waveNumber = 50;
+		private int waveNumber = 1;
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -41,11 +41,19 @@ public class GameEngine {
         private CombatSystem combatSystem = new CombatSystem();
 		private RenderSystems renderSystems = new RenderSystems();
 		private EconomySystems economySystems = new EconomySystems();
-		private Economy economy = new Economy(economySystems, Pathtype.EASY);
+		private Economy economy;
+
+        public GameEngine(Pathtype pathtype, int waveNumber)
+        {
+            this.waveNumber = waveNumber;
+            this.economy = new Economy(this.economySystems, pathtype);
+            this.path = this.pathFactory.createPath(pathtype);
+            this.waveProperty = new SimpleIntegerProperty(waveNumber);
+        }
+
 		public void update(double stepTime) 
 		{
 
-				if ( path == null) path = pathFactory.createPath(Pathtype.EASY);
 				if ( activeWave == null ) activeWave = new ActiveWave(createWave());
 		
 				EnemyType spawnType = activeWave.update(stepTime);
