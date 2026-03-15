@@ -41,11 +41,22 @@ public class FirstStrategy implements MainLayerStrategy {
         });
         aboutUsButton.getStyleClass().add("start-game-button");
         aboutUsButton.setPrefSize(180, 60);
-    
-        BigButtons.getChildren().addAll(startGameButton, setGameOption, aboutUsButton);
+
+        Button closeGameButton = new Button("EXIT GAME");
+        closeGameButton.setOnAction(e -> closeGame());
+        closeGameButton.getStyleClass().add("start-game-button");
+        closeGameButton.setPrefSize(180, 60);
+
+        BigButtons.getChildren().addAll(startGameButton, setGameOption, aboutUsButton, closeGameButton);
 	
         return BigButtons;
     }
+
+    public void closeGame()
+    {
+            
+    }
+
 
     public void showAboutUs(MainLayerStrategyChanger strategyChanger)
     {

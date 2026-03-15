@@ -39,7 +39,7 @@ public class LowerLayerCreator{
             TowerChanger.setStrategy(new SecondStrategy());
             MenuChange.set(!MenuChange.get());
             });
-            Button EffectsMenu = new Button("Special Attacks");
+            Button EffectsMenu = new Button("Special \n Attack");
             EffectsMenu.getStyleClass().add("bottom-menu-buttons");
             EffectsMenu.setPrefSize(120,65);
             EffectsMenu.setOnAction(e -> {

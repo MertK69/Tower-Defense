@@ -1,5 +1,5 @@
 .tower-buy-button {
-		-fx-background-color: Transparent;
+	-fx-background-color: Transparent;
 }
 
 .tower-border {
@@ -31,7 +31,7 @@
 }
 
 .slider-setting{
-    -fx-background-color: #800080; -fx-border-radius: 8; -fx-text-fill: white; -fx-font-size: 18px; -fx-text-alignment: center; -fx-background-radius: 8; -fx-text-alignment: center; -fx-font-weight: bold; -fx-border-color: black; 
+    -fx-background-color: #800080; -fx-border-radius: 8px; -fx-text-fill: white; -fx-font-size: 18px; -fx-text-alignment: center; -fx-background-radius: 8; -fx-text-alignment: center; -fx-font-weight: bold; -fx-border-color: black; 
 }
 
 .curr-wave-label{
