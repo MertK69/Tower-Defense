@@ -23,6 +23,7 @@ public class Main extends Application {
     public BooleanProperty changeScene = new SimpleBooleanProperty();
     private ObjectProperty<Pathtype> pathtype = new SimpleObjectProperty<>(Pathtype.EASY);
     private IntegerProperty waveNumber = new SimpleIntegerProperty(0);
+    private BooleanProperty lostGame = new SimpleBooleanProperty();
     private MenuBuilder menuBuilder = new MenuBuilder(changeScene, pathtype, waveNumber);
     @Override
     public void init() // init, start, stop, werden in dieser Reihenfolge durch launch() aufgerufen!
@@ -64,7 +65,7 @@ public class Main extends Application {
         StackPane root = new StackPane();
         BorderPane MainPane = new BorderPane();
         this.menuBuilder.set_MainPane(MainPane);
-        this.menuBuilder.create_Menu(this.pathtype.getValue(), waveNumber.getValue());
+        this.menuBuilder.create_Menu(this.pathtype.getValue(), this.waveNumber.getValue());
         root.getChildren().add(MainPane);
         Scene menuScene = new Scene(root);
         menuScene.getStylesheets().add(getClass().getResource("/css/UI.css").toExternalForm());
@@ -77,7 +78,9 @@ public class Main extends Application {
         this.engine = new GameEngine(this.pathtype.getValue(), this.waveNumber.getValue());
         this.GL = new GameLoop(engine);
         this.GL.start();
-        StackPane root = new StackPane(); // root = Grundgerüst, immer nur 1 root
+        this.lostGame.bind(this.engine.get_gameLostProperty());
+        this.lostGame.addListener(e -> lostGameWindow());
+        StackPane root = new StackPane(); 
         BorderPane Layout = new BorderPane();
         this.uiB = new UIBuilder(Layout, engine, changeScene);
         this.uiB.initializeMainPane(engine);
@@ -87,9 +90,12 @@ public class Main extends Application {
         return scene;
     }
 
-    public void startGame()
+    public void lostGameWindow()
     {
-
+        this.engine = null;
+        this.GL.stop();
+        this.GL = null;
+        this.changeScene.set(!this.changeScene.getValue());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ui.Menu.MainLayerInsets.MainLayerStrategies;
 
 import game.path.Pathtype;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
@@ -54,7 +55,7 @@ public class FirstStrategy implements MainLayerStrategy {
 
     public void closeGame()
     {
-            
+           Platform.exit(); 
     }
 
 

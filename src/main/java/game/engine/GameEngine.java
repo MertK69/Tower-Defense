@@ -14,7 +14,9 @@ import game.economy.*;
 import util.Vector2;
 import java.util.*;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -33,7 +35,9 @@ public class GameEngine {
 		private ActiveWave activeWave = null;
         private IntegerProperty waveProperty = new SimpleIntegerProperty(1);
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
+        private BooleanProperty gameLost = new SimpleBooleanProperty();
 		private int waveNumber = 1;
+        private int livesLeft = 10;
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -53,6 +57,7 @@ public class GameEngine {
 
 		public void update(double stepTime) 
 		{
+                if (livesLeft == 0) this.gameLost.setValue(!gameLost.getValue());
 
 				if ( activeWave == null ) activeWave = new ActiveWave(createWave());
 		
@@ -74,6 +79,11 @@ public class GameEngine {
 				for (Enemy enemy : enemies)
 				{
 						enemy.update(stepTime);
+                        if (enemy.isFinished())
+                        {
+                            livesLeft--;
+                        }
+
 						if (!enemy.isAlive() || enemy.isFinished())
 						{
 								EnemiesToRemove.add(enemy);
@@ -179,5 +189,10 @@ public class GameEngine {
         public IntegerProperty get_enemyProperty()
         {
             return this.enemyProperty;
+        }
+
+        public BooleanProperty get_gameLostProperty()
+        {
+            return this.gameLost;
         }
 }

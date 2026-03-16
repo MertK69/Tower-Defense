@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class WaveFactory {
 
-		public static Wave create_wave(int waveNumber) {
+		public Wave create_wave(int waveNumber) {
 				int enemyCount = waveNumber * 2 + 8;
 				int enemyCountCopy = enemyCount;
 				double spawnInterval = Math.max(0.2d, 1.5d - waveNumber * 0.1);
