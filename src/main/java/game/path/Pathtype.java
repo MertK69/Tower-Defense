@@ -4,49 +4,49 @@ import util.Vector2;
 import java.util.List;
 
 public enum Pathtype{
-			IMPOSSIBLE(List.of(
+            IMPOSSIBLE(List.of(
 				new Vector2(50, 100),
-		     	new Vector2(50, 700),
-				new Vector2(300, 700),
+				new Vector2(50, 550),
+				new Vector2(300, 550),
 				new Vector2(300, 100),
 				new Vector2(600, 100),
-				new Vector2(600, 700),
-				new Vector2(900, 700),
+				new Vector2(600, 550),
+				new Vector2(900, 550),
 				new Vector2(900, 100),
 				new Vector2(1150, 100)
 			)),
 
-		    HARD(List.of(
+			HARD(List.of(
 				new Vector2(50, 100),
-				new Vector2(50, 750),
-				new Vector2(250, 750),
-		    	new Vector2(250, 200),
+				new Vector2(50, 550),
+				new Vector2(250, 550),
+				new Vector2(250, 200),
 				new Vector2(450, 200),
-				new Vector2(450, 750),
-				new Vector2(650, 750),
+				new Vector2(450, 550),
+				new Vector2(650, 550),
 				new Vector2(650, 200),
 				new Vector2(850, 200),
-				new Vector2(850, 750),
-				new Vector2(1050, 750),
+				new Vector2(850, 550),
+				new Vector2(1050, 550),
 				new Vector2(1050, 100)
-		    )),
+			)),
 
 			MEDIUM(List.of(
 				new Vector2(50, 80),
-				new Vector2(50, 720),
-				new Vector2(200, 720),
+				new Vector2(50, 550),
+				new Vector2(200, 550),
 				new Vector2(200, 150),
 				new Vector2(350, 150),
-				new Vector2(350, 720),
-				new Vector2(500, 720),
+				new Vector2(350, 550),
+				new Vector2(500, 550),
 				new Vector2(500, 150),
 				new Vector2(650, 150),
-				new Vector2(650, 720),
-				new Vector2(800, 720),
+				new Vector2(650, 550),
+				new Vector2(800, 550),
 				new Vector2(800, 150),
 				new Vector2(950, 150),
-				new Vector2(950, 720),
-				new Vector2(1100, 720),
+				new Vector2(950, 550),
+				new Vector2(1100, 550),
 				new Vector2(1100, 80)
 			)),
 

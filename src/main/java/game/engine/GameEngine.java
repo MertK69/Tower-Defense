@@ -128,10 +128,8 @@ public class GameEngine {
 		{
 				renderSystems.renderBackground(gc, canvas);
 
-				if ( path != null)
-				{
-						renderSystems.renderPath(gc, path);
-				}
+				renderSystems.renderPath(gc, path);
+
 				renderSystems.renderTower(gc, towers, STEP);	
 
 				renderSystems.renderEnemies(gc, enemies, STEP, path);
