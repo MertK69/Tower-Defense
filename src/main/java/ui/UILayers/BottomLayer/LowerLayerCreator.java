@@ -27,21 +27,18 @@ public class LowerLayerCreator{
             towerMenu.setStyle("-fx-background-color: #6B4E31;");
             Button DefaultTowerMenu= new Button("Default \n Tower Menu");
             DefaultTowerMenu.getStyleClass().add("bottom-menu-buttons");
-            DefaultTowerMenu.setPrefSize(120,65);
             DefaultTowerMenu.setOnAction(e -> {
             TowerChanger.setStrategy(new FirstStrategy());
             MenuChange.set(!MenuChange.get());
             });
             Button AdvancedTowerMenu = new Button("Advanced \n Tower Menu");
             AdvancedTowerMenu.getStyleClass().add("bottom-menu-buttons");
-            AdvancedTowerMenu.setPrefSize(120,65);
             AdvancedTowerMenu.setOnAction(e -> {
             TowerChanger.setStrategy(new SecondStrategy());
             MenuChange.set(!MenuChange.get());
             });
             Button EffectsMenu = new Button("Special \n Attack");
             EffectsMenu.getStyleClass().add("bottom-menu-buttons");
-            EffectsMenu.setPrefSize(120,65);
             EffectsMenu.setOnAction(e -> {
             TowerChanger.setStrategy(new ThirdStrategy());
             MenuChange.set(!MenuChange.get());

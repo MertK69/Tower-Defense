@@ -11,7 +11,7 @@ public class WaveFactory {
 		public Wave create_wave(int waveNumber) {
 				int enemyCount = waveNumber * 2 + 8;
 				int enemyCountCopy = enemyCount;
-				double spawnInterval = Math.max(0.2d, 1.5d - waveNumber * 0.1);
+				double spawnInterval = Math.max(0.7d, 1.5d - waveNumber * 0.05);
 				Map<EnemyType, Integer>enemyTypes = new HashMap<>();
 				if (waveNumber <= 3 ) {
 					enemyTypes.put(EnemyType.Matrose, enemyCountCopy);	

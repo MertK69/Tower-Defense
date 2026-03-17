@@ -50,8 +50,12 @@ public class ActiveWave {
 						return;
 				}
 				remainingEnemies.put(type, amount_left);
-
 		}
+
+        public int getEnemyCount()
+        {
+                return this.wave.getEnemyCount();
+        }
 		
 		public boolean isFinished() {
 				return remainingEnemies.isEmpty();

@@ -15,15 +15,19 @@
 }
 
 .coin-field{
-  -fx-font-size: 40px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 10 30 10 30; -fx-background-radius: 5;-fx-pref-width: 200px; -fx-pref-height: 80px; 
+  -fx-font-size: 40px; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 5 5 5 5; -fx-background-radius: 8px;-fx-pref-width: 200px; -fx-pref-height: 80px; -fx-border-color: black; -fx-border-radius: 8px; -fx-text-fill: darkred; -fx-border-width: 1.5px;
+}
+
+.heart-field{
+  -fx-font-size: 40px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-border-radius:8px; -fx-padding: 5 5 5 5; -fx-background-radius: 8px;-fx-pref-width: 140px; -fx-pref-height: 80px; -fx-border-color: black; -fx-border-width: 1.5px;
 }
 
 .half-sized{
-  -fx-font-size: 12px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 6 30 6 30; -fx-background-radius: 5; -fx-alignment: center-left; -fx-pref-width: 120px; -fx-pref-height: 35px;
+  -fx-font-size: 12px; -fx-text-fill: darkred; -fx-font-weight: bold; -fx-background-color: white; -fx-padding: 6 5 6 5; -fx-background-radius: 8px; -fx-alignment: center-left; -fx-pref-width: 120px; -fx-pref-height: 35px; -fx-border-radius: 8px; -fx-border-color: black; -fx-border-width: 1.5px;
 }
 
 .bottom-menu-buttons{
-    -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: darkred; -fx-align: center; -fx-text-alignment: center; 
+    -fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: darkred; -fx-text-alignment: center;-fx-background-radius:8px, 6.5px; -fx-pref-width: 120px; -fx-pref-height: 65px; -fx-background-color: black, #e4e4e4; -fx-background-insets: 0, 1.5px;
 }
 
 .start-game-button{

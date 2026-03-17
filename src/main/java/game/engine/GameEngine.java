@@ -37,7 +37,8 @@ public class GameEngine {
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
         private BooleanProperty gameLost = new SimpleBooleanProperty();
 		private int waveNumber = 1;
-        private int livesLeft = 10;
+        private IntegerProperty livesLeft = new SimpleIntegerProperty(10);
+        private IntegerProperty waveEnemys = new SimpleIntegerProperty();
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -57,9 +58,11 @@ public class GameEngine {
 
 		public void update(double stepTime) 
 		{
-                if (livesLeft == 0) this.gameLost.setValue(!gameLost.getValue());
+                if (livesLeft.getValue() == 0) this.gameLost.setValue(!gameLost.getValue());
 
 				if ( activeWave == null ) activeWave = new ActiveWave(createWave());
+
+                this.waveEnemys.setValue(this.activeWave.getEnemyCount());
 		
 				EnemyType spawnType = activeWave.update(stepTime);
 
@@ -81,7 +84,7 @@ public class GameEngine {
 						enemy.update(stepTime);
                         if (enemy.isFinished())
                         {
-                            livesLeft--;
+                            livesLeft.setValue(livesLeft.getValue() - 1);
                         }
 
 						if (!enemy.isAlive() || enemy.isFinished())
@@ -194,5 +197,15 @@ public class GameEngine {
         public BooleanProperty get_gameLostProperty()
         {
             return this.gameLost;
+        }
+
+        public IntegerProperty get_livesLeftProperty()
+        {
+            return this.livesLeft;
+        }
+
+        public IntegerProperty get_waveEnemyProperty()
+        {
+            return this.waveEnemys;
         }
 }

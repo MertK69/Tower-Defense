@@ -2,6 +2,7 @@ package ui.UILayers.BottomLayer;
 
 import game.animation.enemyAnimationen.LoadSystems;
 import game.engine.GameEngine;
+import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -23,7 +24,7 @@ public class UpperLayerCreator{
 
     public HBox create_upper_layer(GameEngine engine, BorderPane MainPane)
     {
-            HBox bottomMenu = new HBox(); 
+            HBox bottomMenu = new HBox(10); 
             bottomMenu.setPadding(new Insets(12, 25, 12, 25)); // Abstand nach oben, rechts, unten, links
             bottomMenu.setAlignment(Pos.CENTER_LEFT);
             bottomMenu.getStyleClass().add("bottom-top-border");
@@ -41,11 +42,16 @@ public class UpperLayerCreator{
             Image Soldierimage = Loader.loadImage("/images/static-images/SoldierPicture");
             ImageView SoldierView = new ImageView(Soldierimage);
             EnemiesLeft.setGraphic(SoldierView);
-            EnemiesLeft.textProperty().bind(engine.get_enemyProperty().asString());
+            EnemiesLeft.textProperty().bind(
+                    Bindings.format(
+                       "%d / %d  ",
+                    engine.get_enemyProperty(),
+                    engine.get_waveEnemyProperty())
+            );
             EnemiesLeft.getStyleClass().add("half-sized");
 
             VBox waveAndSoliderMenu = new VBox(10);
-            waveAndSoliderMenu.setPadding(new Insets(10,10,10,10));
+            waveAndSoliderMenu.setPadding(new Insets(5,5,5,5));
             waveAndSoliderMenu.setAlignment(Pos.CENTER_LEFT);
             waveAndSoliderMenu.getChildren().addAll(waveNumber, EnemiesLeft);
 
@@ -56,7 +62,14 @@ public class UpperLayerCreator{
             coinText.setGraphic(iV);
             coinText.textProperty().bind(engine.get_MoneyProperty().asString());
 
-            bottomMenu.getChildren().addAll(coinText, waveAndSoliderMenu,  towerMenu);
+            Label livesLeft = new Label();
+            Image heartImage = Loader.loadImage("/images/static-images/heart");
+            ImageView heartView = new ImageView(heartImage);
+            livesLeft.getStyleClass().add("heart-field");
+            livesLeft.setGraphic(heartView);
+            livesLeft.textProperty().bind(engine.get_livesLeftProperty().asString()); 
+
+            bottomMenu.getChildren().addAll(coinText, livesLeft ,waveAndSoliderMenu,  towerMenu);
             return bottomMenu;
     }
 }
