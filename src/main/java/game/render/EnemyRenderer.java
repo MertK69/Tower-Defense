@@ -43,7 +43,12 @@ public class EnemyRenderer {
                             ep.getY() - 18,
                             36, 36
                     );
-				}				
+                    gc.setFill(Color.RED);
+                    gc.fillRect(ep.getX() - 10, ep.getY() + 12, 20, 5);
+                    gc.setFill(Color.GREEN);
+                    double hpPercentage = enemy.getCurrent_hp() / (double) enemy.getMaxHealth(); 
+                    gc.fillRect(ep.getX() - 10, ep.getY() + 12, 20 * hpPercentage, 5);
+                }				
 
 		}
 

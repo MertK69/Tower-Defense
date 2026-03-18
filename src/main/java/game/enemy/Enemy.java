@@ -98,4 +98,9 @@ public class Enemy {
 		{
 				return curr_waypoint;
 		}
+
+        public double getMaxHealth()
+        {
+            return this.type.hp();
+        }
 }
