@@ -26,7 +26,7 @@ public class CombatSystem {
 								if (enemyToShoot == null) continue;
 								if (enemyToShoot.isAlive()){
 								damagesystem.DamageEnemy(tower.getDamage(), enemyToShoot);
-								Bullets.add(new Fire(tower.getPosition(), enemyToShoot.getPosition()));
+								Bullets.add(new Fire(tower.getType() ,tower.getPosition(), enemyToShoot.getPosition()));
 								tower.reset_cooldown();
 								tower.lockAnimationLock();
 								tower.calculateAngle(enemyToShoot.getPosition());

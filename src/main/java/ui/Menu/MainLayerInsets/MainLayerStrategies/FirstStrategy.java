@@ -14,7 +14,7 @@ public class FirstStrategy implements MainLayerStrategy {
     private BooleanProperty gameStarter;
 
 	@Override
-	public VBox changeMainLayerButton(BooleanProperty gameStarter, MainLayerStrategyChanger strategyChanger, BooleanProperty changedStrategy, ObjectProperty<Pathtype> type, IntegerProperty waveNumber) {
+	public VBox changeMainLayerButton(BooleanProperty gameStarter, MainLayerStrategyChanger strategyChanger, BooleanProperty changedStrategy, ObjectProperty<Pathtype> type, IntegerProperty waveNumber, IntegerProperty volumeProperty) {
         this.gameStarter = gameStarter;
 
         VBox BigButtons = new VBox(15);

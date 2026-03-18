@@ -19,10 +19,16 @@ import ui.Menu.MainLayerInsets.MainLayerStrategyChanger;
 public class SecondStrategy implements MainLayerStrategy {
 
 	@Override
-	public VBox changeMainLayerButton(BooleanProperty gameStarter, MainLayerStrategyChanger strategyChanger, BooleanProperty strategyChanged, ObjectProperty<Pathtype> type, IntegerProperty waveNumber) {
+	public VBox changeMainLayerButton(BooleanProperty gameStarter, MainLayerStrategyChanger strategyChanger, BooleanProperty strategyChanged, ObjectProperty<Pathtype> type, IntegerProperty waveNumber, IntegerProperty volumeProperty) {
 
         VBox BigButtons = new VBox(15);
         BigButtons.getStyleClass().add("main-layer-big-buttons");
+
+        Label RoundSettingsLabel = new Label("Round Settings");
+        RoundSettingsLabel.getStyleClass().add("settings-titel-label");
+
+        Label GameSettingsLabel = new Label("Game Settings");
+        GameSettingsLabel.getStyleClass().add("settings-titel-label");
 
         HBox waveNumberBox = new HBox(10);
         waveNumberBox.setAlignment(Pos.CENTER);
@@ -37,9 +43,7 @@ public class SecondStrategy implements MainLayerStrategy {
         startWaveButton.setPrefSize(195,60);
 
         Slider slider = new Slider(0, 100, 0);
-
-        slider.setPrefSize(385, 60);
-        slider.getStyleClass().add("start-game-button");
+        slider.getStyleClass().add("slider-style");
 
         slider.valueProperty().addListener((obs, oldVal, newVal) -> {
             waveNumber.set(newVal.intValue());
@@ -100,6 +104,31 @@ public class SecondStrategy implements MainLayerStrategy {
         currentDifficulty.getStyleClass().add("curr-wave-label");
         currentDifficulty.setPrefSize(180, 60);
 
+        HBox volumeBox = new HBox(10);
+        volumeBox.setAlignment(Pos.CENTER);
+        
+        Button soundButton = new Button("Set Volume");
+        soundButton.getStyleClass().add("set-volume-button");
+        soundButton.setOnAction(e -> volumeProperty.setValue(0));
+
+        Slider volumeSlider = new Slider(0, 100, 0);
+        volumeSlider.getStyleClass().add("slider-style");
+
+        volumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> { 
+            volumeProperty.setValue(newVal.intValue());
+        });
+
+        volumeProperty.addListener((obs, oldVal, newVal) -> {
+            volumeSlider.setValue(newVal.doubleValue());
+        });
+
+        Label soundLabel = new Label();
+        soundLabel.getStyleClass().add("current-volume-label");
+        soundLabel.textProperty().bind(volumeProperty.asString());
+
+        volumeBox.getChildren().addAll(soundButton, volumeSlider, soundLabel);
+        
+
         difficultyBox.getChildren().addAll(changeToEasy, changeToMedium, changeToHard, changeToImpossible, currentDifficulty);
 
 
@@ -111,7 +140,7 @@ public class SecondStrategy implements MainLayerStrategy {
         setAndReturn.getStyleClass().add("start-game-button");
         setAndReturn.setPrefSize(180, 60);
 
-        BigButtons.getChildren().addAll(waveNumberBox,  difficultyBox, setAndReturn);
+        BigButtons.getChildren().addAll(RoundSettingsLabel ,waveNumberBox,  difficultyBox, GameSettingsLabel, volumeBox ,setAndReturn);
 	
         return BigButtons;
     }

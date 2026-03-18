@@ -8,5 +8,5 @@ import javafx.scene.layout.VBox;
 
 public interface MainLayerStrategy {
     
-    VBox changeMainLayerButton(BooleanProperty gameStarter, MainLayerStrategyChanger strategyChanger, BooleanProperty changedStrategy, ObjectProperty<Pathtype> type, IntegerProperty waveNumber);
+    VBox changeMainLayerButton(BooleanProperty gameStarter, MainLayerStrategyChanger strategyChanger, BooleanProperty changedStrategy, ObjectProperty<Pathtype> type, IntegerProperty waveNumber, IntegerProperty volumeProperty);
 }

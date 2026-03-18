@@ -10,6 +10,9 @@ public class TowerRenderer {
     private TowerAnimation BASIC = new TowerAnimation(TowerType.BASIC);
     private TowerAnimation ADVANCED = new TowerAnimation(TowerType.ADVANCED);
     private TowerAnimation EXPERT = new TowerAnimation(TowerType.EXPERT);
+    private TowerAnimation RAYBASIC = new TowerAnimation(TowerType.RAYBASIC);
+    private TowerAnimation RAYADVANCED = new TowerAnimation(TowerType.RAYADVANCED);
+    private TowerAnimation RAYEXPERT = new TowerAnimation(TowerType.RAYEXPERT);
 
 		public void renderTower(List<Tower>towers, GraphicsContext gc, double dt)
 		{
@@ -70,6 +73,36 @@ public class TowerRenderer {
                     } else {
                          int frame = tower.currShootAnimation(dt);
                          image = EXPERT.getNextMovement(frame);	
+                    }
+                }
+                if(tower.getType() == TowerType.RAYBASIC)
+                {
+                    if(!tower.getAnimationLock())
+                    {
+                            image = RAYBASIC.getImage();
+                    } else {
+                         int frame = tower.currShootAnimation(dt);
+                         image = RAYBASIC.getNextMovement(frame);	
+                    }
+                }
+                if(tower.getType() == TowerType.RAYADVANCED)
+                {
+                    if(!tower.getAnimationLock())
+                    {
+                            image = RAYADVANCED.getImage();
+                    } else {
+                         int frame = tower.currShootAnimation(dt);
+                         image = RAYADVANCED.getNextMovement(frame);	
+                    }
+                }
+                if(tower.getType() == TowerType.RAYEXPERT)
+                {
+                    if(!tower.getAnimationLock())
+                    {
+                            image = RAYEXPERT.getImage();
+                    } else {
+                         int frame = tower.currShootAnimation(dt);
+                         image = RAYEXPERT.getNextMovement(frame);	
                     }
                 }
 				return image;

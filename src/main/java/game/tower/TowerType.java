@@ -13,7 +13,21 @@ public enum TowerType {
 		EXPERT(40.0d, 90, 75, 650,
 						"/images/static-images/lvl3-turret",
 						"/images/lvl3-turret-fight/lvl3-turret-fight", 8	
+						),
+        RAYBASIC(40.0d, 90, 75, 150,
+						"/images/static-images/lvl4-turret",
+						"/images/lvl4-turret-fight/lvl4-turret-fight", 11	
+						),
+        RAYADVANCED(40.0d, 90, 75, 150,
+						"/images/static-images/lvl5-turret",
+						"/images/lvl5-turret-fight/lvl5-turret-fight", 11	
+						),
+        RAYEXPERT(40.0d, 90, 75, 150,
+						"/images/static-images/lvl6-turret",
+						"/images/lvl6-turret-fight/lvl6-turret-fight", 11	
 						);
+
+
 		private final double firerate;
 		private final int reichweite;
 		private final int damage;

@@ -22,9 +22,9 @@ public class MainLayerStrategyChanger {
         this.strategy = strategy;
     }
 
-    public VBox setNewMainLayer(ObjectProperty<Pathtype> type, IntegerProperty waveNumber)
+    public VBox setNewMainLayer(ObjectProperty<Pathtype> type, IntegerProperty waveNumber, IntegerProperty volumeProperty)
     {
-        return this.strategy.changeMainLayerButton(this.gameStarter, this, this.changedStrategy, type, waveNumber);
+        return this.strategy.changeMainLayerButton(this.gameStarter, this, this.changedStrategy, type, waveNumber, volumeProperty);
     }
 
 

@@ -23,8 +23,9 @@ public class Main extends Application {
     public BooleanProperty changeScene = new SimpleBooleanProperty();
     private ObjectProperty<Pathtype> pathtype = new SimpleObjectProperty<>(Pathtype.EASY);
     private IntegerProperty waveNumber = new SimpleIntegerProperty(0);
+    private IntegerProperty volumeProperty = new SimpleIntegerProperty(100);
     private BooleanProperty lostGame = new SimpleBooleanProperty();
-    private MenuBuilder menuBuilder = new MenuBuilder(changeScene, pathtype, waveNumber);
+    private MenuBuilder menuBuilder = new MenuBuilder(changeScene, pathtype, waveNumber, volumeProperty);
     @Override
     public void init() // init, start, stop, werden in dieser Reihenfolge durch launch() aufgerufen!
     {
@@ -58,6 +59,9 @@ public class Main extends Application {
                     this.mainStage.setScene(gameScene);
                     gameScene.getRoot().requestFocus();
                     } else {
+                        this.engine = null;
+                        this.GL.stop();
+                        this.GL = null;
                         this.mainStage.setScene(setMenuScene());
                     }
                 }
@@ -80,7 +84,7 @@ public class Main extends Application {
 
     public Scene setGameScene()
     {
-        this.engine = new GameEngine(this.pathtype.getValue(), this.waveNumber.getValue());
+        this.engine = new GameEngine(this.pathtype.getValue(), this.waveNumber.getValue(), this.volumeProperty.getValue());
         this.GL = new GameLoop(engine);
         this.GL.start();
         this.lostGame.unbind();
@@ -100,7 +104,6 @@ public class Main extends Application {
         this.lostGame.unbind();
         this.engine = null;
         this.GL.stop();
-        this.GL = null;
         this.changeScene.setValue(false);
     }
 

@@ -7,6 +7,7 @@ import game.render.RenderSystems;
 import game.sattack.SpecialAttack;
 import game.sattack.SpecialAttackFactory;
 import game.sattack.SpecialAttackType;
+import game.sound.SoundSystems;
 import game.tower.*;
 import game.animation.towerAnimationen.Fire;
 import game.combat.*;
@@ -32,6 +33,7 @@ public class GameEngine {
         private SpecialAttackFactory sattackFactory = new SpecialAttackFactory();
 		private WaveFactory waveFactory = new WaveFactory();
 		private PathFactory pathFactory = new PathFactory();
+        private SoundSystems soundSystem;
 		private ActiveWave activeWave = null;
         private IntegerProperty waveProperty = new SimpleIntegerProperty(1);
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
@@ -48,9 +50,10 @@ public class GameEngine {
 		private EconomySystems economySystems = new EconomySystems();
 		private Economy economy;
 
-        public GameEngine(Pathtype pathtype, int waveNumber)
+        public GameEngine(Pathtype pathtype, int waveNumber, int volume)
         {
             this.waveNumber = waveNumber;
+            this.soundSystem = new SoundSystems((double) volume / 100);
             this.economy = new Economy(this.economySystems, pathtype);
             this.path = this.pathFactory.createPath(pathtype);
             this.waveProperty = new SimpleIntegerProperty(waveNumber);
@@ -87,6 +90,11 @@ public class GameEngine {
                             livesLeft.setValue(livesLeft.getValue() - 1);
                         }
 
+                        if (!enemy.isAlive())
+                        {
+                            soundSystem.playEnemyDyingSound(enemy.getType());
+                        }
+
 						if (!enemy.isAlive() || enemy.isFinished())
 						{
 								EnemiesToRemove.add(enemy);
@@ -98,15 +106,20 @@ public class GameEngine {
 				List<Tower>TowersToRemove = new ArrayList<>();
 				for (Tower tower : towers)
 				{
+                        if (tower.get_fireSound() == true)
+                        {
+                            soundSystem.playTowerSound(tower.getType());
+                            tower.set_fireSound();
+                        }
 						tower.update(stepTime);
 				}
 				List<Fire>bulletsToRemove = new ArrayList<>();
 				for (Fire bullet : Bullets)
 				{
-						bullet.updatePosition(stepTime);
+                        bullet.updatePosition(stepTime);
 						if (bullet.reachedTarget())
 						{
-								bulletsToRemove.add(bullet);
+							bulletsToRemove.add(bullet);
 						}
 				}
 				Bullets.removeAll(bulletsToRemove);

@@ -3,17 +3,25 @@ package game.animation.towerAnimationen;
 import javafx.scene.image.Image;
 import util.Vector2;
 import game.animation.enemyAnimationen.LoadSystems;
+import game.tower.TowerType;
 
 public class Fire{
 		private String firePic = "/images/static-images/bullet";
+        private String rayPic = "/images/static-images/ray2";
         private Image loadedFirePic = null;
 		private Vector2 endpoint;
 		private Vector2 position;
 		private double speed = 400d;
 		private boolean reachedTarget = false;
 
-		public Fire(Vector2 position, Vector2 endpoint) 
+		public Fire(TowerType type ,Vector2 position, Vector2 endpoint) 
 		{
+                if (type == TowerType.BASIC || type == TowerType.ADVANCED || type == TowerType.EXPERT) 
+                {
+                    this.loadedFirePic = LoadSystems.loadImage(this.firePic);
+                } else{
+                    this.loadedFirePic = LoadSystems.loadImage(this.rayPic);
+                }
 				this.position = position; this.endpoint = endpoint;
 		}
 

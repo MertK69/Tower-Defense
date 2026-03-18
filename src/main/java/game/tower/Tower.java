@@ -12,6 +12,7 @@ public class Tower {
 		private double shootAnimationInterval = 5d;
 		private double Timer = 0d;
 	    private double currentAngle = -90d;			
+        private boolean doFireSound = false;
 		public Tower(TowerType type, Vector2 position) {
 				this.type = type;
 				this.position = position;
@@ -63,6 +64,7 @@ public class Tower {
 		public void lockAnimationLock()
 		{
 				shootAnimationLock = true;
+                this.doFireSound = true;
 		}
 
 		public void delockAnimationLock()
@@ -110,7 +112,13 @@ public class Tower {
 				return this.currentAngle + 90d;
 		}
 
+        public void set_fireSound()
+        {
+            this.doFireSound = false;
+        }
 
-
-
+        public boolean get_fireSound()
+        {
+            return this.doFireSound;
+        }
 }

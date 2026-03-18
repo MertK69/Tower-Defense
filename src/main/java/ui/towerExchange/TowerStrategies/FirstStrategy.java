@@ -54,15 +54,15 @@ public class FirstStrategy implements TowerStrategy{
                 tower3.getStyleClass().add("tower-border");
                 tower3.setPrefSize(80, 50);
                 Button tower4 = new Button("", iV4);
-                tower4.setOnAction(e -> buyTower(e, TowerType.EXPERT, engine, MainPane));
+                tower4.setOnAction(e -> buyTower(e, TowerType.RAYBASIC, engine, MainPane));
                 tower4.getStyleClass().add("tower-border");
                 tower4.setPrefSize(80, 50);
                 Button tower5 = new Button("", iV5);
-                tower5.setOnAction(e -> buyTower(e, TowerType.EXPERT, engine, MainPane));
+                tower5.setOnAction(e -> buyTower(e, TowerType.RAYADVANCED, engine, MainPane));
                 tower5.getStyleClass().add("tower-border");
                 tower5.setPrefSize(80, 50);
                 Button tower6 = new Button("", iV6);
-                tower6.setOnAction(e -> buyTower(e, TowerType.EXPERT, engine, MainPane));
+                tower6.setOnAction(e -> buyTower(e, TowerType.RAYEXPERT, engine, MainPane));
                 tower6.getStyleClass().add("tower-border");
                 tower6.setPrefSize(80, 50);
 

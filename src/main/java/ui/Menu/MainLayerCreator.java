@@ -24,12 +24,13 @@ public class MainLayerCreator {
     private MainLayerStrategyChanger strategyChanger;
     private BorderPane MainBox = new BorderPane();
     private IntegerProperty waveNumber;
+    private IntegerProperty volumeProperty;
     private ObjectProperty<Pathtype> type;
 
-    public MainLayerCreator(BooleanProperty changeScene, ObjectProperty<Pathtype> type, IntegerProperty waveNumber)
+    public MainLayerCreator(BooleanProperty changeScene, ObjectProperty<Pathtype> type, IntegerProperty waveNumber, IntegerProperty volumeProperty)
     {
         this.strategyChanger = new MainLayerStrategyChanger(changeScene, changedStrategy);
-        this.type = type; this.waveNumber = waveNumber;
+        this.type = type; this.waveNumber = waveNumber; this.volumeProperty = volumeProperty;
         this.strategyChanger.changeStrategy(new FirstStrategy());
         this.changedStrategy.addListener(e -> refreshUI());
     }
@@ -39,7 +40,7 @@ public class MainLayerCreator {
         Image gifImage = Loader.loadGif("/images/background-video/background_gif");
     
         ImageView backgroundView = new ImageView(gifImage);
-        VBox Buttons = this.strategyChanger.setNewMainLayer(this.type, this.waveNumber);
+        VBox Buttons = this.strategyChanger.setNewMainLayer(this.type, this.waveNumber, this.volumeProperty);
         MainBox.setCenter(Buttons);
 
         StackPane root = new StackPane();
@@ -57,7 +58,7 @@ public class MainLayerCreator {
 
     public void refreshUI()
     {
-        this.MainBox.setCenter(this.strategyChanger.setNewMainLayer(this.type, this.waveNumber));
+        this.MainBox.setCenter(this.strategyChanger.setNewMainLayer(this.type, this.waveNumber, this.volumeProperty));
     }
 
 

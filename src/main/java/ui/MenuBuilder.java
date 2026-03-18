@@ -18,9 +18,9 @@ public class MenuBuilder {
     private TopLayerCreator topLayerCreator = new TopLayerCreator();
     private MainLayerCreator mainLayerCreator;
 
-    public MenuBuilder(BooleanProperty changeScene, ObjectProperty<Pathtype> type, IntegerProperty waveNumber)
+    public MenuBuilder(BooleanProperty changeScene, ObjectProperty<Pathtype> type, IntegerProperty waveNumber, IntegerProperty volumeProperty)
     {
-        this.mainLayerCreator = new MainLayerCreator(changeScene, type, waveNumber);
+        this.mainLayerCreator = new MainLayerCreator(changeScene, type, waveNumber, volumeProperty);
     }
 
     public void set_MainPane(BorderPane pane)

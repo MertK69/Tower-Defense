@@ -16,7 +16,7 @@ public class ThirdStrategy implements MainLayerStrategy {
 
 	@Override
 	public VBox changeMainLayerButton(BooleanProperty gameStarter, MainLayerStrategyChanger strategyChanger,
-			BooleanProperty changedStrategy, ObjectProperty<Pathtype> type, IntegerProperty waveNumber) {
+			BooleanProperty changedStrategy, ObjectProperty<Pathtype> type, IntegerProperty waveNumber, IntegerProperty volumeProperty) {
 
         VBox MainBox = new VBox(10);
         MainBox.setAlignment(Pos.CENTER);
