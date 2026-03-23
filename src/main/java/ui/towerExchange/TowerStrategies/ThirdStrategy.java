@@ -11,19 +11,20 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import ui.towerExchange.TowerStrategy;
 import util.Vector2;
 import game.sattack.SpecialAttack;
 import game.sattack.SpecialAttackType;
 
 public class ThirdStrategy implements TowerStrategy {
-    LoadSystems Loader = new LoadSystems();
 
 	@Override
 	public HBox changeTower(GameEngine engine, BorderPane MainPane) {
@@ -31,12 +32,27 @@ public class ThirdStrategy implements TowerStrategy {
         HBox towerMenu = new HBox(15); // 15 Pixel Abstand zwischen den Buttons
         towerMenu.setAlignment(Pos.CENTER_LEFT);
         towerMenu.setPadding(new Insets(0, 0, 0, 25)); // Etwas Abstand nach links zu den Münzen
-        Image image = Loader.loadImage("/images/static-images/Fireattack");
+        Image image = LoadSystems.loadImage("/images/static-images/Fireattack");
         ImageView iV = new ImageView(image);
-        Image image2 = Loader.loadImage("/images/static-images/Missle");
+        Image image2 = LoadSystems.loadImage("/images/static-images/Missle");
         ImageView iV2 = new ImageView(image2);
-        Image image3 = Loader.loadImage("/images/static-images/EarthQuake");
+        Image image3 = LoadSystems.loadImage("/images/static-images/EarthQuake");
         ImageView iV3 = new ImageView(image3);
+    
+        Label attack1priceTag = new Label(String.valueOf(SpecialAttackType.FireAttack.get_Price()));
+        attack1priceTag.getStyleClass().add("tower-price-label");
+        Label attack2priceTag = new Label(String.valueOf(SpecialAttackType.BombAttack.get_Price()));
+        attack2priceTag.getStyleClass().add("tower-price-label");
+        Label attack3priceTag = new Label(String.valueOf(SpecialAttackType.ElectricWave.get_Price()));
+        attack3priceTag.getStyleClass().add("tower-price-label");
+
+        VBox attack1box = new VBox();
+        attack1box.getStyleClass().add("tower-box");
+        VBox attack2box = new VBox();
+        attack2box.getStyleClass().add("tower-box");
+        VBox attack3box = new VBox();
+        attack3box.getStyleClass().add("tower-box");
+
         Button tower1 = new Button("", iV);
         tower1.getStyleClass().add("tower-border");
         tower1.setOnAction(e -> useSpecialAttack(e, SpecialAttackType.FireAttack, engine, MainPane));
@@ -47,10 +63,18 @@ public class ThirdStrategy implements TowerStrategy {
         tower2.setPrefSize(80, 50);
         Button tower3 = new Button("", iV3);
         tower3.getStyleClass().add("tower-border");
-        tower3.setOnAction(e -> useSpecialAttack(e, SpecialAttackType.EarthQuake, engine, MainPane));
+        tower3.setOnAction(e -> useSpecialAttack(e, SpecialAttackType.ElectricWave, engine, MainPane));
         tower3.setPrefSize(80, 50);
-        towerMenu.getChildren().addAll(tower1, tower2, tower3);
-            
+           
+        attack1box.getChildren().addAll(tower1, attack1priceTag);
+        attack1box.getStyleClass().add("tower-border");
+        attack2box.getChildren().addAll(tower2, attack2priceTag);
+        attack2box.getStyleClass().add("tower-border");
+        attack3box.getChildren().addAll(tower3, attack3priceTag);
+        attack3box.getStyleClass().add("tower-border");
+
+        towerMenu.getChildren().addAll(attack1box, attack2box ,attack3box);
+
         return towerMenu;
 	}
 

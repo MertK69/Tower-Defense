@@ -3,7 +3,11 @@
 }
 
 .tower-border {
-    -fx-background-color: Transparent; -fx-border-color: grey; -fx-border-radius: 8;
+     -fx-border-color: grey; -fx-background-color: lightgrey; -fx-border-radius: 8px; -fx-border-color: black; -fx-background-radius: 8px; 
+}
+
+.tower-price-label {
+    -fx-font-size: 16px; -fx-text-fill: darkred; -fx-background-color: Transparent;
 }
 
 .bottom-top-border {
@@ -12,6 +16,10 @@
 
 .top-bottom-border {
     -fx-background-color: grey; -fx-border-color:  transparent transparent black transparent; -fx-border-width: 2; 
+}
+
+.tower-box {
+    -fx-alignment: center; -fx-background-color: white; -fx-background-radius: 8px; -fx-border-color: black;
 }
 
 .coin-field{

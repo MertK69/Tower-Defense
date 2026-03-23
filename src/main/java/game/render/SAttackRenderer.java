@@ -12,16 +12,17 @@ import util.Vector2;
 public class SAttackRenderer{
     private SpecialAttackAnimation fireAnimation = new SpecialAttackAnimation(SpecialAttackType.FireAttack);
     private SpecialAttackAnimation explosionAnimation = new SpecialAttackAnimation(SpecialAttackType.BombAttack);
-    private SpecialAttackAnimation earthQuakeAnimation = new SpecialAttackAnimation(SpecialAttackType.EarthQuake);
+    private SpecialAttackAnimation electricAnimation = new SpecialAttackAnimation(SpecialAttackType.ElectricWave);
 
     public void renderSAttack(GraphicsContext gc, List<SpecialAttack>SAttackList, double dt)
     {
-        gc.save();
         
         for (SpecialAttack SAttack : SAttackList)
         {
             Vector2 position = SAttack.get_position();
+            if(SAttack.get_type() == SpecialAttackType.ElectricWave) SAttack.change_position();
             Image curr_Pic = get_Image(SAttack, dt);
+            gc.save();
             gc.translate(position.getX(), position.getY());
             gc.drawImage(
                     curr_Pic,
@@ -29,8 +30,8 @@ public class SAttackRenderer{
                     - SAttack.get_type().get_renderDistance(),
                     SAttack.get_type().get_renderDistance() * 2, SAttack.get_type().get_renderDistance() * 2
             );
+            gc.restore();
         }
-        gc.restore();
     }
 
     public Image get_Image(SpecialAttack specialAttack, double dt)
@@ -56,14 +57,14 @@ public class SAttackRenderer{
                  image = explosionAnimation.get_NextImage(frame);	
             }
         }
-        if(specialAttack.get_type() == SpecialAttackType.EarthQuake)
+        if(specialAttack.get_type() == SpecialAttackType.ElectricWave)
         {
             if(specialAttack.get_AnimationLock())
             {
-                    image = earthQuakeAnimation.get_Image();
+                    image = electricAnimation.get_Image();
             } else {
                  int frame = specialAttack.currAttackAnimation(dt);
-                 image = earthQuakeAnimation.get_NextImage(frame);	
+                 image = electricAnimation.get_NextImage(frame);	
             }
         }
         return image;

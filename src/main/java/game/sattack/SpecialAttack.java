@@ -1,5 +1,6 @@
 package game.sattack;
 
+import game.animation.enemyAnimationen.LoadSystems;
 import util.Vector2;
 
 public class SpecialAttack {
@@ -10,12 +11,23 @@ public class SpecialAttack {
     private double AnimationLockTimer;
     private int currAttackAnimation = 0;
     private boolean reachedLastFrame = false;
+    private boolean playedSound = false;
 
     public SpecialAttack(SpecialAttackType type, Vector2 position)
     {
         this.type = type;
         this.position = position;
         this.AnimationLockTimer = type.get_AnimationInterval();
+    }
+
+    public boolean playedSound()
+    {
+        return this.playedSound;
+    }
+
+    public void didPlayedSound()
+    {
+        this.playedSound = true;
     }
 
     public boolean reachedLastFrame()
@@ -31,6 +43,11 @@ public class SpecialAttack {
     public Vector2 get_position()
     {
         return this.position;
+    }
+
+    public void change_position()
+    {
+        this.position = LoadSystems.generateRandomVector2();
     }
 
     public boolean get_AnimationLock()

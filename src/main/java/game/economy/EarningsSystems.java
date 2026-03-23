@@ -16,14 +16,7 @@ public class EarningsSystems{
 				int Money = 0;
 				for (Enemy X : removedEnemies)
 				{
-						if (X.getType() == EnemyType.Matrose) Money += 10;
-						if (X.getType() == EnemyType.Gefreiter) Money += 15;
-						if (X.getType() == EnemyType.Leutnant) Money += 20;
-						if (X.getType() == EnemyType.Kommodore) Money += 25;
-						if (X.getType() == EnemyType.Kapitan) Money += 35;
-						if (X.getType() == EnemyType.Vizeadmiral) Money += 50;
-						if (X.getType() == EnemyType.Admiral) Money += 70;
-						if (X.getType() == EnemyType.Großadmiral) Money += 100;
+						Money += X.getType().get_Value();
 				}
 				return Money;
 		}

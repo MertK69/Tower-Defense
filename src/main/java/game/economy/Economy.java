@@ -2,6 +2,9 @@ package game.economy;
 
 import game.path.Path;
 import game.path.Pathtype;
+import game.sattack.SpecialAttack;
+import game.sattack.SpecialAttackType;
+
 import java.util.List;
 import game.enemy.*;
 import game.tower.*;
@@ -15,7 +18,7 @@ public class Economy {
 		public Economy(EconomySystems economySystems, Pathtype difficulty)
 		{
 				this.economySystems = economySystems;
-				if (difficulty == Pathtype.EASY) this.curr_money.set(500);
+				if (difficulty == Pathtype.EASY) this.curr_money.set(80000);
 				if (difficulty == Pathtype.MEDIUM) this.curr_money.set(750);
 				if (difficulty == Pathtype.MEDIUM) this.curr_money.set(1000);
 				if (difficulty == Pathtype.IMPOSSIBLE) this.curr_money.set(1500);
@@ -41,5 +44,10 @@ public class Economy {
 		{
 				curr_money.set(curr_money.get() - economySystems.withdrawMoneyFromBoughtTowers(type));
 		}
+
+        public void specialEffectsBought(SpecialAttackType type)
+        {
+                curr_money.set(curr_money.get() - economySystems.withdrawMoneyFromSpecialEffects(type));
+        }
 
 }

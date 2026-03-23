@@ -1,4 +1,5 @@
 package game.render;
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import game.tower.*;
@@ -11,14 +12,15 @@ import game.sattack.SpecialAttack;
 import java.util.List;
 
 public class RenderSystems {
-		private TowerRenderer towerRenderer = new TowerRenderer();
+		private TowerRenderer towerRenderer;
 		private EnemyRenderer enemyRenderer = new EnemyRenderer();
 		private PathRenderer pathRenderer = new PathRenderer();
 		private BackgroundRenderer backgroundRenderer = new BackgroundRenderer();
 		private BulletRenderer bulletRenderer = new BulletRenderer();
         private SAttackRenderer sattackRenderer = new SAttackRenderer();
-		public RenderSystems ()
+		public RenderSystems (BooleanProperty showTowerRanges)
 		{
+            this.towerRenderer = new TowerRenderer(showTowerRanges);
 		}
 
         public void renderSpecialAttacks(GraphicsContext gc, List<SpecialAttack>SAttackList, double dt)

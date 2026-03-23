@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 import javafx.scene.image.Image;
+import util.Vector2;
 import game.animation.hilfsfunktionen.*;
 
 
@@ -36,6 +37,11 @@ public class LoadSystems {
         public String get_css()
         {
             return this.css;
+        }
+
+        public static Vector2 generateRandomVector2()
+        {
+            return Loader.loadRandomVec2();
         }
 
 }

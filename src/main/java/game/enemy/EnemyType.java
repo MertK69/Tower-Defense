@@ -2,49 +2,49 @@ package game.enemy;
 
 public enum EnemyType {
 		
-		Matrose(10.0d, 20.0d, false, false, 
+		Matrose(15.0d, 20.0d, 10,false, false, 
 						"/images/s-lvl1-walk-right/s-lvl1-walk-right",
 						"/images/s-lvl1-walk-left/s-lvl1-walk-left", 
 						"/images/s-lvl1-walk-down/s-lvl1-walk-down",
 						"/images/s-lvl1-walk-up/s-lvl1-walk-up", 6, 0.2d),
 
-		Gefreiter(70.0d, 20.0d, false, false, 
+		Gefreiter(70.0d, 20.0d, 15,false, false, 
 						"/images/s-lvl2-walk-right/s-lvl2-walk-right",
 						"/images/s-lvl2-walk-left/s-lvl2-walk-left",
 						"/images/s-lvl2-walk-down/s-lvl2-walk-down",
 						"/images/s-lvl2-walk-up/s-lvl2-walk-up", 6, 0.2d),
 
-		Leutnant(105.0d, 25.0d, false, false,
+		Leutnant(150.0d, 25.0d, 20,false, false,
 						"/images/s-lvl4-walk-right/s-lvl4-walk-right",
 						"/images/s-lvl4-walk-left/s-lvl4-walk-left",
 						"/images/s-lvl4-walk-down/s-lvl4-walk-down",
 						"/images/s-lvl4-walk-up/s-lvl4-walk-up", 6, 0.2d),	
 
-		Kapitan(120.0d, 30.0d, true, false, 
+		Kapitan(200.0d, 30.0d, 25,true, false, 
 						"/images/s-lvl5-walk-right/s-lvl5-walk-right",
 						"/images/s-lvl5-walk-left/s-lvl5-walk-left",
 						"/images/s-lvl5-walk-down/s-lvl5-walk-down",
 						"/images/s-lvl5-walk-up/s-lvl5-walk-up", 6, 0.2d),
 
-		Kommodore(220.0d, 35.0d, true, false, 
+		Kommodore(270.0d, 35.0d, 35,true, false, 
 						"/images/s-lvl6-walk-right/s-lvl6-walk-right",
 						"/images/s-lvl6-walk-left/s-lvl6-walk-left",
 						"/images/s-lvl6-walk-down/s-lvl6-walk-down",
 						"/images/s-lvl6-walk-up/s-lvl6-walk-up", 6, 0.2d),
 
-		Vizeadmiral(300.0d, 30.0d, false, true, 
+		Vizeadmiral(380.0d, 30.0d, 50,false, true, 
 						"/images/s-lvl7-walk-right/s-lvl7-walk-right",
 						"/images/s-lvl7-walk-left/s-lvl7-walk-left",
 						"/images/s-lvl7-walk-down/s-lvl7-walk-down",
 						"/images/s-lvl7-walk-up/s-lvl7-walk-up", 6, 0.2d),
 
-		Admiral(450.0d, 50.0d, false, true, 
+		Admiral(600.0d, 50.0d, 70,false, true, 
 						"/images/s-lvl8-walk-right/s-lvl8-walk-right",
 						"/images/s-lvl8-walk-left/s-lvl8-walk-left",
 						"/images/s-lvl8-walk-down/s-lvl8-walk-down",
 						"/images/s-lvl8-walk-up/s-lvl8-walk-up", 6, 0.2d),
 
-		Großadmiral(1000.0d, 60.0d, false, true,
+		Großadmiral(1200.0d, 60.0d, 100,false, true,
 						"/images/s-lvl9-walk-right/s-lvl9-walk-right",
 						"/images/s-lvl9-walk-left/s-lvl9-walk-left",
 						"/images/s-lvl9-walk-down/s-lvl9-walk-down",
@@ -52,6 +52,7 @@ public enum EnemyType {
 
 		private double hp;
 		private double speed;
+        private int value;
 		private boolean can_explode;
 		private boolean can_summon;
         private final String movementRightPath;
@@ -60,9 +61,10 @@ public enum EnemyType {
         private final String movementDownwardsPath;
         private final int movementFrameCount;
 		private double movementInterval;
-        EnemyType(double hp, double speed, boolean can_explode, boolean can_summon, String movementRightPath, String movementLeftPath, String movementUpwardsPath, String movementDownwardsPath, int movementFrameCount, double movementInterval) {
+        EnemyType(double hp, double speed, int value,boolean can_explode, boolean can_summon, String movementRightPath, String movementLeftPath, String movementUpwardsPath, String movementDownwardsPath, int movementFrameCount, double movementInterval) {
 				this.hp = hp; 
 				this.speed = speed; 
+                this.value = value;
 				this.can_explode = can_explode; 
 				this.can_summon = can_summon;
 				this.movementRightPath = movementRightPath;
@@ -72,6 +74,11 @@ public enum EnemyType {
                 this.movementFrameCount = movementFrameCount;
 				this.movementInterval = movementInterval;
 		}
+
+        public int get_Value()
+        {
+                return this.value;
+        }
 
 		public double hp(){
 				return this.hp;

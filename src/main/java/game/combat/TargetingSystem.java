@@ -17,7 +17,7 @@ public class TargetingSystem {
 
 	 				Vector2 Distance = enemy.getPosition().subtraction(tower.getPosition());
 					double Distance_length = Distance.Vector_length();
-						if ( closest_distance > Distance_length && Distance_length <= tower.getReichweite()) {
+						if ( closest_distance > Distance_length && Distance_length <= tower.getReichweite()  && Distance_length >= tower.get_NegativReichweite()){
 								closest_distance = Distance_length;
 								closest = enemy;
 						}

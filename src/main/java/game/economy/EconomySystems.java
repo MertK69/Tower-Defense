@@ -2,6 +2,7 @@ package game.economy;
 
 import java.util.List;
 import game.enemy.*;
+import game.sattack.SpecialAttackType;
 import game.tower.*;
 public class EconomySystems {
 		private EarningsSystems earningsSystems = new EarningsSystems();
@@ -25,4 +26,9 @@ public class EconomySystems {
 		{
 				return spendingsSystems.buyTower(type);
 		}
+
+        public int withdrawMoneyFromSpecialEffects(SpecialAttackType type)
+        {
+                return spendingsSystems.buySpecialEffect(type);
+        }
 }

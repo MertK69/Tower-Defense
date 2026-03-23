@@ -75,7 +75,7 @@ public class Tower {
 		public int currShootAnimation(double dt)
 		{
 				if (nextFrame(dt) == true){
-						if (currShootAnimation ==6)
+						if (currShootAnimation == type.get_frameCount() - 2)
 						{
 								this.currShootAnimation = 0;
 								delockAnimationLock();
@@ -120,5 +120,10 @@ public class Tower {
         public boolean get_fireSound()
         {
             return this.doFireSound;
+        }
+
+        public int get_NegativReichweite()
+        {
+            return this.type.get_negativReichweite();
         }
 }

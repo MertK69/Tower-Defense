@@ -38,6 +38,7 @@ public class GameEngine {
         private IntegerProperty waveProperty = new SimpleIntegerProperty(1);
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
         private BooleanProperty gameLost = new SimpleBooleanProperty();
+        private BooleanProperty showTowerRanges = new SimpleBooleanProperty(false);
 		private int waveNumber = 1;
         private IntegerProperty livesLeft = new SimpleIntegerProperty(10);
         private IntegerProperty waveEnemys = new SimpleIntegerProperty();
@@ -46,7 +47,7 @@ public class GameEngine {
         private GraphicsContext gc = canvas.getGraphicsContext2D();
 		private TowerSystems towerSystems = new TowerSystems();
         private CombatSystem combatSystem = new CombatSystem();
-		private RenderSystems renderSystems = new RenderSystems();
+		private RenderSystems renderSystems = new RenderSystems(showTowerRanges);
 		private EconomySystems economySystems = new EconomySystems();
 		private Economy economy;
 
@@ -116,24 +117,27 @@ public class GameEngine {
 				List<Fire>bulletsToRemove = new ArrayList<>();
 				for (Fire bullet : Bullets)
 				{
-                        bullet.updatePosition(stepTime);
 						if (bullet.reachedTarget())
 						{
 							bulletsToRemove.add(bullet);
 						}
+                        bullet.updatePosition(stepTime);
 				}
 				Bullets.removeAll(bulletsToRemove);
                 List<SpecialAttack>SAttacksToRemove = new ArrayList<>();
                 for(SpecialAttack specialAttack : sattackList)
                 {   
+                    if (!specialAttack.playedSound()) soundSystem.playSpecialAttackSound(specialAttack.get_type());
+
                     if(specialAttack.reachedLastFrame())
                     {
                         SAttacksToRemove.add(specialAttack);
                     }
+                    specialAttack.didPlayedSound();
                 }
                 sattackList.removeAll(SAttacksToRemove);
 
-				combatSystem.update(stepTime, towers, enemies, Bullets);
+				combatSystem.update(stepTime, towers, enemies, Bullets, sattackList);
 				economy.update(EnemiesToRemove, TowersToRemove);
 		}
 
@@ -186,8 +190,12 @@ public class GameEngine {
 
         public void handleSpecialAttack(Vector2 Position ,SpecialAttackType attackType)
         {
-            createSAttack(attackType, Position);
-            combatSystem.handleSpecialAttack(this.enemies, Position, attackType); 
+            if (economy.getMoney() >= attackType.get_Price())
+            {
+                createSAttack(attackType, Position);
+                combatSystem.handleSpecialAttack(this.enemies, Position, attackType); 
+                economy.specialEffectsBought(attackType);
+            }
         }
 
         public IntegerProperty get_MoneyProperty()
@@ -218,5 +226,10 @@ public class GameEngine {
         public IntegerProperty get_waveEnemyProperty()
         {
             return this.waveEnemys;
+        }
+
+        public BooleanProperty get_showTowerRangesProperty()
+        {
+            return this.showTowerRanges;
         }
 }

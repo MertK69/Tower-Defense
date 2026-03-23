@@ -2,6 +2,7 @@ package game.render;
 import game.render.animationStorage.TowerAnimation;
 import game.tower.*;
 import util.Vector2;
+import javafx.beans.property.BooleanProperty;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -13,6 +14,16 @@ public class TowerRenderer {
     private TowerAnimation RAYBASIC = new TowerAnimation(TowerType.RAYBASIC);
     private TowerAnimation RAYADVANCED = new TowerAnimation(TowerType.RAYADVANCED);
     private TowerAnimation RAYEXPERT = new TowerAnimation(TowerType.RAYEXPERT);
+    private TowerAnimation ROCKETLAUNCHERBASIC = new TowerAnimation(TowerType.ROCKETLAUNCHERBASIC);
+    private TowerAnimation ROCKETLAUNCHERADVANCED = new TowerAnimation(TowerType.ROCKETLAUNCHERADVANCED);
+    private TowerAnimation ROCKETLAUNCHEREXPERT = new TowerAnimation(TowerType.ROCKETLAUNCHEREXPERT);
+
+    private BooleanProperty showTowerRanges;
+
+    public TowerRenderer(BooleanProperty showTowerRanges)
+    {
+        this.showTowerRanges = showTowerRanges; 
+    }
 
 		public void renderTower(List<Tower>towers, GraphicsContext gc, double dt)
 		{
@@ -31,13 +42,38 @@ public class TowerRenderer {
 							36, 36
 					);
 					gc.restore();
-					gc.setStroke(Color.BLACK);
-					gc.strokeOval(
-							tp.getX() - tower.getReichweite(),
-							tp.getY() - tower.getReichweite(),
-							tower.getReichweite() * 2,
-							tower.getReichweite() * 2
-					);
+                    if (this.showTowerRanges.getValue() == true)
+                    {
+                        gc.save();
+                        gc.setStroke(Color.BLACK);
+                        gc.strokeOval(
+                                tp.getX() - tower.getReichweite(),
+                                tp.getY() - tower.getReichweite(),
+                                tower.getReichweite() * 2,
+                                tower.getReichweite() * 2
+                        );
+                        gc.restore();
+                        if (tower.get_NegativReichweite() > 0)
+                        {
+                            gc.save();
+                            gc.setStroke(Color.RED);
+                            gc.strokeOval(
+                                    tp.getX() - tower.get_NegativReichweite(),
+                                    tp.getY() - tower.get_NegativReichweite(),
+                                    tower.get_NegativReichweite() * 2,
+                                    tower.get_NegativReichweite() * 2
+                        );
+                            gc.setFill(Color.RED);
+                            gc.setGlobalAlpha(0.2);
+                            gc.fillOval(
+                                    tp.getX() - tower.get_NegativReichweite(),
+                                    tp.getY() - tower.get_NegativReichweite(),
+                                    tower.get_NegativReichweite() * 2,
+                                    tower.get_NegativReichweite() * 2
+                                    );
+                            gc.restore();
+                        }
+                    }
 				 }
             gc.restore();
 		}
@@ -105,6 +141,37 @@ public class TowerRenderer {
                          image = RAYEXPERT.getNextMovement(frame);	
                     }
                 }
+                if(tower.getType() == TowerType.ROCKETLAUNCHERBASIC)
+                {
+                    if(!tower.getAnimationLock())
+                    {
+                            image = ROCKETLAUNCHERBASIC.getImage();
+                    } else {
+                         int frame = tower.currShootAnimation(dt);
+                         image = ROCKETLAUNCHERBASIC.getNextMovement(frame);	
+                    }
+                }
+                if(tower.getType() == TowerType.ROCKETLAUNCHERADVANCED)
+                {
+                    if(!tower.getAnimationLock())
+                    {
+                            image = ROCKETLAUNCHERADVANCED.getImage();
+                    } else {
+                         int frame = tower.currShootAnimation(dt);
+                         image = ROCKETLAUNCHERADVANCED.getNextMovement(frame);	
+                    }
+                }
+                if(tower.getType() == TowerType.ROCKETLAUNCHEREXPERT)
+                {
+                    if(!tower.getAnimationLock())
+                    {
+                            image = ROCKETLAUNCHEREXPERT.getImage();
+                    } else {
+                         int frame = tower.currShootAnimation(dt);
+                         image = ROCKETLAUNCHEREXPERT.getNextMovement(frame);	
+                    }
+                }
+
 				return image;
 		}
 }

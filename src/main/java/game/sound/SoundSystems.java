@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import game.enemy.EnemyType;
+import game.sattack.SpecialAttack;
+import game.sattack.SpecialAttackType;
 import game.tower.TowerType;
 import javafx.application.Platform;
 import javafx.scene.media.AudioClip;
@@ -11,6 +13,7 @@ import javafx.scene.media.AudioClip;
 public class SoundSystems {
     private Map<EnemyType, AudioClip>EnemySounds = new HashMap<>();
     private Map<TowerType, AudioClip>TowerSounds = new HashMap<>();
+    private Map<SpecialAttackType, AudioClip>SpecialAttackSounds = new HashMap<>();
     private double volume;
 
     public SoundSystems(double volume)
@@ -27,6 +30,9 @@ public class SoundSystems {
         this.TowerSounds.put(TowerType.RAYBASIC, new AudioClip(getClass().getResource("/sounds/raySound.wav").toExternalForm()));
         this.TowerSounds.put(TowerType.RAYADVANCED, new AudioClip(getClass().getResource("/sounds/raySound.wav").toExternalForm()));
         this.TowerSounds.put(TowerType.RAYEXPERT, new AudioClip(getClass().getResource("/sounds/raySound.wav").toExternalForm()));
+        this.TowerSounds.put(TowerType.ROCKETLAUNCHERBASIC, new AudioClip(getClass().getResource("/sounds/rocket-launch.wav").toExternalForm()));
+        this.TowerSounds.put(TowerType.ROCKETLAUNCHERADVANCED, new AudioClip(getClass().getResource("/sounds/rocket-launch.wav").toExternalForm()));
+        this.TowerSounds.put(TowerType.ROCKETLAUNCHEREXPERT, new AudioClip(getClass().getResource("/sounds/rocket-launch.wav").toExternalForm()));
 
         for (Map.Entry<TowerType, AudioClip> sound : this.TowerSounds.entrySet())
         {
@@ -44,6 +50,10 @@ public class SoundSystems {
         {
             sound.getValue().setVolume(this.volume);
         }
+        this.SpecialAttackSounds.put(SpecialAttackType.BombAttack, new AudioClip(getClass().getResource("/sounds/rocket-explosion.wav").toExternalForm()));
+        this.SpecialAttackSounds.put(SpecialAttackType.ElectricWave, new AudioClip(getClass().getResource("/sounds/electric-sound.wav").toExternalForm()));
+    this.SpecialAttackSounds.put(SpecialAttackType.FireAttack, new AudioClip(getClass().getResource("/sounds/fire-breath.wav").toExternalForm()));
+
     }
 
     public void playTowerSound(TowerType type)
@@ -71,5 +81,18 @@ public class SoundSystems {
         } catch (Exception mediaException) {
             mediaException.printStackTrace();
             }
+    }
+
+    public void playSpecialAttackSound(SpecialAttackType type)
+    {
+        try {
+            if (this.SpecialAttackSounds.containsKey(type)){
+                Platform.runLater(() -> {
+                    this.SpecialAttackSounds.get(type).play();
+                });
+            }
+        }catch (Exception mediaException) {
+                mediaException.printStackTrace();
+        }
     }
 }
