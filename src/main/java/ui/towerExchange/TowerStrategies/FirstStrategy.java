@@ -3,24 +3,21 @@ package ui.towerExchange.TowerStrategies;
 import game.animation.enemyAnimationen.LoadSystems;
 import game.engine.GameEngine;
 import game.tower.TowerType;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import ui.towerExchange.PlacementInputController;
 import ui.towerExchange.TowerStrategy;
-import util.Vector2;
 
 public class FirstStrategy implements TowerStrategy{
 
@@ -123,24 +120,8 @@ public class FirstStrategy implements TowerStrategy{
             Button sourceButton = (Button) e.getSource();
             Scene scene = sourceButton.getScene();
 
-            scene.setCursor(Cursor.CROSSHAIR);
-            
-            javafx.application.Platform.runLater(() -> {
-                scene.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent mouseEvent) {
-                        Pane place = (Pane) MainPane.getCenter();
-                        Point2D localPoint = MainPane.getCenter().sceneToLocal(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-                        if ( place.getBoundsInLocal().contains(localPoint))
-                        {
-                        Vector2 position = new Vector2(localPoint.getX(), localPoint.getY());
-                        engine.handleBuyRequest(type, position);
-                        }
-                        scene.setCursor(Cursor.DEFAULT);
-                        scene.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
-                        mouseEvent.consume();
-                    }
-                });
+            Platform.runLater(() -> {
+                PlacementInputController.begin(scene, (Pane) MainPane.getCenter(), engine, type);
             });
         }
 }

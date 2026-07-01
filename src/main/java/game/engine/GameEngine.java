@@ -43,6 +43,8 @@ public class GameEngine {
         private IntegerProperty livesLeft = new SimpleIntegerProperty(10);
         private IntegerProperty waveEnemys = new SimpleIntegerProperty();
 		private Path path = null;
+		private TowerType placementPreviewType = null;
+		private Vector2 placementPreviewPosition = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
 		private TowerSystems towerSystems = new TowerSystems();
@@ -147,7 +149,12 @@ public class GameEngine {
 
 				renderSystems.renderPath(gc, path);
 
-				renderSystems.renderTower(gc, towers, STEP);	
+				renderSystems.renderTower(gc, towers, STEP);
+
+				if (isPlacingTower())
+				{
+						renderSystems.renderPlacementPreview(gc, placementPreviewType, placementPreviewPosition, isPlacementPreviewValid());
+				}
 
 				renderSystems.renderEnemies(gc, enemies, STEP, path);
 
@@ -183,9 +190,56 @@ public class GameEngine {
 				return canvas;
 		}
 
-		public void handleBuyRequest(TowerType type, Vector2 position)
+		public boolean handleBuyRequest(TowerType type, Vector2 position)
 		{
-				towerSystems.handleBuyRequest(economy, towers, type, position);	
+				return towerSystems.handleBuyRequest(economy, towers, path, type, position);
+		}
+
+		public void startPlacementPreview(TowerType type)
+		{
+				this.placementPreviewType = type;
+				this.placementPreviewPosition = null;
+		}
+
+		public void updatePlacementPreviewPosition(Vector2 position)
+		{
+				this.placementPreviewPosition = position;
+		}
+
+		public void cancelPlacementPreview()
+		{
+				this.placementPreviewType = null;
+				this.placementPreviewPosition = null;
+		}
+
+		public boolean isPlacingTower()
+		{
+				return this.placementPreviewType != null && this.placementPreviewPosition != null;
+		}
+
+		public TowerType getPlacementPreviewType()
+		{
+				return this.placementPreviewType;
+		}
+
+		public Vector2 getPlacementPreviewPosition()
+		{
+				return this.placementPreviewPosition;
+		}
+
+		public boolean isPlacementPreviewValid()
+		{
+				return towerSystems.isValidPlacement(towers, path, placementPreviewPosition);
+		}
+
+		public boolean confirmPlacementPreview()
+		{
+				boolean placed = handleBuyRequest(placementPreviewType, placementPreviewPosition);
+				if (placed)
+				{
+						cancelPlacementPreview();
+				}
+				return placed;
 		}
 
         public void handleSpecialAttack(Vector2 Position ,SpecialAttackType attackType)
