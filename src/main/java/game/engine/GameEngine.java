@@ -37,11 +37,11 @@ public class GameEngine {
 		private ActiveWave activeWave = null;
         private IntegerProperty waveProperty = new SimpleIntegerProperty(1);
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
-        private BooleanProperty gameLost = new SimpleBooleanProperty();
         private BooleanProperty showTowerRanges = new SimpleBooleanProperty(false);
 		private int waveNumber = 1;
-        private IntegerProperty livesLeft = new SimpleIntegerProperty(10);
         private IntegerProperty waveEnemys = new SimpleIntegerProperty();
+        private final RoundLifecycle roundLifecycle = new RoundLifecycle();
+        private final Pathtype pathtype;
 		private Path path = null;
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -54,41 +54,69 @@ public class GameEngine {
         public GameEngine(Pathtype pathtype, int waveNumber, int volume)
         {
             this.waveNumber = waveNumber;
+            this.pathtype = pathtype;
             this.soundSystem = new SoundSystems((double) volume / 100);
             this.economy = new Economy(this.economySystems, pathtype);
             this.path = this.pathFactory.createPath(pathtype);
             this.waveProperty = new SimpleIntegerProperty(waveNumber);
         }
 
-		public void update(double stepTime) 
+		public void update(double stepTime)
 		{
-                if (livesLeft.getValue() == 0) this.gameLost.setValue(!gameLost.getValue());
+                if (roundLifecycle.checkAndHandleGameLost()) return;
 
-				if ( activeWave == null ) activeWave = new ActiveWave(createWave());
+                if (!roundLifecycle.isOnBreak())
+                {
+                    advanceWave(stepTime);
+                }
+                else
+                {
+                    roundLifecycle.advanceBreak(stepTime);
+                }
 
-                this.waveEnemys.setValue(this.activeWave.getEnemyCount());
-		
-				EnemyType spawnType = activeWave.update(stepTime);
+				updateEnemies(stepTime);
+				updateTowers(stepTime);
+				updateBullets(stepTime);
+				updateSpecialAttacks(stepTime);
 
-				if (spawnType != null)
-				{
-						createEnemy(spawnType, path);
-				}
-                this.enemyProperty.set(enemies.size());
+				combatSystem.update(stepTime, towers, enemies, Bullets, sattackList);
+				List<Tower>TowersToRemove = new ArrayList<>();
+				economy.update(EnemiesToRemove, TowersToRemove);
+		}
 
-				if (activeWave.isFinished() && enemies.isEmpty())
-				{
-						activeWave = null;
-						waveNumber++;
-                        this.waveProperty.set(this.waveNumber);
-				}
+		// Spawns enemies for the current wave and starts the post-wave break once it is finished.
+		private void advanceWave(double stepTime)
+		{
+			if (activeWave == null) activeWave = new ActiveWave(createWave());
+
+			this.waveEnemys.setValue(this.activeWave.getEnemyCount());
+
+			EnemyType spawnType = activeWave.update(stepTime);
+
+			if (spawnType != null)
+			{
+					createEnemy(spawnType, path);
+			}
+			this.enemyProperty.set(enemies.size());
+
+			if (activeWave.isFinished() && enemies.isEmpty())
+			{
+					activeWave = null;
+					waveNumber++;
+					this.waveProperty.set(this.waveNumber);
+					roundLifecycle.startBreak();
+			}
+		}
+
+		private void updateEnemies(double stepTime)
+		{
 				EnemiesToRemove.clear();
 				for (Enemy enemy : enemies)
 				{
 						enemy.update(stepTime);
                         if (enemy.isFinished())
                         {
-                            livesLeft.setValue(livesLeft.getValue() - 1);
+                            roundLifecycle.loseLife();
                         }
 
                         if (!enemy.isAlive())
@@ -99,21 +127,26 @@ public class GameEngine {
 						if (!enemy.isAlive() || enemy.isFinished())
 						{
 								EnemiesToRemove.add(enemy);
-								continue;
 						}
 				}
 				enemies.removeAll(EnemiesToRemove);
+		}
 
-				List<Tower>TowersToRemove = new ArrayList<>();
+		private void updateTowers(double stepTime)
+		{
 				for (Tower tower : towers)
 				{
-                        if (tower.get_fireSound() == true)
+                        if (tower.get_fireSound())
                         {
                             soundSystem.playTowerSound(tower.getType());
                             tower.set_fireSound();
                         }
 						tower.update(stepTime);
 				}
+		}
+
+		private void updateBullets(double stepTime)
+		{
 				List<Fire>bulletsToRemove = new ArrayList<>();
 				for (Fire bullet : Bullets)
 				{
@@ -124,9 +157,13 @@ public class GameEngine {
                         bullet.updatePosition(stepTime);
 				}
 				Bullets.removeAll(bulletsToRemove);
+		}
+
+		private void updateSpecialAttacks(double stepTime)
+		{
                 List<SpecialAttack>SAttacksToRemove = new ArrayList<>();
                 for(SpecialAttack specialAttack : sattackList)
-                {   
+                {
                     if (!specialAttack.playedSound()) soundSystem.playSpecialAttackSound(specialAttack.get_type());
 
                     if(specialAttack.reachedLastFrame())
@@ -136,9 +173,6 @@ public class GameEngine {
                     specialAttack.didPlayedSound();
                 }
                 sattackList.removeAll(SAttacksToRemove);
-
-				combatSystem.update(stepTime, towers, enemies, Bullets, sattackList);
-				economy.update(EnemiesToRemove, TowersToRemove);
 		}
 
 		public void render(double STEP)
@@ -185,8 +219,29 @@ public class GameEngine {
 
 		public void handleBuyRequest(TowerType type, Vector2 position)
 		{
-				towerSystems.handleBuyRequest(economy, towers, type, position);	
+				towerSystems.handleBuyRequest(economy, towers, type, position);
 		}
+
+        public void skipBreak()
+        {
+            roundLifecycle.skipBreak();
+        }
+
+        public void resetGame()
+        {
+            this.waveNumber = 1;
+            this.waveProperty.set(1);
+            this.towers.clear();
+            this.enemies.clear();
+            this.EnemiesToRemove.clear();
+            this.Bullets.clear();
+            this.sattackList.clear();
+            this.enemyProperty.set(0);
+            this.waveEnemys.set(0);
+            this.activeWave = null;
+            this.roundLifecycle.reset();
+            this.economy.reset(this.pathtype);
+        }
 
         public void handleSpecialAttack(Vector2 Position ,SpecialAttackType attackType)
         {
@@ -215,17 +270,27 @@ public class GameEngine {
 
         public BooleanProperty get_gameLostProperty()
         {
-            return this.gameLost;
+            return this.roundLifecycle.gameLostProperty();
         }
 
         public IntegerProperty get_livesLeftProperty()
         {
-            return this.livesLeft;
+            return this.roundLifecycle.livesLeftProperty();
         }
 
         public IntegerProperty get_waveEnemyProperty()
         {
             return this.waveEnemys;
+        }
+
+        public BooleanProperty get_onBreakProperty()
+        {
+            return this.roundLifecycle.onBreakProperty();
+        }
+
+        public IntegerProperty get_breakSecondsLeftProperty()
+        {
+            return this.roundLifecycle.breakSecondsLeftProperty();
         }
 
         public BooleanProperty get_showTowerRangesProperty()

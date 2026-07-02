@@ -50,10 +50,18 @@ public class UpperLayerCreator{
             );
             EnemiesLeft.getStyleClass().add("half-sized");
 
+            Label breakCountdown = new Label();
+            breakCountdown.textProperty().bind(
+                    Bindings.format("Nächste Welle in: %ds", engine.get_breakSecondsLeftProperty())
+            );
+            breakCountdown.visibleProperty().bind(engine.get_onBreakProperty());
+            breakCountdown.managedProperty().bind(breakCountdown.visibleProperty());
+            breakCountdown.getStyleClass().add("half-sized");
+
             VBox waveAndSoliderMenu = new VBox(10);
             waveAndSoliderMenu.setPadding(new Insets(5,5,5,5));
             waveAndSoliderMenu.setAlignment(Pos.CENTER_LEFT);
-            waveAndSoliderMenu.getChildren().addAll(waveNumber, EnemiesLeft);
+            waveAndSoliderMenu.getChildren().addAll(waveNumber, EnemiesLeft, breakCountdown);
 
             Label coinText = new Label();
             Image CoinImage = Loader.loadImage("/images/static-images/coins");

@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import game.enemy.*;
@@ -15,9 +17,20 @@ import game.tower.Tower;
 import game.tower.TowerType;
 import game.path.*;
 import game.animation.towerAnimationen.*;
-import util.Vector2; 
+import util.Vector2;
 
 class CombatSystemTest {
+
+    @BeforeAll
+    static void initToolkit() throws InterruptedException {
+        final CountDownLatch latch = new CountDownLatch(1);
+        try {
+            javafx.application.Platform.startup(latch::countDown);
+        } catch (IllegalStateException alreadyStarted) {
+            latch.countDown();
+        }
+        latch.await();
+    }
 
     @Test
     public void update_CombatSystem_Test()
@@ -32,10 +45,11 @@ class CombatSystemTest {
         enemy.__set_Position__(160,390);
         List<Enemy>enemylist = new ArrayList<>(List.of(enemy));
         List<Fire>Bullets = new ArrayList<>();
+        List<game.sattack.SpecialAttack> sattackList = new ArrayList<>();
         double dt = 1.0 / 60.0;
-        
+
         // act
-        combatSystem.update(dt, towerlist, enemylist, Bullets);
+        combatSystem.update(dt, towerlist, enemylist, Bullets, sattackList);
         
         // assert
         assertFalse(Bullets.isEmpty(), "Es sollte ein Projektil erzeugt worden sein.");
