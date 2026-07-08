@@ -8,6 +8,7 @@ import game.economy.Economy;
 import game.enemy.*;
 import game.path.*;
 import game.sattack.SpecialAttack;
+import util.Vector2;
 
 import java.util.List;
 
@@ -56,6 +57,11 @@ public class RenderSystems {
 		public void renderBullets(GraphicsContext gc, List<Fire>Bullets)
 		{
 				bulletRenderer.renderBullets(gc, Bullets);
+		}
+
+		public void renderPlacementPreview(GraphicsContext gc, TowerType type, Vector2 position, boolean valid)
+		{
+				towerRenderer.renderPlacementPreview(gc, type, position, valid);
 		}
 
 }

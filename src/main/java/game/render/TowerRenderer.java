@@ -18,6 +18,11 @@ public class TowerRenderer {
     private TowerAnimation ROCKETLAUNCHERADVANCED = new TowerAnimation(TowerType.ROCKETLAUNCHERADVANCED);
     private TowerAnimation ROCKETLAUNCHEREXPERT = new TowerAnimation(TowerType.ROCKETLAUNCHEREXPERT);
 
+    private static final int PREVIEW_SPRITE_SIZE = 36;
+    private static final int PREVIEW_SPRITE_HALF_SIZE = PREVIEW_SPRITE_SIZE / 2;
+    private static final double PREVIEW_SPRITE_ALPHA = 0.5;
+    private static final double PREVIEW_RANGE_FILL_ALPHA = 0.2;
+
     private BooleanProperty showTowerRanges;
 
     public TowerRenderer(BooleanProperty showTowerRanges)
@@ -173,5 +178,56 @@ public class TowerRenderer {
                 }
 
 				return image;
+		}
+
+		public Image idleImage(TowerType type)
+		{
+				if (type == TowerType.BASIC) return BASIC.getImage();
+				if (type == TowerType.ADVANCED) return ADVANCED.getImage();
+				if (type == TowerType.EXPERT) return EXPERT.getImage();
+				if (type == TowerType.RAYBASIC) return RAYBASIC.getImage();
+				if (type == TowerType.RAYADVANCED) return RAYADVANCED.getImage();
+				if (type == TowerType.RAYEXPERT) return RAYEXPERT.getImage();
+				if (type == TowerType.ROCKETLAUNCHERBASIC) return ROCKETLAUNCHERBASIC.getImage();
+				if (type == TowerType.ROCKETLAUNCHERADVANCED) return ROCKETLAUNCHERADVANCED.getImage();
+				if (type == TowerType.ROCKETLAUNCHEREXPERT) return ROCKETLAUNCHEREXPERT.getImage();
+				return null;
+		}
+
+		public void renderPlacementPreview(GraphicsContext gc, TowerType type, Vector2 position, boolean valid)
+		{
+				if (type == null || position == null) return;
+
+				Image previewImage = idleImage(type);
+				int reichweite = type.reichweite();
+				Color rangeColor = valid ? Color.GREEN : Color.RED;
+
+				gc.save();
+				gc.setGlobalAlpha(PREVIEW_SPRITE_ALPHA);
+				if (previewImage != null)
+				{
+						gc.drawImage(
+								previewImage,
+								position.getX() - PREVIEW_SPRITE_HALF_SIZE,
+								position.getY() - PREVIEW_SPRITE_HALF_SIZE,
+								PREVIEW_SPRITE_SIZE, PREVIEW_SPRITE_SIZE
+						);
+				}
+				gc.setStroke(rangeColor);
+				gc.strokeOval(
+						position.getX() - reichweite,
+						position.getY() - reichweite,
+						reichweite * 2,
+						reichweite * 2
+				);
+				gc.setFill(rangeColor);
+				gc.setGlobalAlpha(PREVIEW_RANGE_FILL_ALPHA);
+				gc.fillOval(
+						position.getX() - reichweite,
+						position.getY() - reichweite,
+						reichweite * 2,
+						reichweite * 2
+				);
+				gc.restore();
 		}
 }

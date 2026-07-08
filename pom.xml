@@ -71,6 +71,22 @@
                 </configuration>
             </plugin>
 
+            <!-- Surefire: isolate each test class in its own JVM. Some Pathtype enum
+                 constants hold Vector2 waypoints that are mutable and shared across every
+                 Path built from them; a test-only helper (Enemy.__set_Position__) mutates
+                 that shared Vector2 in place, which corrupts Pathtype.EASY's waypoints for
+                 the rest of the JVM's lifetime if reused across test classes. Forking a new
+                 JVM per class prevents that cross-class pollution. See TT-1 build report. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+                <configuration>
+                    <reuseForks>false</reuseForks>
+                    <forkCount>1</forkCount>
+                </configuration>
+            </plugin>
+
             <!-- JavaFX Run Plugin -->
             <plugin>
                 <groupId>org.openjfx</groupId>

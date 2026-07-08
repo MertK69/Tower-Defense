@@ -15,7 +15,8 @@ import game.tower.Tower;
 import game.tower.TowerType;
 import game.path.*;
 import game.animation.towerAnimationen.*;
-import util.Vector2; 
+import game.sattack.SpecialAttack;
+import util.Vector2;
 
 class CombatSystemTest {
 
@@ -32,10 +33,11 @@ class CombatSystemTest {
         enemy.__set_Position__(160,390);
         List<Enemy>enemylist = new ArrayList<>(List.of(enemy));
         List<Fire>Bullets = new ArrayList<>();
+        List<SpecialAttack>sattackList = new ArrayList<>();
         double dt = 1.0 / 60.0;
-        
+
         // act
-        combatSystem.update(dt, towerlist, enemylist, Bullets);
+        combatSystem.update(dt, towerlist, enemylist, Bullets, sattackList);
         
         // assert
         assertFalse(Bullets.isEmpty(), "Es sollte ein Projektil erzeugt worden sein.");
