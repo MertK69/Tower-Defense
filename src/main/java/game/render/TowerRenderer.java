@@ -25,10 +25,10 @@ public class TowerRenderer {
         this.showTowerRanges = showTowerRanges; 
     }
 
-		public void renderTower(List<Tower>towers, GraphicsContext gc, double dt)
+		public void renderTower(List<Tower>towers, GraphicsContext gc, double dt, Tower selectedTower)
 		{
             gc.save();
-				for (Tower tower : towers) 
+				for (Tower tower : towers)
 				{
 					Vector2 tp = tower.getPosition();
 				    Image towerPic = image(tower, dt);
@@ -42,7 +42,7 @@ public class TowerRenderer {
 							36, 36
 					);
 					gc.restore();
-                    if (this.showTowerRanges.getValue() == true)
+                    if (this.showTowerRanges.getValue() == true || tower == selectedTower)
                     {
                         gc.save();
                         gc.setStroke(Color.BLACK);

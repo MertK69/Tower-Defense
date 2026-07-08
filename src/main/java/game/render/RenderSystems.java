@@ -28,9 +28,9 @@ public class RenderSystems {
                 sattackRenderer.renderSAttack(gc, SAttackList, dt);
         }
 
-		public void renderTower(GraphicsContext gc, List<Tower>towers, double dt)
+		public void renderTower(GraphicsContext gc, List<Tower>towers, double dt, Tower selectedTower)
 		{
-				towerRenderer.renderTower(towers, gc, dt);				
+				towerRenderer.renderTower(towers, gc, dt, selectedTower);
 		}
 
 		public void renderEnemies(GraphicsContext gc, List<Enemy>enemies, double STEP, Path path)

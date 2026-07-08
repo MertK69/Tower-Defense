@@ -87,5 +87,10 @@
 }
 
 .return-button{
-    -fx-background-color: #800080; -fx-border-radius: 8px; -fx-text-alignment: center; -fx-alignment: center; -fx-border-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px;  
+    -fx-background-color: #800080; -fx-border-radius: 8px; -fx-text-alignment: center; -fx-alignment: center; -fx-border-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px;
 }
+
+.tower-interaction-panel{
+    -fx-background-color: white; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-padding: 6px;
+}
+

@@ -45,6 +45,11 @@ public class Economy {
 				curr_money.set(curr_money.get() - economySystems.withdrawMoneyFromBoughtTowers(type));
 		}
 
+		public void towerUpgraded(Tower tower)
+		{
+				curr_money.set(curr_money.get() - economySystems.withdrawMoneyFromUpgrade(tower));
+		}
+
         public void specialEffectsBought(SpecialAttackType type)
         {
                 curr_money.set(curr_money.get() - economySystems.withdrawMoneyFromSpecialEffects(type));

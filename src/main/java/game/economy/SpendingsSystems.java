@@ -17,6 +17,11 @@ public class SpendingsSystems {
 				return type.price();
 		}
 
+		public int upgradeTower(Tower tower)
+		{
+				return tower.getUpgradeCost();
+		}
+
         public int buySpecialEffect(SpecialAttackType type)
         {
             return type.get_Price();

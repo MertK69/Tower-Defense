@@ -17,6 +17,7 @@ import java.util.*;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.canvas.Canvas;
@@ -26,6 +27,7 @@ public class GameEngine {
 		private final List<Enemy>enemies = new ArrayList<>();
 		private final List<Tower>towers = new ArrayList<>();
 		private final List<Enemy>EnemiesToRemove = new ArrayList<>();
+		private final List<Tower>pendingSoldTowers = new ArrayList<>();
 		private final List<Fire>Bullets = new ArrayList<>();
         private final List<SpecialAttack> sattackList = new ArrayList<>();
 		private TowerFactory towerFactory = new TowerFactory();
@@ -46,6 +48,7 @@ public class GameEngine {
 	    private	Canvas canvas = new Canvas(1200, 800);
         private GraphicsContext gc = canvas.getGraphicsContext2D();
 		private TowerSystems towerSystems = new TowerSystems();
+		private final TowerSelectionController towerSelection = new TowerSelectionController(towerSystems);
         private CombatSystem combatSystem = new CombatSystem();
 		private RenderSystems renderSystems = new RenderSystems(showTowerRanges);
 		private EconomySystems economySystems = new EconomySystems();
@@ -104,7 +107,6 @@ public class GameEngine {
 				}
 				enemies.removeAll(EnemiesToRemove);
 
-				List<Tower>TowersToRemove = new ArrayList<>();
 				for (Tower tower : towers)
 				{
                         if (tower.get_fireSound() == true)
@@ -138,7 +140,9 @@ public class GameEngine {
                 sattackList.removeAll(SAttacksToRemove);
 
 				combatSystem.update(stepTime, towers, enemies, Bullets, sattackList);
-				economy.update(EnemiesToRemove, TowersToRemove);
+				towers.removeAll(pendingSoldTowers);
+				economy.update(EnemiesToRemove, pendingSoldTowers);
+				pendingSoldTowers.clear();
 		}
 
 		public void render(double STEP)
@@ -147,7 +151,7 @@ public class GameEngine {
 
 				renderSystems.renderPath(gc, path);
 
-				renderSystems.renderTower(gc, towers, STEP);	
+				renderSystems.renderTower(gc, towers, STEP, towerSelection.selectedTowerProperty().getValue());
 
 				renderSystems.renderEnemies(gc, enemies, STEP, path);
 
@@ -185,7 +189,42 @@ public class GameEngine {
 
 		public void handleBuyRequest(TowerType type, Vector2 position)
 		{
-				towerSystems.handleBuyRequest(economy, towers, type, position);	
+				towerSystems.handleBuyRequest(economy, towers, type, position);
+		}
+
+		/**
+		 * Selects the tower hit by a click, or clears the selection on an empty-ground
+		 * click (AC #1 / AC #7). Delegates to {@link TowerSelectionController}.
+		 */
+		public void handleTowerClick(Vector2 position)
+		{
+				towerSelection.handleTowerClick(towers, position);
+		}
+
+		/**
+		 * Sells the currently selected tower (AC #4/#5) via {@link TowerSelectionController}.
+		 */
+		public void handleSellRequest()
+		{
+				towerSelection.handleSellRequest(economy, towers, pendingSoldTowers);
+		}
+
+		/**
+		 * Upgrades the currently selected tower (AC #2/#3) via {@link TowerSelectionController}.
+		 */
+		public void handleUpgradeRequest()
+		{
+				towerSelection.handleUpgradeRequest(economy);
+		}
+
+		public void clearSelection()
+		{
+				towerSelection.clearSelection();
+		}
+
+		public ObjectProperty<Tower> get_selectedTowerProperty()
+		{
+				return towerSelection.selectedTowerProperty();
 		}
 
         public void handleSpecialAttack(Vector2 Position ,SpecialAttackType attackType)

@@ -35,7 +35,7 @@ public class UIFactory {
 
    public Pane create_GameArea()
     {
-        return this.gameAreaCreator.create_game_area(this.canvas);
+        return this.gameAreaCreator.create_game_area(this.canvas, this.engine);
     }
 
 

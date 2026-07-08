@@ -26,7 +26,7 @@ public class EarningsSystems{
 				int Money = 0;
 				for (Tower X : soldTowers)
 				{
-						Money += X.getPrice();	
+						Money += X.getSellValue();
 				}
 				return Money;
 		}

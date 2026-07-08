@@ -4,6 +4,11 @@ import javafx.scene.image.Image;
 import util.Vector2;
 
 public class Tower {
+		public static final int MAX_LEVEL = 3;
+		private static final double UPGRADE_COST_FACTOR = 0.5;
+		private static final double STAT_MULTIPLIER_PER_LEVEL = 0.25;
+		private static final double SELL_REFUND_RATE = 0.7;
+
 		private final TowerType type;
 		private final Vector2 position;
 		private double cooldown;
@@ -11,12 +16,17 @@ public class Tower {
 		private int currShootAnimation = 0;
 		private double shootAnimationInterval = 5d;
 		private double Timer = 0d;
-	    private double currentAngle = -90d;			
+	    private double currentAngle = -90d;
         private boolean doFireSound = false;
+		private int level = 1;
+		private final int baseCost;
+		private int totalInvestedGold;
 		public Tower(TowerType type, Vector2 position) {
 				this.type = type;
 				this.position = position;
 				this.cooldown = 0;
+				this.baseCost = type.price();
+				this.totalInvestedGold = this.baseCost;
 		}
 
 		public void update(double dt) {
@@ -28,14 +38,14 @@ public class Tower {
 		}
 
 		public void fire() {
-				cooldown = type.firerate();
+				cooldown = getEffectiveFirerate();
 		}
 		public double getDamage(){
-				return this.type.damage();
+				return this.type.damage() * getStatMultiplier();
 		}
 
 		public double getReichweite() {
-				return this.type.reichweite();
+				return this.type.reichweite() * getStatMultiplier();
 		}
 
 		public int getPrice()
@@ -53,7 +63,45 @@ public class Tower {
 		}
 
 		public void reset_cooldown() {
-				this.cooldown = type.firerate();
+				this.cooldown = getEffectiveFirerate();
+		}
+
+		public int getLevel() {
+				return level;
+		}
+
+		public boolean isMaxLevel() {
+				return level >= MAX_LEVEL;
+		}
+
+		public int getBaseCost() {
+				return baseCost;
+		}
+
+		public int getTotalInvestedGold() {
+				return totalInvestedGold;
+		}
+
+		public int getUpgradeCost() {
+				return (int) (baseCost * UPGRADE_COST_FACTOR * level);
+		}
+
+		public void upgrade() {
+				if (isMaxLevel()) return;
+				totalInvestedGold += getUpgradeCost();
+				level++;
+		}
+
+		public int getSellValue() {
+				return (int) (totalInvestedGold * SELL_REFUND_RATE);
+		}
+
+		private double getStatMultiplier() {
+				return 1.0 + STAT_MULTIPLIER_PER_LEVEL * (level - 1);
+		}
+
+		private double getEffectiveFirerate() {
+				return this.type.firerate() / getStatMultiplier();
 		}
 
 		public boolean getAnimationLock()
