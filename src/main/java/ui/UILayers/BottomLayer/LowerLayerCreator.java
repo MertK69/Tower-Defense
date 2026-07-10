@@ -14,6 +14,7 @@ import ui.towerExchange.TowerUIChanger;
 import ui.towerExchange.TowerStrategies.*;
 
 public class LowerLayerCreator{
+    private static final String BOTTOM_MENU_BACKGROUND = "-fx-background-color: #6B4E31;";
     private TowerUIChanger TowerChanger;
     public BooleanProperty MenuChange = new SimpleBooleanProperty(false);
 
@@ -26,15 +27,15 @@ public class LowerLayerCreator{
     {
         HBox towerAndOptionsMenu = new HBox();
         towerAndOptionsMenu.setPadding(new Insets(10));
-        towerAndOptionsMenu.setStyle("-fx-background-color: #6B4E31;");
+        towerAndOptionsMenu.setStyle(BOTTOM_MENU_BACKGROUND);
         HBox towerMenu = new HBox(10);
         towerMenu.setPadding(new Insets(10));
         towerMenu.setAlignment(Pos.CENTER_LEFT);
-        towerMenu.setStyle("-fx-background-color: #6B4E31;");
+        towerMenu.setStyle(BOTTOM_MENU_BACKGROUND);
         HBox OptionsMenu = new HBox(10);
         OptionsMenu.setPadding(new Insets(10));
         OptionsMenu.setAlignment(Pos.CENTER_RIGHT);
-        OptionsMenu.setStyle("-fx-background-color: #6B4E31;");
+        OptionsMenu.setStyle(BOTTOM_MENU_BACKGROUND);
         Button DefaultTowerMenu= new Button("Default \n Tower Menu");
         DefaultTowerMenu.getStyleClass().add("bottom-menu-buttons");
         DefaultTowerMenu.setOnAction(e -> {
@@ -58,12 +59,18 @@ public class LowerLayerCreator{
         showTowerRanges.getStyleClass().add("bottom-menu-buttons");
         showTowerRanges.setOnAction(e -> showTowerRanges(engine));
 
+        Button skipBreak = new Button("Skip Break");
+        skipBreak.getStyleClass().add("bottom-menu-buttons");
+        skipBreak.setOnAction(e -> engine.skipBreak());
+        skipBreak.visibleProperty().bind(engine.get_onBreakProperty());
+        skipBreak.managedProperty().bind(skipBreak.visibleProperty());
+
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         towerMenu.getChildren().addAll(DefaultTowerMenu, AdvancedTowerMenu, EffectsMenu);
 
-        OptionsMenu.getChildren().add(showTowerRanges);
+        OptionsMenu.getChildren().addAll(showTowerRanges, skipBreak);
 
         towerAndOptionsMenu.getChildren().addAll(towerMenu, spacer, OptionsMenu);
 

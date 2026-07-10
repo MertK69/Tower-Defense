@@ -15,11 +15,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import ui.*;
+import ui.UILayers.LoseScreenCreator;
 public class Main extends Application {
     private GameEngine engine;
     private GameLoop GL;
     private UIBuilder uiB;
     private Stage mainStage;
+    private StackPane gameRoot;
     public BooleanProperty changeScene = new SimpleBooleanProperty();
     private ObjectProperty<Pathtype> pathtype = new SimpleObjectProperty<>(Pathtype.EASY);
     private IntegerProperty waveNumber = new SimpleIntegerProperty(0);
@@ -41,8 +43,23 @@ public class Main extends Application {
 		UIFXSettings.initializeSettings(this.mainStage, initialScene);
         this.changeScene.addListener(obs -> changeCurrentSceneByProperty());
         this.lostGame.addListener((obs, oldValue, newValue) -> {
-            if (newValue != null && newValue == true) {
-                lostGameWindow();
+            if (newValue != null && newValue) {
+                // Capture the engine reference now: `engine` is still valid while this listener
+                // fires (it is nulled later by lostGameWindow()/changeCurrentSceneByProperty()).
+                final GameEngine engineAtLoss = this.engine;
+                final StackPane[] loseScreenHolder = new StackPane[1];
+                Runnable onPlayAgain = () -> {
+                    engineAtLoss.resetGame();
+                    this.gameRoot.getChildren().remove(loseScreenHolder[0]);
+                };
+                Runnable onGoToMenu = () -> {
+                    this.gameRoot.getChildren().remove(loseScreenHolder[0]);
+                    lostGameWindow();
+                };
+                StackPane loseScreen = new LoseScreenCreator().create_lose_screen(
+                        engineAtLoss.get_waveProperty(), onPlayAgain, onGoToMenu);
+                loseScreenHolder[0] = loseScreen;
+                this.gameRoot.getChildren().add(loseScreen);
             }
         });
         stage.show();
@@ -52,18 +69,16 @@ public class Main extends Application {
     {
         javafx.application.Platform.runLater(() -> {
             if (this.mainStage != null) {
+                if (this.changeScene.getValue())
                 {
-                    if (this.changeScene.getValue() == true)
-                    {
                     Scene gameScene = setGameScene();
                     this.mainStage.setScene(gameScene);
                     gameScene.getRoot().requestFocus();
-                    } else {
-                        this.engine = null;
-                        this.GL.stop();
-                        this.GL = null;
-                        this.mainStage.setScene(setMenuScene());
-                    }
+                } else {
+                    this.engine = null;
+                    this.GL.stop();
+                    this.GL = null;
+                    this.mainStage.setScene(setMenuScene());
                 }
             }
         });
@@ -89,12 +104,12 @@ public class Main extends Application {
         this.GL.start();
         this.lostGame.unbind();
         this.lostGame.bind(this.engine.get_gameLostProperty());
-        StackPane root = new StackPane(); 
+        this.gameRoot = new StackPane();
         BorderPane Layout = new BorderPane();
         this.uiB = new UIBuilder(Layout, engine, changeScene);
         this.uiB.initializeMainPane(engine);
-        root.getChildren().add(Layout);
-		Scene scene = new Scene(root);
+        this.gameRoot.getChildren().add(Layout);
+		Scene scene = new Scene(this.gameRoot);
 		scene.getStylesheets().add(getClass().getResource("/css/UI.css").toExternalForm());
         return scene;
     }

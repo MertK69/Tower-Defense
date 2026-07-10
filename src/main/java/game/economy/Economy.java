@@ -18,10 +18,26 @@ public class Economy {
 		public Economy(EconomySystems economySystems, Pathtype difficulty)
 		{
 				this.economySystems = economySystems;
-				if (difficulty == Pathtype.EASY) this.curr_money.set(80000);
-				if (difficulty == Pathtype.MEDIUM) this.curr_money.set(750);
-				if (difficulty == Pathtype.MEDIUM) this.curr_money.set(1000);
-				if (difficulty == Pathtype.IMPOSSIBLE) this.curr_money.set(1500);
+				this.curr_money.set(startingMoneyFor(difficulty));
+		}
+
+		// Reproduces the exact net effect of the original (pre-existing) branch logic:
+		// MEDIUM was checked twice in the constructor (750 then 1000 - the second write
+		// wins, net 1000) and HARD was never handled (falls through, net 0). Both quirks
+		// are intentionally preserved here, not fixed - see plan.md Edge Cases.
+		private int startingMoneyFor(Pathtype difficulty)
+		{
+				int money = 0;
+				if (difficulty == Pathtype.EASY) money = 80000;
+				if (difficulty == Pathtype.MEDIUM) money = 750;
+				if (difficulty == Pathtype.MEDIUM) money = 1000;
+				if (difficulty == Pathtype.IMPOSSIBLE) money = 1500;
+				return money;
+		}
+
+		public void reset(Pathtype difficulty)
+		{
+				this.curr_money.set(startingMoneyFor(difficulty));
 		}
 
 		public void update(List<Enemy>removedEnemies, List<Tower>soldTowers)

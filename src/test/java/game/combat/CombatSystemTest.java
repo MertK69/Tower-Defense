@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import game.enemy.*;
@@ -19,6 +21,17 @@ import game.sattack.SpecialAttack;
 import util.Vector2;
 
 class CombatSystemTest {
+
+    @BeforeAll
+    static void initToolkit() throws InterruptedException {
+        final CountDownLatch latch = new CountDownLatch(1);
+        try {
+            javafx.application.Platform.startup(latch::countDown);
+        } catch (IllegalStateException alreadyStarted) {
+            latch.countDown();
+        }
+        latch.await();
+    }
 
     @Test
     public void update_CombatSystem_Test()

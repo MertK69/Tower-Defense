@@ -87,5 +87,21 @@
 }
 
 .return-button{
-    -fx-background-color: #800080; -fx-border-radius: 8px; -fx-text-alignment: center; -fx-alignment: center; -fx-border-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px;  
+    -fx-background-color: #800080; -fx-border-radius: 8px; -fx-text-alignment: center; -fx-alignment: center; -fx-border-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px;
+}
+
+.lose-screen-overlay{
+    -fx-background-color: rgba(0, 0, 0, 0.6); -fx-alignment: center;
+}
+
+.lose-screen-box{
+    -fx-background-color: white; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 8px; -fx-alignment: center; -fx-pref-width: 400px;
+}
+
+.lose-screen-title{
+    -fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: darkred; -fx-text-alignment: center;
+}
+
+.lose-screen-button{
+    -fx-background-color: #800080; -fx-border-radius: 8px; -fx-text-alignment: center; -fx-alignment: center; -fx-border-color: black; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8px; -fx-pref-width: 200px; -fx-pref-height: 50px;
 }
