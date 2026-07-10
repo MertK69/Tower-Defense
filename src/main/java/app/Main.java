@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -111,6 +112,12 @@ public class Main extends Application {
         this.gameRoot.getChildren().add(Layout);
 		Scene scene = new Scene(this.gameRoot);
 		scene.getStylesheets().add(getClass().getResource("/css/UI.css").toExternalForm());
+        scene.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ESCAPE)
+            {
+                this.engine.clearSelection();
+            }
+        });
         return scene;
     }
 

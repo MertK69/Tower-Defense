@@ -27,6 +27,11 @@ public class EconomySystems {
 				return spendingsSystems.buyTower(type);
 		}
 
+		public int withdrawMoneyFromUpgrade(Tower tower)
+		{
+				return spendingsSystems.upgradeTower(tower);
+		}
+
         public int withdrawMoneyFromSpecialEffects(SpecialAttackType type)
         {
                 return spendingsSystems.buySpecialEffect(type);
