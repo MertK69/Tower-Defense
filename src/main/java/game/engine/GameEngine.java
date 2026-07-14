@@ -8,6 +8,7 @@ import game.sattack.SpecialAttack;
 import game.sattack.SpecialAttackFactory;
 import game.sattack.SpecialAttackType;
 import game.sound.SoundSystems;
+import game.sound.MusicSystem;
 import game.tower.*;
 import game.animation.towerAnimationen.Fire;
 import game.combat.*;
@@ -36,6 +37,8 @@ public class GameEngine {
 		private WaveFactory waveFactory = new WaveFactory();
 		private PathFactory pathFactory = new PathFactory();
         private SoundSystems soundSystem;
+        private MusicSystem musicSystem;
+        private boolean paused = false;
 		private ActiveWave activeWave = null;
         private IntegerProperty waveProperty = new SimpleIntegerProperty(1);
         private IntegerProperty enemyProperty = new SimpleIntegerProperty();
@@ -61,6 +64,8 @@ public class GameEngine {
             this.waveNumber = waveNumber;
             this.pathtype = pathtype;
             this.soundSystem = new SoundSystems((double) volume / 100);
+            this.musicSystem = new MusicSystem("/sounds/tower-sound.mp3", (double) volume / 100);
+            this.musicSystem.play();
             this.economy = new Economy(this.economySystems, pathtype);
             this.path = this.pathFactory.createPath(pathtype);
             this.waveProperty = new SimpleIntegerProperty(waveNumber);
@@ -68,6 +73,8 @@ public class GameEngine {
 
 		public void update(double stepTime)
 		{
+                if (paused) return;
+
                 if (roundLifecycle.checkAndHandleGameLost()) return;
 
                 if (!roundLifecycle.isOnBreak())
@@ -389,5 +396,47 @@ public class GameEngine {
         public BooleanProperty get_showTowerRangesProperty()
         {
             return this.showTowerRanges;
+        }
+
+        // ---------------------------------------------------------------------
+        // TT-5: pause + in-game audio control surface (owned by GameEngine)
+        // ---------------------------------------------------------------------
+
+        public void setPaused(boolean paused)
+        {
+            this.paused = paused;
+        }
+
+        public boolean isPaused()
+        {
+            return this.paused;
+        }
+
+        public void setSfxVolume(double volume)
+        {
+            this.soundSystem.setVolume(volume);
+        }
+
+        public double getSfxVolume()
+        {
+            return this.soundSystem.getVolume();
+        }
+
+        public void setMusicVolume(double volume)
+        {
+            this.musicSystem.setVolume(volume);
+        }
+
+        public double getMusicVolume()
+        {
+            return this.musicSystem.getVolume();
+        }
+
+        public void stopMusic()
+        {
+            if (this.musicSystem != null)
+            {
+                this.musicSystem.stop();
+            }
         }
 }

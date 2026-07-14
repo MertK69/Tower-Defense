@@ -54,6 +54,28 @@ public class SoundSystems {
         this.SpecialAttackSounds.put(SpecialAttackType.ElectricWave, new AudioClip(getClass().getResource("/sounds/electric-sound.wav").toExternalForm()));
     this.SpecialAttackSounds.put(SpecialAttackType.FireAttack, new AudioClip(getClass().getResource("/sounds/fire-breath.wav").toExternalForm()));
 
+        for (Map.Entry<SpecialAttackType, AudioClip> sound : this.SpecialAttackSounds.entrySet())
+        {
+            sound.getValue().setVolume(this.volume);
+        }
+    }
+
+    /**
+     * Updates the SFX volume live (TT-5 AC-2). Mutates every already-loaded
+     * {@link AudioClip} in all three maps so subsequent {@code play()} calls use the
+     * new value, and stores it as the current volume for {@link #getVolume()}.
+     */
+    public void setVolume(double newVolume)
+    {
+        this.volume = newVolume;
+        for (AudioClip clip : this.TowerSounds.values())         clip.setVolume(newVolume);
+        for (AudioClip clip : this.EnemySounds.values())         clip.setVolume(newVolume);
+        for (AudioClip clip : this.SpecialAttackSounds.values()) clip.setVolume(newVolume);
+    }
+
+    public double getVolume()
+    {
+        return this.volume;
     }
 
     public void playTowerSound(TowerType type)
