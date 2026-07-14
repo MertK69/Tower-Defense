@@ -3,6 +3,7 @@ package app;
 import game.engine.GameEngine;
 import game.engine.GameLoop;
 import game.path.Pathtype;
+import java.util.function.Consumer;
 import javafx.application.Application;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
@@ -10,6 +11,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -76,6 +78,7 @@ public class Main extends Application {
                     this.mainStage.setScene(gameScene);
                     gameScene.getRoot().requestFocus();
                 } else {
+                    if (this.engine != null) this.engine.stopMusic();
                     this.engine = null;
                     this.GL.stop();
                     this.GL = null;
@@ -107,9 +110,11 @@ public class Main extends Application {
         this.lostGame.bind(this.engine.get_gameLostProperty());
         this.gameRoot = new StackPane();
         BorderPane Layout = new BorderPane();
-        this.uiB = new UIBuilder(Layout, engine, changeScene);
-        this.uiB.initializeMainPane(engine);
         this.gameRoot.getChildren().add(Layout);
+        Consumer<Node> addOverlay = node -> this.gameRoot.getChildren().add(node);
+        Consumer<Node> removeOverlay = node -> this.gameRoot.getChildren().remove(node);
+        this.uiB = new UIBuilder(Layout, engine, changeScene, addOverlay, removeOverlay);
+        this.uiB.initializeMainPane(engine);
 		Scene scene = new Scene(this.gameRoot);
 		scene.getStylesheets().add(getClass().getResource("/css/UI.css").toExternalForm());
         scene.setOnKeyPressed(keyEvent -> {
@@ -124,6 +129,7 @@ public class Main extends Application {
     public void lostGameWindow()
     {
         this.lostGame.unbind();
+        if (this.engine != null) this.engine.stopMusic();
         this.engine = null;
         this.GL.stop();
         this.changeScene.setValue(false);

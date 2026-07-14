@@ -1,6 +1,9 @@
 package ui;
+import java.util.function.Consumer;
+
 import game.engine.GameEngine;
 import javafx.beans.property.BooleanProperty;
+import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -10,10 +13,11 @@ import ui.UILayers.UIFactory;
 public class UIBuilder {
     private BorderPane MainPane;
     private UIFactory uiFactory;
-        public UIBuilder(BorderPane pane, GameEngine engine, BooleanProperty changeScene)
+        public UIBuilder(BorderPane pane, GameEngine engine, BooleanProperty changeScene,
+                         Consumer<Node> addOverlay, Consumer<Node> removeOverlay)
         {
             this.MainPane = pane;
-            this.uiFactory = new UIFactory(engine.getCanvas(), engine, pane, changeScene);
+            this.uiFactory = new UIFactory(engine.getCanvas(), engine, pane, changeScene, addOverlay, removeOverlay);
         }
 
 		public void initializeMainPane(GameEngine engine)

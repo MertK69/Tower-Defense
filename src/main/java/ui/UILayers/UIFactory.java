@@ -1,8 +1,11 @@
 package ui.UILayers;
 
+import java.util.function.Consumer;
+
 import game.engine.GameEngine;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -15,12 +18,13 @@ public class UIFactory {
     private GameAreaCreator gameAreaCreator = new GameAreaCreator();
     private Canvas canvas; 
     private GameEngine engine;
-    public UIFactory(Canvas canvas, GameEngine engine, BorderPane MainPane, BooleanProperty changeScene)
+    public UIFactory(Canvas canvas, GameEngine engine, BorderPane MainPane, BooleanProperty changeScene,
+                     Consumer<Node> addOverlay, Consumer<Node> removeOverlay)
     {
         this.canvas = canvas;
         this.engine = engine;
         this.bottomLayerCreator = new BottomLayerCreator(engine, MainPane);
-        this.topLayerCreator = new TopLayerCreator(changeScene);
+        this.topLayerCreator = new TopLayerCreator(changeScene, engine, addOverlay, removeOverlay);
     }
 
    public HBox create_TopLayer()

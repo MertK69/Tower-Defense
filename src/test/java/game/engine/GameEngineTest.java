@@ -161,4 +161,82 @@ class GameEngineTest {
         assertFalse(engine.get_onBreakProperty().getValue());
         assertEquals(0, engine.get_breakSecondsLeftProperty().getValue());
     }
+
+    // ---------------------------------------------------------------------
+    // TT-5: pause (AC-4/AC-5) and in-game audio control surface (AC-2/AC-3/AC-8)
+    // ---------------------------------------------------------------------
+
+    @Test
+    void pauseDefaultsToFalse() {
+        assertFalse(engine.isPaused(), "a fresh engine must not start paused");
+    }
+
+    @Test
+    void pausedUpdateFreezesGameplay() {
+        engine.setPaused(true);
+        assertTrue(engine.isPaused());
+
+        int waveBefore = engine.get_waveProperty().getValue();
+        int enemiesBefore = engine.get_enemyProperty().getValue();
+        int waveEnemiesBefore = engine.get_waveEnemyProperty().getValue();
+
+        // Repeated large-step updates must not advance any gameplay state while paused.
+        engine.update(1000.0);
+        engine.update(1000.0);
+        engine.update(1000.0);
+
+        assertEquals(waveBefore, engine.get_waveProperty().getValue(), "wave must not advance while paused");
+        assertEquals(enemiesBefore, engine.get_enemyProperty().getValue(), "enemies must not spawn/move while paused");
+        assertEquals(waveEnemiesBefore, engine.get_waveEnemyProperty().getValue(), "no wave should start while paused");
+    }
+
+    @Test
+    void unpauseResumesGameplay() {
+        engine.setPaused(true);
+        engine.update(1000.0);
+
+        engine.setPaused(false);
+        assertFalse(engine.isPaused());
+
+        // First update after resuming starts spawning the wave.
+        engine.update(0.01);
+        assertTrue(engine.get_waveEnemyProperty().getValue() > 0, "gameplay should resume after unpausing");
+    }
+
+    @Test
+    void sfxVolumeConversion100MapsToOne() {
+        GameEngine e = new GameEngine(Pathtype.EASY, 1, 100);
+        assertEquals(1.0, e.getSfxVolume(), 1e-9);
+    }
+
+    @Test
+    void sfxVolumeConversion50MapsToHalf() {
+        GameEngine e = new GameEngine(Pathtype.EASY, 1, 50);
+        assertEquals(0.5, e.getSfxVolume(), 1e-9);
+    }
+
+    @Test
+    void setSfxVolumeIsLiveAndReadable() {
+        engine.setSfxVolume(0.2);
+        assertEquals(0.2, engine.getSfxVolume(), 1e-9);
+    }
+
+    @Test
+    void setMusicVolumeIsReadable() {
+        engine.setMusicVolume(0.3);
+        assertEquals(0.3, engine.getMusicVolume(), 1e-9);
+    }
+
+    @Test
+    void musicAndSfxVolumesAreIndependent() {
+        engine.setSfxVolume(0.2);
+        engine.setMusicVolume(0.7);
+        assertEquals(0.2, engine.getSfxVolume(), 1e-9, "SFX volume must not be affected by music volume");
+        assertEquals(0.7, engine.getMusicVolume(), 1e-9, "music volume must not be affected by SFX volume");
+    }
+
+    @Test
+    void stopMusicDoesNotThrow() {
+        engine.stopMusic();
+    }
 }
